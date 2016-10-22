@@ -1,4 +1,40 @@
 <?php
+/*************************************************************
+ *
+ * alert();
+ * -----------------------------------------------------------
+ *
+ * Javscript Alert 창을 띄우고 지정한 URL로 이동합니다.
+ *
+ ************************************************************/
+function alert($msg = '', $url = '')
+{
+    if (empty($msg)) {
+        $msg = '잘못된 접근입니다';
+    }
+    echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">';
+    echo '<script type="text/javascript">alert("' . $msg . '");';
+    if (empty($url)) {
+        echo 'history.go(-1);';
+    }
+    if ($url) {
+        echo 'document.location.href="' . $url . '"';
+    }
+    echo '</script>';
+    exit;
+}
+
+/****************************************************************************************
+ * 배열의 특정 키값을 가져옵니다.
+ * @param $item
+ * @param $array
+ * @param null $default
+ * @return mixed|null
+ ***************************************************************************************/
+function element($item, $array, $default = NULL)
+{
+    return is_array($array) && array_key_exists($item, $array) ? $array[$item] : $default;
+}
 
 /**
  * 해당 URL이 우리 서버 도메인을 가르키는지 확인한다.

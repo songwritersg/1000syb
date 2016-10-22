@@ -7,4 +7,4 @@ define("DEVICE_DESKTOP", "desktop");
 define("COOKIE_VIEWMODE", "viewmode");
 define("LAYOUT_PATH", FCPATH . DIRECTORY_SEPARATOR . "layouts" . DIRECTORY_SEPARATOR);
 define("LAYOUT_DEKSTOP", "desktop");
-define("LAYOUT_MOBILE", "mobile");
+define("LAYOUT_MOBILE", "desktop");
