@@ -36,12 +36,13 @@ function element($item, $array, $default = NULL)
     return is_array($array) && array_key_exists($item, $array) ? $array[$item] : $default;
 }
 
-/**
+
+/******************************************************************************************
  * 해당 URL이 우리 서버 도메인을 가르키는지 확인한다.
  * @param $url 체크할 URL
  * @param bool $check_file_exist 파일존재 여부까지 확인한다.
  * @return bool
- */
+ *****************************************************************************************/
 function is_my_domain($url, $check_file_exist = TRUE) {
     global $_SERVER;
 
@@ -62,4 +63,24 @@ function is_my_domain($url, $check_file_exist = TRUE) {
         return TRUE;
     }
     return FALSE;
+}
+
+/*******************************************************************************************
+ *
+ * @param $date
+ *
+ ******************************************************************************************/
+function board_date_format($date){
+    if(! is_numeric($date) ){
+        $date = strtotime($date);
+    }
+
+    if(date('Y-m-d') == date('Y-m-d', $date))
+    {
+        return date('H:m', $date);
+    }
+    else
+    {
+        return date('Y.m.d', $date);
+    }
 }

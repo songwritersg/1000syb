@@ -58,3 +58,4 @@ $route['404'] = 'helptool/page_404';
 $route['products/(:num)'] = 'products/view/$1';
 
 $route['board/(:any)'] = "board/lists/$1";
+$route['board/(:any)/(:num)'] = "board/view/$1";

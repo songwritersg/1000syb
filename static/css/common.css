@@ -10,8 +10,8 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 /** Common **/
 * { box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
-html { font-size:14px; -ms-overflow-style: scrollbar; -webkit-tap-highlight-color:transparent; height:100%; }
-body { font-family: Tahoma,Verdana,"나눔고딕","NanumGothic","돋움","Dotum", sans-serif; font-size:14px; line-height:1.5; color:#373a3c; background-color:#fff; height:100%; -webkit-text-size-adjust:none}
+html { font-size:14px; -ms-overflow-style: scrollbar; -webkit-tap-highlight-color:transparent; height:100%;}
+body { font-family: Tahoma,Verdana,"나눔고딕","NanumGothic","돋움","Dotum", sans-serif; font-size:14px; line-height:1.5; color:#373a3c; background-color:#fff; height:100%; -webkit-text-size-adjust:none;  -webkit-font-smoothing: antialiased; }
 a {color:#333;text-decoration:none}
 a:active, a:hover {text-decoration:none}
 address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
@@ -220,3 +220,20 @@ ul.tab.tab-default > li > a:hover { background:#fff;  }
 #page-404 .msg-404-2 { display:block; text-align:center; margin:0 auto; width:100%; margin-top:45px; font-size:18px; font-weight:bold; letter-spacing:-0.1em; }
 #page-404 .page-404-buttons { margin:0; padding:0; text-align:center; }
 #page-404 .page-404-buttons > li { display:inline-block; }
+
+
+
+/******************************************************************************************************
+ * 게시판스킨
+ *
+ * 아이디 명명 규칙
+ * #skin-스킨이름-파일명  (ex : #skin-normal-list)
+ *****************************************************************************************************/
+#skin-normal-list {}
+#skin-normal-list table.post-list { width:100%; max-width:100%; border-collapse: collapse; border-top:1px solid #ddd; border-bottom:1px solid #ddd; }
+#skin-normal-list table.post-list caption { overflow:hidden; position:absolute; width:0; height:0; line-height:0; text-indent:-9999px }
+#skin-normal-list table.post-list > thead > tr > th { background:#f9f9f9; color:#282828; border-bottom:1px solid #ddd; padding:30px; text-align:center; letter-spacing: -0.05em;}
+#skin-normal-list table.post-list > tbody > tr > td { background:#ffffff; color:#282828; border-top:1px solid #ddd; padding:20px; text-align:center; letter-spacing: -0.05em;}
+#skin-normal-list table.post-list > tbody > tr:nth-child(even) > td {background:#f9f9f9}
+#skin-normal-list table.post-list > tbody > tr > td.post-title { text-align:left; }
+#skin-normal-list table.post-list > tbody > tr > td.post-title > a:hover { text-decoration:underline; }

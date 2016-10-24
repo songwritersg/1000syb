@@ -43,6 +43,7 @@ class Board_model extends SYB_Model {
         $param['start']     = ($param['page'] -1) * $param['page_rows'];
 
         $this->db->select("SQL_CALC_FOUND_ROWS *", FALSE);
+        $this->db->where('brd_key', $param['brd_key']);
         $this->db->limit( $param['page_rows'] , $param['start'] );
         $this->db->order_by("post_num DESC, post_depth ASC");
         $result = $this->db->get("tbl_board_post");
@@ -53,11 +54,14 @@ class Board_model extends SYB_Model {
 
         // 게시번호 달아주기
         $num = 0;
-        foreacH($return['list'] as &$row)
+        foreach($return['list'] as &$row)
         {
-            $row['nums'] = $return['total_count'] - $num - $param['start'];
+            $row['nums'] = $return['total_count'] - $num - $param['start']; // 게시글 번호
+            $row['post_link'] = base_url("board/{$row['brd_key']}/{$row['post_idx']}");
             $num++;
         }
+
+        return $return;
     }
 
 }
