@@ -237,3 +237,10 @@ ul.tab.tab-default > li > a:hover { background:#fff;  }
 #skin-normal-list table.post-list > tbody > tr:nth-child(even) > td {background:#f9f9f9}
 #skin-normal-list table.post-list > tbody > tr > td.post-title { text-align:left; }
 #skin-normal-list table.post-list > tbody > tr > td.post-title > a:hover { text-decoration:underline; }
+
+#skin-normal-view {}
+#skin-normal-view .post-header { height:150px; background:#f9f9f9; border:1px solid #ddd; border-top:2px solid #282828; padding-left:40px; padding-top:58px;}
+#skin-normal-view .post-header .post-title { font-size:24px; font-weight:bold; letter-spacing:-0.075em; color:#282828;}
+#skin-normal-view .post-header .post-title small { font-size:14px; color:#767676; }
+#skin-normal-view .post-header .post-title small:before {  content:"|"; display:inline-block; margin:0 18px; }
+#skin-normal-view .post-content { padding:40px; }
