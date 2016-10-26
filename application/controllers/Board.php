@@ -53,9 +53,59 @@ class Board extends SYB_Controller {
 
         // Device에 따른 스킨 설정
         $this->site->add_js("/static/js/board.js");
-        $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_list_mobile'] : $this->data['board']['brd_skin_list'];
+        $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_mobile'] : $this->data['board']['brd_skin'];
         $this->layout = $this->site->get_layout();
         $this->view = "board/{$skin}/lists";
+    }
+
+    /**********************************************************
+     *
+     * 게시판 암호 확인 페이지
+     * @param string $brd_key
+     * @param string $post_idx
+     *
+     *********************************************************/
+    function password($brd_key="",$post_idx="")
+    {
+        $this->output->enable_profiler(TRUE);
+        if(! $this->data['board'] = $this->board_model->get_board($brd_key))
+        {
+            alert('존재하지 않는 게시판입니다.');
+            exit;
+        }
+
+        $this->data['reurl'] = $this->input->get('reurl', TRUE);
+
+        // 폼검증 라이브러리 로드
+        $this->load->library("form_validation");
+        // 폼검증 규칙 설정
+        $this->form_validation->set_rules("password", "비밀번호","trim|required|min_length[4]|max_length[16]");
+
+        if( $this->form_validation->run() == FALSE )
+        {
+            $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_mobile'] : $this->data['board']['brd_skin'];
+            $this->layout = $this->site->get_layout();
+            $this->view = "board/{$skin}/password";
+        }
+        else
+        {
+            $reurl = $this->input->post("reurl", TRUE, base_url("board/{$brd_key}/{$post_idx}") );
+            $password = $this->input->post("password", TRUE);
+
+            $post = $this->board_model->get_post($post_idx);
+
+            if( hash('md5', $this->config->item('encryption_key') . $password) == $post['usr_pass'] )
+            {
+                $this->session->set_userdata('post_password_'.$post_idx, TRUE);
+                redirect($reurl);
+                exit;
+            }
+            else
+            {
+                alert('비밀번호가 맞지 않습니다.'.$password);
+                exit;
+            }
+        }
     }
 
     /**********************************************************
@@ -83,13 +133,32 @@ class Board extends SYB_Controller {
             exit;
         }
 
+        // 권한을 확인한다.
+        if( ! $this->data['auth']['view'] )
+        {
+            // 로그인 여부를 확인한다.
+            if( $this->member->is_login() )
+            {
+
+            }
+            else
+            {
+                // 비회원일 경우
+                // 비밀번호 확인 세션이 있는지 확인한다.
+                if( ! $this->session->userdata('post_password_'.$post_idx) )
+                {
+                    redirect("board/{$brd_key}/password/{$post_idx}?reurl=".current_full_url(TRUE));
+                }
+            }
+        }
+
         //if( ! $this->data['auth']['view'] && $this->data[''])
 
         // 조회수를 증가시킨다.
         $this->board_model->update_post_hit($post_idx);
 
         // Device에 따른 스킨 설정
-        $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_view_mobile'] : $this->data['board']['brd_skin_view'];
+        $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_mobile'] : $this->data['board']['brd_skin'];
         $this->layout = $this->site->get_layout();
         $this->view = "board/{$skin}/view";
     }

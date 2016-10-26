@@ -21,6 +21,19 @@ function alert($msg = '', $url = '')
     exit;
 }
 
+/*****************************************************************************************
+ * 현재 주소를 Parameter 포함해서 가져온다.
+ * @return string
+ ****************************************************************************************/
+function current_full_url($urlencode = FALSE)
+{
+    $CI =& get_instance();
+    $url = $CI->config->site_url($CI->uri->uri_string());
+    $return = ($CI->input->server('QUERY_STRING'))
+        ? $url . '?' . $CI->input->server('QUERY_STRING') : $url;
+    return $urlencode ?  urlencode($return) : $return;
+}
+
 /****************************************************************************************
  * 배열의 특정 키값을 가져옵니다.
  * @param $item
