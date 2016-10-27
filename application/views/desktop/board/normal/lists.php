@@ -25,13 +25,11 @@
         <?php else :?>
             <?php foreach($notice as $row) :?>
             <tr>
-                <td>공지사항</td>
+                <td class="notice"><img class="icon-notice" src="/static/images/common/icon_notice.gif" alt="상시공지"></td>
                 <td class="post-title">
                     <a href="<?=$row['post_link']?>">
-                        <?=$row['is_reply']?'▶':''?>
-                        <?=$row['is_new']?'N':''?>
+                        <?=$row['is_new']?'<img src="/static/images/common/icon_new.gif" class="icon-new">':''?>
                         <?=$row['post_title']?>
-                        <?=$row['is_secret']?'<i class="fa fa-lock"></i>':''?>
                     </a>
                 </td>
                 <td><?=$row['usr_name']?></td>
@@ -41,14 +39,14 @@
             <?php endforeach;?>
             <?php foreach($list as $row) :?>
             <tr>
-                <td><?=number_format($row['nums'])?></td>
+                <td><?=$row['is_reply']?"":number_format($row['nums'])?></td>
                 <td class="post-title">
-                    <a href="<?=$row['post_link']?>">
-                        <?=$row['is_reply']?'▶':''?>
-                        <?=$row['is_new']?'N':''?>
+                    <?=$row['is_reply']?'<img src="/static/images/common/icon_reply.gif" class="icon-reply">':''?>
+                    <?=$row['is_new']?'<img src="/static/images/common/icon_new.gif" class="icon-new">':''?>
+                    <a href="<?=$row['post_link'].$querystring?>">
                         <?=$row['post_title']?>
-                        <?=$row['is_secret']?'<i class="fa fa-lock"></i>':''?>
                     </a>
+                    <?=$row['is_secret']?'<i class="fa fa-lock"></i>':''?>
                 </td>
                 <td><?=$row['usr_name']?></td>
                 <td><?=board_date_format($row['post_regtime'])?></td>
@@ -58,4 +56,26 @@
         <?php endif;?>
         </tbody>
     </table>
+    <div class="pagination-container margin-top-30">
+        <?=$pagination?>
+    </div>
+
+    <div class="toolbar-group margin-top-30">
+        <div class="search-form">
+            <?=form_open(NULL, array("method"=>"get","class"=>"form-inline"))?>
+            <select name="scol" data-toggle="syb-select">
+                <option value="title" <?=$scol=="title"?"selected":""?>>제목</option>
+                <option value="titlecontent" <?=$scol=="titlecontent"?"selected":""?>>제목+내용</option>
+                <option value="nickname" <?=$scol=="nickname"?"selected":""?>>작성자</option>
+            </select>
+            <input type="search" class="form-control form-control-search" name="stxt" value="<?=$stxt?>" placeholder="검색어를 입력하세요">
+            <?=form_close()?>
+        </div>
+
+        <div class="action-group">
+            <?php if($auth['write']) : ?>
+            <a class="btn btn-primary" href="<?=base_url("board/{$board['brd_key']}/write").$querystring?>"><i class="fa fa-pencil"></i>&nbsp;글쓰기</a>
+            <?php endif; ?>
+        </div>
+    </div>
 </article>

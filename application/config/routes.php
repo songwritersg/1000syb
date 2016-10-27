@@ -59,4 +59,6 @@ $route['products/(:num)'] = 'products/view/$1';
 
 $route['board/(:any)'] = "board/lists/$1";
 $route['board/(:any)/(:num)'] = "board/view/$1/$2";
+$route['board/(:any)/write'] = "board/write/$1";
+$route['board/(:any)/(:num)/edit'] = "board/write/$1/$2";
 $route['board/(:any)/password/(:num)'] = "board/password/$1/$2";

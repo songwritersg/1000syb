@@ -41,21 +41,23 @@ class Site {
         // 컬럼값이 없으면 리턴한다.
         if( empty($column) ) return NULL;
 
-        // 이미 불러온 환경설정 내역이 없다면 새로 불러온다.
-        if( ! $this->config OR empty($this->config) OR ! is_array($this->config) )
+        // 캐시 드라이버 로드
+        $CI =& get_instance();
+        $CI->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+
+        if( ! $config = $CI->cache->get('site_config') )
         {
-            $CI =& get_instance();
             $result = $CI->db->get("tbl_config");
             $config_list = $result->result_array();
-            $this->config = array();
+            $config = array();
             foreach( $config_list as $row ) {
-                $this->config[$row['cfg_key']] = $row['cfg_value'];
+                $config[$row['cfg_key']] = $row['cfg_value'];
             }
+
+            $CI->cache->save('site_config', $config);
         }
 
-        // 값을 리턴한다.
-        if( isset($this->config[$column]) ) return $this->config[$column];
-        else return NULL;
+        return element($column, $config, NULL);
     }
 
     public function get_layout()

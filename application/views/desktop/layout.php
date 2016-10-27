@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <?=$this->site->display_meta()?>
-<?=$this->site->add_css("//fonts.googleapis.com/earlyaccess/nanumgothic.css", TRUE)?>
+<?=$this->site->add_css("//fonts.googleapis.com/earlyaccess/notosanskr.css", TRUE)?>
 <?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css", TRUE)?>
 <?=$this->site->add_css("/static/css/common.css", TRUE)?>
 <?=$this->site->display_css()?>

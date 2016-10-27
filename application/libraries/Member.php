@@ -7,6 +7,7 @@
 class Member {
 
     protected $CI;
+    protected $mb;
 
     function __construct()
     {
@@ -39,6 +40,7 @@ class Member {
         if(! $id) return NULL;
         if( ! $this->mb )
         {
+            $this->CI->load->model('user_model');
             $this->mb =$this->CI->user_model->get_by_id($id);
         }
 

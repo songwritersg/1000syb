@@ -47,3 +47,4 @@ fabric.properties
 
 /session/
 .idea/
+/application/cache/

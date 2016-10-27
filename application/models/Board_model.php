@@ -25,14 +25,28 @@ class Board_model extends SYB_Model {
     {
         if(empty($brd_key)) return NULL;
 
-        if( ! isset($this->board[$brd_key]) OR ! $this->board[$brd_key] )
+        // 캐시 드라이버 로드
+        $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+
+        if( ! $board = $this->cache->get('board_info_'.$brd_key) )
         {
             $this->db->where("brd_key", $brd_key);
             $result = $this->db->get("tbl_board");
-            $this->board[$brd_key] = $result->row_array();
+            $board = $result->row_array();
+
+            // 해당 게시판의 카테고리를 가져온다.
+            $this->db->where("brd_key", $brd_key);
+            $this->db->order_by("bca_sort ASC");
+            $result = $this->db->get("tbl_board_category");
+            if( $result->num_rows() > 0 )
+            {
+                $board['brd_category'] = $result->result_array();
+            }
+
+            $this->cache->save("board_info_".$brd_key, $board, 60*5);
         }
 
-        return $this->board[$brd_key];
+        return $board;
     }
 
 
@@ -50,7 +64,9 @@ class Board_model extends SYB_Model {
         $result = $this->db->get("tbl_board_post");
         $post = $result->row_array();
 
-        $post['contents'] = display_html_content($post['post_content'], TRUE);
+        preg_match_all( "/(<([^>]+)>)/", $post['post_content'], $matches );
+        $is_html = (empty($matches[0])) ? FALSE : TRUE;
+        $post['contents'] =  $is_html ?  display_html_content($post['post_content'], TRUE) : nl2br($post['post_content']);
         return $post;
     }
 
@@ -81,6 +97,8 @@ class Board_model extends SYB_Model {
      *********************************************************/
     function get_list( $param=array() )
     {
+        $permit_stxt = array("title","titlecontent","nickname");
+
         $param['page']      = element('page', $param, 1);
         $param['page_rows'] = element('page_rows', $param, 10);
         $param['brd_key']   = element('brd_key', $param);
@@ -94,6 +112,45 @@ class Board_model extends SYB_Model {
         $this->db->where("post_notice","N");
         $this->db->limit( $param['page_rows'] , $param['start'] );
         $this->db->order_by("post_num DESC, post_depth ASC");
+
+        // 검색어 처리
+        if( $param['stxt'] && $param['scol'] && in_array($param['scol'], $permit_stxt) )
+        {
+            // 검색어를 띄어쓰기 기준으로 나눈다.
+            $s = explode(" ",$param['stxt']);
+
+            switch ( $param['scol'])
+            {
+                case "title" :
+                    $this->db->group_start();
+                        foreach($s as $kwd)
+                        {
+                            $this->db->or_like("post_title", $kwd);
+                        }
+                    $this->db->group_end();
+                    break;
+                case "titlecontent":
+                    $this->db->group_start();
+                    foreach($s as $kwd)
+                    {
+                        $this->db->or_like("post_title", $kwd);
+                        $this->db->or_like("post_content", $kwd);
+                    }
+                    $this->db->group_end();
+                    break;
+                case "nickname":
+                    $this->db->group_start();
+                    foreach($s as $kwd)
+                    {
+                        $this->db->or_like("usr_name", $kwd);
+                    }
+                    $this->db->group_end();
+                    break;
+                default :
+                    break;
+            }
+        }
+
         $result = $this->db->get("tbl_board_post");
         $return['list'] = $result->result_array();
 
@@ -104,7 +161,7 @@ class Board_model extends SYB_Model {
         $num = 0;
         foreach($return['list'] as &$row)
         {
-            $this->adjust_row($row, $return['total_count'] - $num - $param['start']);
+            $this->adjust_row($row, $return['total_count'] - $num - $param['start'], $param['scol'], $param['stxt']);
             $num++;
         }
 
@@ -117,13 +174,13 @@ class Board_model extends SYB_Model {
 
         foreach($return['notice'] as &$row)
         {
-            $this->adjust_row($row, NULL);
+            $this->adjust_row($row, NULL, NULL, NULL);
         }
 
         return $return;
     }
 
-    function adjust_row(&$row, $nums)
+    function adjust_row(&$row, $nums, $scol="", $stxt="")
     {
         $row['nums'] = $nums; // 게시글 번호
         $row['post_link'] = base_url("board/{$row['brd_key']}/{$row['post_idx']}");
@@ -131,9 +188,76 @@ class Board_model extends SYB_Model {
         $row['is_reply'] = ($row['post_depth'] > 0);
         $row['is_secret'] = ($row['post_secret']=='Y');
 
+        // 검색어가 있는경우 하이라이팅
+        if($scol && $stxt)
+        {
+            $s = explode(" ",$stxt);
+            if($scol == 'title' OR $scol == 'titlecontent')
+            {
+                foreach($s as $kwd) {
+                    $row['post_title'] = str_replace($kwd,"<span class='highlight'>{$kwd}</span>", $row['post_title'] );
+                }
+            }
+            else if ( $scol == 'nickname' )
+            {
+                foreach($s as $kwd) {
+                    $row['usr_name'] = str_replace($kwd,"<span class='highlight'>{$kwd}</span>", $row['usr_name'] );
+                }
+            }
+        }
+
         return $row;
     }
 
+    /*************************************************************
+     * 이전글과 다음글 가져오기
+     * @param $brd_key
+     * @param $post_idx
+     ************************************************************/
+    function get_np($brd_key, $post_idx, $post_num, $post_depth)
+    {
+        // 이전글 가져오기
+        $this->db->select("post_idx, post_title, post_category, post_depth, post_secret");
+        $this->db->where("post_status", "Y");
+        $this->db->where("brd_key", $brd_key);
+
+        $this->db->group_start();
+            $this->db->group_start();
+                $this->db->where("post_num", (int)$post_num);
+                $this->db->where("post_depth <", (int)$post_depth);
+            $this->db->group_end();
+            $this->db->or_group_start();
+                $this->db->where("post_num <", (int)$post_num);
+            $this->db->group_end();
+        $this->db->group_end();
+
+        $this->db->limit(1);
+        $this->db->order_by("post_num DESC, post_depth DESC");
+        $result = $this->db->get("tbl_board_post");
+        $return['prev'] = $result->row_array();
+
+        // 다음글 가져오기
+        $this->db->select("post_idx, post_title, post_category, post_depth, post_secret");
+        $this->db->where("post_status", "Y");
+        $this->db->where("brd_key", $brd_key);
+
+        $this->db->group_start();
+        $this->db->group_start();
+        $this->db->where("post_num", (int)$post_num);
+        $this->db->where("post_depth >", (int)$post_depth);
+        $this->db->group_end();
+        $this->db->or_group_start();
+        $this->db->where("post_num >", (int)$post_num);
+        $this->db->group_end();
+        $this->db->group_end();
+        $this->db->limit(1);
+
+        $this->db->order_by("post_num ASC, post_depth ASC");
+        $result = $this->db->get("tbl_board_post");
+        $return['next'] = $result->row_array();
+
+        return $return;
+    }
 
     /*************************************************************
      *
