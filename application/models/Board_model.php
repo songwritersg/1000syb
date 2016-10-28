@@ -34,19 +34,117 @@ class Board_model extends SYB_Model {
             $result = $this->db->get("tbl_board");
             $board = $result->row_array();
 
-            // 해당 게시판의 카테고리를 가져온다.
-            $this->db->where("brd_key", $brd_key);
-            $this->db->order_by("bca_sort ASC");
-            $result = $this->db->get("tbl_board_category");
-            if( $result->num_rows() > 0 )
+            if( $board['brd_use_category'] == 'Y' )
             {
-                $board['brd_category'] = $result->result_array();
+                // 해당 게시판의 카테고리를 가져온다.
+                $this->db->where("brd_key", $brd_key);
+                $this->db->order_by("bca_sort ASC");
+                $result = $this->db->get("tbl_board_category");
+                if( $result->num_rows() > 0 )
+                {
+                    $board['brd_category'] = $result->result_array();
+                }
             }
 
             $this->cache->save("board_info_".$brd_key, $board, 60*5);
         }
 
         return $board;
+    }
+
+    /**********************************************************
+     * 게시글 삭제
+     * @param $post_idx
+     *********************************************************/
+    function post_delete($post_idx)
+    {
+        if(! $post = $this->get_post($post_idx) )
+        {
+            return NULL;
+        }
+
+        // 게시글 삭제로 처리
+        $this->db->where("post_idx", $post_idx);
+        $this->db->set("post_status", "N");
+        $this->db->update("tbl_board_post");
+
+        if( count($post['post_attach_list']) > 0 )
+        {
+            foreach($post['post_attach_list'] as $attach) {
+                $this->attach_remove( $attach['bfi_idx'] );
+            }
+        }
+    }
+
+    /**********************************************************
+     * 해당 게시판의 가장큰 post_num 값을 가져온다.
+     * @param $brd_key
+     *********************************************************/
+    function get_max_post_num($brd_key)
+    {
+        if(empty($brd_key)) return false;
+
+        $this->db->where("brd_key", $brd_key);
+        $this->db->select_max("post_num", "max");
+        $result = $this->db->get("tbl_board_post");
+        return (int)$result->row(0)->max + 1;
+    }
+
+    /**********************************************************
+     * 첨부파일 삭제
+     * @param $bfi_idx
+     * @return mixed
+     *********************************************************/
+    function attach_remove($bfi_idx)
+    {
+        if(empty($bfi_idx)) return false;
+
+        $this->db->where("bfi_idx", $bfi_idx);
+        $result = $this->db->get('tbl_board_file');
+        $attach = $result->row_array();
+
+        if(! $attach) return false;
+
+        if( file_exists(FCPATH . $attach['bfi_filename']) )
+        {
+            @unlink(FCPATH.$attach['bfi_filename']);
+        }
+
+        $this->db->where("bfi_idx", $bfi_idx);
+        $this->db->delete("tbl_board_file");
+    }
+
+    /**********************************************************
+     * 새로운 게시글을 등록합니다.
+     * @param $data
+     * @return mixed
+     *********************************************************/
+    function insert_post($data)
+    {
+        $this->db->insert("tbl_board_post", $data);
+        return $this->db->insert_id();
+    }
+
+    /**********************************************************
+     * 기존 게시글의 내용을 업데이트 합니다.
+     * @param $data
+     *********************************************************/
+    function update_post($data)
+    {
+        return $this->db->update("tbl_board_post", $data, $data['post_idx']);
+    }
+
+    /***********************************************************
+     * 첨부파일 행을 가져옵니다.
+     * @param $bfi_idx
+     **********************************************************/
+    function get_attach($bfi_idx)
+    {
+        if(empty($bfi_idx)) return NULL;
+
+        $this->db->where("bfi_idx", $bfi_idx);
+        $result = $this->db->get("tbl_board_file");
+        return $result->row_array();
     }
 
 
@@ -64,9 +162,29 @@ class Board_model extends SYB_Model {
         $result = $this->db->get("tbl_board_post");
         $post = $result->row_array();
 
+        // 글 내용부분을 정리합니다.
         preg_match_all( "/(<([^>]+)>)/", $post['post_content'], $matches );
         $is_html = (empty($matches[0])) ? FALSE : TRUE;
         $post['contents'] =  $is_html ?  display_html_content($post['post_content'], TRUE) : nl2br($post['post_content']);
+        $post['post_attach_list'] = array();
+        $post['post_attach_image_count'] = 0;
+
+        // 첨부파일 목록을 가져옵니다.
+        $this->db->where("brd_key", $post['brd_key']);
+        $this->db->where("post_idx", $post['post_idx']);
+        $this->db->order_by("bfi_idx DESC");
+        $result = $this->db->get("tbl_board_file");
+        if( $result->num_rows() >0 )
+        {
+            $list = $result->result_array();
+            foreach($list as $row)
+            {
+                $post['post_attach_list'][] = $row;
+                if($row['bfi_is_image'] == 'Y') {
+                    $post['post_attach_image_count'] ++;
+                }
+            }
+        }
         return $post;
     }
 
@@ -109,6 +227,7 @@ class Board_model extends SYB_Model {
         // 공지글이 아닌 글 가져오기
         $this->db->select("SQL_CALC_FOUND_ROWS *", FALSE);
         $this->db->where('brd_key', $param['brd_key']);
+        $this->db->where("post_status", "Y");
         $this->db->where("post_notice","N");
         $this->db->limit( $param['page_rows'] , $param['start'] );
         $this->db->order_by("post_num DESC, post_depth ASC");
@@ -168,6 +287,7 @@ class Board_model extends SYB_Model {
         // 공지글 전체 가져오기
         $this->db->where("brd_key", $param['brd_key']);
         $this->db->where("post_notice","Y");
+        $this->db->where("post_status", "Y");
         $this->db->order_by("post_num DESC, post_depth ASC");
         $result = $this->db->get("tbl_board_post");
         $return['notice'] = $result->result_array();
@@ -303,5 +423,14 @@ class Board_model extends SYB_Model {
         }
 
         return $return;
+    }
+
+    function get_comment_list($brd_key, $post_idx)
+    {
+        $this->db->where("brd_key", $brd_key);
+        $this->db->where("post_idx", $post_idx);
+        $this->db->order_by("cmt_idx DESC");
+        $result = $this->db->get("tbl_board_comment");
+        return $result->result_array();
     }
 }

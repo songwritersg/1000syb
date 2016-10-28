@@ -53,5 +53,8 @@
 <footer id="sybFooter">
 
 </footer>
+<!--[if lt IE 9]>
+<script src="<?=base_url('static/js/poly-checked.min.js')?>"></script>
+<![endif]-->
 </body>
 </html>

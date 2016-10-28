@@ -119,6 +119,20 @@ function board_date_format($date){
     }
 }
 
+function make_dir($dir = "")
+{
+    $dirs = explode("/", $dir);
+    $now_dir = FCPATH;
+    foreach($dirs as $dr)
+    {
+        $now_dir .= "/" . $dr;
+        if (is_dir($now_dir) === false) {
+            $old = umask(0);
+            mkdir($now_dir, 0777);
+            umask($old);
+        }
+    }
+}
 
 /********************************************************************************************
  * URL주소를 자동으로 링크로 바꿔줍니다.

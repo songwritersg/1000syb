@@ -163,5 +163,7 @@ return array(
 	'vcf'	=>	'text/x-vcard',
 	'srt'	=>	array('text/srt', 'text/plain'),
 	'vtt'	=>	array('text/vtt', 'text/plain'),
-	'ico'	=>	array('image/x-icon', 'image/x-ico', 'image/vnd.microsoft.icon')
+	'ico'	=>	array('image/x-icon', 'image/x-ico', 'image/vnd.microsoft.icon'),
+    'hwp'   => array('application/haansofthwp', 'application/x-hwp', 'application/unknown', 'application/msword', 'application/octet-stream', 'application/zip', 'text/plain', 'text/xml'),
+    'hwp'   => Array('application/unknown', 'text/plain')
 );
