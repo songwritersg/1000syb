@@ -90,6 +90,24 @@ class Board_model extends SYB_Model {
         return (int)$result->row(0)->max + 1;
     }
 
+
+    /*******************************************************************
+     * 답글을 위해서 해당 원글에 달린 답글중 가장 높은 depth를 가져온다.
+     * @param $brd_key
+     * @param $post_num
+     * @return bool|int
+     *****************************************************************/
+    function get_max_post_depth($brd_key,$post_num)
+    {
+        if(empty($brd_key) OR empty($post_num)) return FALSE;
+
+        $this->db->where("brd_key", $brd_key);
+        $this->db->where("post_num", $post_num);
+        $this->db->select_max("post_depth", "max");
+        $result = $this->db->get("tbl_board_post");
+        return (int) $result->row(0)->max + 1;
+    }
+
     /**********************************************************
      * 첨부파일 삭제
      * @param $bfi_idx
@@ -300,6 +318,14 @@ class Board_model extends SYB_Model {
         return $return;
     }
 
+    /******************************************************************
+     * 출력을 위해 각 행의 데이타를 정리한다.
+     * @param $row
+     * @param $nums
+     * @param string $scol
+     * @param string $stxt
+     * @return mixed
+     *******************************************************************/
     function adjust_row(&$row, $nums, $scol="", $stxt="")
     {
         $row['nums'] = $nums; // 게시글 번호
@@ -327,6 +353,37 @@ class Board_model extends SYB_Model {
         }
 
         return $row;
+    }
+
+
+    /**
+     * @param $brd_key
+     * @param $limit
+     */
+    function get_recent( $brd_key, $limit = 5)
+    {
+        if(empty($brd_key)) return NULL;
+
+        $CI =& get_instance();
+        $CI->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+
+        if(! $list = $CI->cache->get('board_recent_'.$brd_key))
+        {
+            $this->db->select("post_title, post_regtime, brd_key, post_idx, post_depth, post_secret");
+            $this->db->where("brd_key", $brd_key);
+            $this->db->where("post_depth", 0);
+            $this->db->order_by("post_num DESC");
+            $this->db->limit($limit);
+            $result = $this->db->get("tbl_board_post");
+
+            $list = $result->result_array();
+            foreach($list as &$row)
+            {
+                $this->adjust_row($row, 0, null,null);
+            }
+            $CI->cache->save("board_recent_".$brd_key, $list, 60*10);
+        }
+        return $list;
     }
 
     /*************************************************************

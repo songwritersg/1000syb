@@ -7,9 +7,41 @@
  *****************************************************************************************************/
 
 $(function(){
-   $("button[data-toggle='btn-back']").on('click',function(){
-       history.go(-1);
-   });
+
+    /**************************************************************************************************
+     * 뒤로가기 버튼
+     **************************************************************************************************/
+    $("button[data-toggle='btn-back']").on('click',function(){
+        history.go(-1);
+     });
+
+    /***************************************************************************************************
+     * 유투브 링크
+     **************************************************************************************************/
+    $("a[data-toggle='youtube-link']").on('click',function(e){
+        e.preventDefault();
+
+        $("#pop-youtube").remove();
+        var aside = $("<aside>").attr({id:'pop-youtube',tabindex : -1}).addClass('poplayer');
+        aside.append( $("<div>").addClass('content') );
+        $("body").append(aside);
+
+        var width = $(this).attr('data-width') ? $(this).attr('data-width') : 800;
+        var height = $(this).attr('data-height') ? $(this).attr('data-height') : 600;
+        var iframe = $("<iframe allowfullscreen>");
+
+        iframe.attr({width : width,height : height,frameborder : 0,src : $(this).attr('href')});
+
+        $("#pop-youtube").bPopup({
+            onOpen: function() {
+                $("#pop-youtube .content").html( iframe );
+            },
+            onClose : function() {
+                $("#pop-youtube .content").empty();
+                $("#pop-youtube").remove();
+            }
+        });
+    });
 });
 
 /******************************************************************************************************

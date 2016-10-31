@@ -13,6 +13,10 @@ class Home extends SYB_Controller {
 
 	public function index()
 	{
+	    $this->data['main_slide_banners'] = $this->banner->lists("MAIN_SLIDE");
+        $this->data['main_middle_banners'] = $this->banner->lists("MAIN_MIDDLE");
+        $this->data['main_best_banners'] = $this->banner->lists("MAIN_BEST");
+
 	    $this->view = "home/index";
         $this->layout = "desktop";
 	}

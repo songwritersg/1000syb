@@ -19,4 +19,31 @@ class About extends SYB_Controller {
         $this->layout = $this->site->get_layout();
         $this->view = "about/index";
     }
+
+    /**********************************************************
+     * A03L 이용약관
+     *********************************************************/
+    function agreement()
+    {
+        $this->layout = $this->site->get_layout();
+        $this->view = "about/agreement";
+    }
+
+    /**********************************************************
+     * A04L 개인정보 취급방침
+     *********************************************************/
+    function privacy()
+    {
+        $this->layout = $this->site->get_layout();
+        $this->view = "about/privacy";
+    }
+
+    /**********************************************************
+     * A05L 여행약관
+     *********************************************************/
+    function travel()
+    {
+        $this->layout = $this->site->get_layout();
+        $this->view = "about/travel";
+    }
 }

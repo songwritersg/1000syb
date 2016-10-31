@@ -128,7 +128,7 @@ class Board extends SYB_Controller {
             }
             else
             {
-                alert('비밀번호가 맞지 않습니다.'.$password);
+                alert('비밀번호가 맞지 않습니다.');
                 exit;
             }
         }
@@ -274,62 +274,13 @@ class Board extends SYB_Controller {
         exit;
     }
 
-    /*********************************************************
-     * 글작성/수정
-     * @param string $brd_key
-     * @param string $post_idx
-     ********************************************************/
-    function write($brd_key="", $post_idx="")
+    /*********************************************************************************************
+     *
+     * 실제 글쓰기를 수행하는 동작
+     *
+     *******************************************************************************************/
+    function _write_process($brd_key, $is_reply)
     {
-        if(! $this->data['board'] = $this->board_model->get_board($brd_key))
-        {
-            alert('존재하지 않는 게시판입니다.');
-            exit;
-        }
-
-        // 게시판 권한 가져오기
-        $this->data['auth'] = $this->board_model->get_auth($brd_key);
-        $this->data['post'] = ($post_idx) ? $this->board_model->get_post($post_idx) : array();
-
-        if( $post_idx && ! $this->data['post'] )
-        {
-            alert('존재하지 않는 글이거나, 이미 삭제된 글입니다.');
-            exit;
-        }
-
-        if( $this->member->is_login() )
-        {
-            // 로그인 되어있다면 작성자가 같은지 확인
-            if( $this->member->info('usr_id') != $this->data['post']['usr_id'] )
-            {
-                alert('해당글을 수정할 권한이 없습니다.');
-                exit;
-            }
-        }
-        else
-        {
-            if( $this->data['post']['usr_id'] )
-            {
-                alert('해당글을 수정하기 위해선 로그인이 필요합니다.');
-                exit;
-            }
-            else
-            {
-                if( ! $this->session->userdata('post_password_'.$post_idx) )
-                {
-                    redirect("board/{$brd_key}/password/{$post_idx}?reurl=".current_full_url(TRUE));
-                    exit;
-                }
-            }
-        }
-
-        if(! $this->data['auth']['write'])
-        {
-            alert('해당 게시판에 글을 쓸수 있는 권한이 없습니다.');
-            exit;
-        }
-
-
         $this->load->library("form_validation");
 
         $this->form_validation->set_rules("post_key", "post_key", "trim|required");
@@ -338,7 +289,7 @@ class Board extends SYB_Controller {
         {
             $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_mobile'] : $this->data['board']['brd_skin'];
             $this->layout = $this->site->get_layout();
-            $this->view = "board/{$skin}/write";
+            $this->view = "board/{$skin}/" . ($is_reply ? "reply" : "write");
         }
         else
         {
@@ -402,7 +353,7 @@ class Board extends SYB_Controller {
                 }
 
                 // 비회원으로 등록된 글을 수정할때 비밀번호 체크
-                if($data['post_idx'])
+                if($data['post_idx'] && !$is_reply)
                 {
                     // 기존 값을 가져온다.
                     $original = $this->board_model->get_post($data['post_idx']);
@@ -416,6 +367,31 @@ class Board extends SYB_Controller {
                 {
                     $data['usr_pass'] = hash('md5', $this->config->item('encryption_key'). $usr_pass);
                 }
+            }
+            else
+            {
+                // 로그인상태일경우 비밀번호는 회원 비밀번호
+                $data['usr_pass'] = $this->member->info('usr_pass');
+            }
+
+
+            // 답글일때 처리
+            if ( $is_reply )
+            {
+                // 원글 정보를 가져온다.
+                $parent = $this->board_model->get_post( $data['post_idx'] );
+
+                if(empty($parent))
+                {
+                    alert('원글의 정보를 찾을 수 없습니다.');
+                    exit;
+                }
+
+                $data['post_num'] = $parent['post_num'];
+                $data['post_depth'] = $this->board_model->get_max_post_depth($brd_key, $data['post_num']);
+                $data['usr_pass'] = $parent['usr_pass'];
+                $data['post_regtime'] = date('Y-m-d H:i:s');
+                unset($data['post_idx']);
             }
 
             // 등록된 파일이 있을경우 처리한다.
@@ -482,7 +458,7 @@ class Board extends SYB_Controller {
             $msg = "";
 
             // 신규 등록일 경우
-            if( empty($data['post_idx']) )
+            if( empty($data['post_idx']) OR $is_reply )
             {
                 $data['post_idx'] = $this->board_model->insert_post($data);
                 $msg = "신규 게시글을 등록하였습니다.";
@@ -493,7 +469,7 @@ class Board extends SYB_Controller {
                 $this->board_model->update_post($data);
                 $msg = "글 수정이 완료되었습니다.";
             }
-            
+
             // 업로드된 데이타가 있을경우에 DB에 기록
             if(isset($upload_array) && count($upload_array) >0 )
             {
@@ -501,11 +477,125 @@ class Board extends SYB_Controller {
                 $this->db->insert_batch("tbl_board_file", $upload_array);
             }
 
+            // 최근 게시물 Cache 삭제
+            $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+            $this->cache->delete('board_recent_'.$brd_key);
+
             alert($msg, base_url("board/{$brd_key}/{$data['post_idx']}"));
             exit;
         }
     }
 
+    /********************************************************************************************
+     * @param string $brd_key
+     * @param string $post_idx
+     ********************************************************************************************/
+    function reply($brd_key="", $post_idx="")
+    {
+        if(! $this->data['board'] = $this->board_model->get_board($brd_key))
+        {
+            alert('존재하지 않는 게시판입니다.');
+            exit;
+        }
+
+        $this->data['auth'] = $this->board_model->get_auth($brd_key);
+        $this->data['original'] = ($post_idx) ? $this->board_model->get_post($post_idx) : array();  // 원글
+
+        if( ! $this->data['original'] )
+        {
+            alert('해당 원글은 존재하지 않거나, 이미 삭제된 글입니다.');
+            exit;
+        }
+
+        // 권한 확인
+        if( $this->member->is_login() )
+        {
+            // 로그인 되어있다면 작성자가 같은지 확인
+            if( ! $this->data['auth']['reply'] )
+            {
+                alert('해당글을 수정할 권한이 없습니다.');
+                exit;
+            }
+        }
+        else
+        {
+            if( ! $this->session->userdata('post_password_'.$post_idx) )
+            {
+                redirect("board/{$brd_key}/password/{$post_idx}?reurl=".current_full_url(TRUE));
+                exit;
+            }
+        }
+
+        $this->_write_process($brd_key, TRUE);
+    }
+
+    /*********************************************************
+     * 글작성/수정
+     * @param string $brd_key
+     * @param string $post_idx
+     ********************************************************/
+    function write($brd_key="", $post_idx="")
+    {
+        if(! $this->data['board'] = $this->board_model->get_board($brd_key))
+        {
+            alert('존재하지 않는 게시판입니다.');
+            exit;
+        }
+
+        // 게시판 권한 가져오기
+        $this->data['auth'] = $this->board_model->get_auth($brd_key);
+        $this->data['post'] = ($post_idx) ? $this->board_model->get_post($post_idx) : array();
+
+        if( $post_idx && ! $this->data['post'] )
+        {
+            alert('존재하지 않는 글이거나, 이미 삭제된 글입니다.');
+            exit;
+        }
+
+        if( ! empty($post_idx) )
+        {
+
+            if( $this->member->is_login() )
+            {
+                // 로그인 되어있다면 작성자가 같은지 확인
+                if( $this->member->info('usr_id') != $this->data['post']['usr_id'] )
+                {
+                    alert('해당글을 수정할 권한이 없습니다.');
+                    exit;
+                }
+            }
+            else
+            {
+                if( $this->data['post']['usr_id'] )
+                {
+                    alert('해당글을 수정하기 위해선 로그인이 필요합니다.');
+                    exit;
+                }
+                else
+                {
+                    if( ! $this->session->userdata('post_password_'.$post_idx) )
+                    {
+                        redirect("board/{$brd_key}/password/{$post_idx}?reurl=".current_full_url(TRUE));
+                        exit;
+                    }
+                }
+            }
+        }
+
+        if(! $this->data['auth']['write'])
+        {
+            alert('해당 게시판에 글을 쓸수 있는 권한이 없습니다.');
+            exit;
+        }
+
+        $this->_write_process($brd_key, FALSE);
+
+    }
+
+    /**************************************************************************************************
+     * 코멘트 작성
+     * @param string $brd_key
+     **************************************************************************************************/
     function comment($brd_key="")
     {
         if(empty($brd_key))

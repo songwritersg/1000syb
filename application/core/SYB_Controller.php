@@ -96,7 +96,7 @@ class SYB_Controller extends CI_Controller
             else
             {
                //show_404(strtolower(get_class($this)).'/'.$method);
-                redirect("404");
+                //redirect("404");
             }
         }
 
