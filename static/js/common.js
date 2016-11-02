@@ -42,6 +42,47 @@ $(function(){
             }
         });
     });
+
+    $("a[data-toggle='sns-share']").click(function(e){
+        e.preventDefault();
+
+        var _this = $(this);
+        var sns_type = _this.data('service');
+        var href = _this.data('url');
+        var title = _this.data('title');
+        var loc = "";
+        var img = $("meta[name='og:image']").attr('content');
+
+        if( ! sns_type || !href || !title) return;
+
+        if( sns_type == 'facebook' ) {
+            loc = '//www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(href);
+        }
+        else if ( sns_type == 'twitter' ) {
+            loc = '//twitter.com/home?status='+encodeURIComponent(title)+' '+href;
+        }
+        else if ( sns_type == 'google' ) {
+            loc = '//plus.google.com/share?url='+href;
+        }
+        else if ( sns_type == 'pinterest' ) {
+
+            loc = '//www.pinterest.com/pin/create/button/?url='+href+'&media='+img+'&description='+encodeURIComponent(title);
+        }
+        else if ( sns_type == 'kakaostory') {
+            loc = 'https://story.kakao.com/share?url='+encodeURIComponent(href);
+        }
+        else if ( sns_type == 'band' ) {
+            loc = 'http://www.band.us/plugin/share?body='+encodeURIComponent(title)+'%0A'+encodeURIComponent(href);
+        }
+        else if ( sns_type == 'naver' ) {
+            loc = "http://share.naver.com/web/shareView.nhn?url="+encodeURIComponent(href)+"&title="+encodeURIComponent(title);
+        }
+        else {
+            return false;
+        }
+        $.popup({ url : loc});
+        return false;
+    });
 });
 
 /******************************************************************************************************
@@ -103,6 +144,34 @@ function getQuerystring(paramName){
 })(jQuery);
 
 
+/******************************************************************************************************
+ *
+ * PopUP
+ *
+ * Popup창을 띄웁니다.
+ *****************************************************************************************************/
+(function($) {
+    $.popup = function(option) {
+        $.popup.default = {
+            title : '_blank',
+            width : 800,
+            height : 600,
+            url : ''
+        };
+
+        var options = $.extend({}, $.popup.default, option);
+
+        cw = screen.availWidth;
+        ch = screen.availHeight;
+        sw = options.width;
+        sh = options.height;
+
+        ml = (cw - sw) / 2;
+        mt = (ch - sh) / 2;
+        var option = 'width='+sw+',height='+sh+',top='+mt+',left='+ml+',scrollbars=yes,resizable=no';
+        window.open(options.url, options.title,  option);
+    };
+})(jQuery);
 /******************************************************************************************************
  *
  * SelectBox

@@ -55,7 +55,9 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['404'] = 'helptool/page_404';
 
-$route['products/(:num)'] = 'products/view/$1';
+$route['products/(:any)'] = 'products/lists/$1';
+$route['products/(:any)/(:any)']= 'products/lists/$1/$2';
+$route['products/(:any)/(:any)/(:num)']= 'products/view/$1/$2/$3';
 
 $route['board/(:any)'] = "board/lists/$1";
 $route['board/(:any)/(:num)'] = "board/view/$1/$2";

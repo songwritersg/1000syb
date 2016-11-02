@@ -43,7 +43,7 @@ function current_full_url($urlencode = FALSE)
  ***************************************************************************************/
 function element($item, $array, $default = NULL)
 {
-    return is_array($array) && array_key_exists($item, $array) ? $array[$item] : $default;
+    return is_array($array) && array_key_exists($item, $array) &&  $array[$item] ? $array[$item] : $default;
 }
 
 
@@ -224,6 +224,34 @@ function display_html_content($content = '', $html = '', $thumb_width=800, $auto
     $content = get_view_thumbnail($content, $thumb_width);
 
     return $content;
+}
+
+function get_yoil( $date, $short = TRUE )
+{
+    $yoil_array = array("일","월","화","수","목","금","토");
+
+    if(! is_numeric($date) )
+    {
+        $date = strtotime($date);
+    }
+
+    $w = date('w', $date);
+    $return = $yoil_array[$w];
+
+    return ($short) ? $return : $return ."요일";
+}
+
+/*******************************************************************************************
+ * 파일이 실제로 존재하는지 체크한다.
+ * @param $file_src
+ * @return bool
+ ******************************************************************************************/
+function file_check( $file_src )
+{
+    if( empty($file_src) ) return FALSE;
+
+    $file_src = FCPATH . $file_src;
+    return file_exists($file_src);
 }
 
 

@@ -39,16 +39,16 @@
 <!--START:네비게이션-->
 <nav id="sybNav">
     <ul id="mainNaviagtion">
-        <li><a href="#">태국</a></li>
-        <li><a href="#">코사무이</a></li>
-        <li><a href="#">발리/롬복</a></li>
-        <li><a href="#">하와이</a></li>
-        <li><a href="#">몰디브</a></li>
-        <li><a href="#">유럽</a></li>
-        <li><a href="#">칸쿤</a></li>
-        <li><a href="#">남태평양</a></li>
-        <li class="other1"><a href="#">연계지역</a></li>
-        <li class="other2"><a href="#">특수지역</a></li>
+        <li <?=$this->active=='tai'?'class="active"':''?>><a href="<?=base_url("products/tai")?>">태국</a></li>
+        <li <?=$this->active=='koh'?'class="active"':''?>><a href="<?=base_url("products/koh")?>">코사무이</a></li>
+        <li <?=$this->active=='balo'?'class="active"':''?>><a href="<?=base_url("products/balo")?>">발리/롬복</a></li>
+        <li <?=$this->active=='hwa'?'class="active"':''?>><a href="<?=base_url("products/hwa")?>">하와이</a></li>
+        <li <?=$this->active=='mol'?'class="active"':''?>><a href="<?=base_url("products/mol")?>">몰디브</a></li>
+        <li <?=$this->active=='eur'?'class="active"':''?>><a href="<?=base_url("products/eur")?>">유럽</a></li>
+        <li <?=$this->active=='canc'?'class="active"':''?>><a href="<?=base_url("products/canc")?>">칸쿤</a></li>
+        <li <?=$this->active=='aune'?'class="active"':''?>><a href="<?=base_url("products/aune")?>">남태평양</a></li>
+        <li class="other1 <?=$this->active=='eth'?'active':''?>"><a href="<?=base_url("products/eth")?>">연계지역</a></li>
+        <li class="other2 <?=$this->active=='oth'?'active':''?>"><a href="<?=base_url("products/oth")?>">특수지역</a></li>
     </ul>
 </nav>
 <!--END:네비게이션-->
@@ -194,12 +194,12 @@
     <div class="footer-about">
         <div class="container">
             <ul class="footer-about-list">
-                <li><a href="<?=base_url("about/location")?>">찾아오시는길</a></li>
+                <li><a href="<?=base_url("about/#location")?>">찾아오시는길</a></li>
                 <li><a href="<?=base_url("about/agreement")?>">이용약관</a></li>
                 <li class="privacy"><a href="<?=base_url("about/privacy")?>">개인정보 취급방침</a></li>
                 <li><a href="<?=base_url("about/travel")?>">여행약관</a></li>
-                <li><a href="<?=base_url("about/insurance")?>">해외여행자보험</a></li>
-                <li><a href="javascript:;" data-toggle="toggle-account">계좌번호안내</a></li>
+                <li><a href="<?=base_url("about/#insurance")?>">해외여행자보험</a></li>
+                <li><a href="<?=base_url("about/#account")?>">계좌번호안내</a></li>
             </ul>
         </div>
     </div>
