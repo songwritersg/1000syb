@@ -12,7 +12,9 @@
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js", TRUE)?>
 <?=$this->site->add_js("/static/js/common.js", TRUE)?>
 <?=$this->site->display_js();?>
-
+<script>
+var base_url = '<?=base_url()?>';
+</script>
 <!--START:본문 바로가기-->
 <div id="sybIndex">
     <a href="#sybSection">본문 바로가기</a>

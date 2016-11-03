@@ -76,13 +76,20 @@ class Product_model extends SYB_Model
      ***********************************************************/
     function get_product( $prd_idx )
     {
-        $this->db->select("P.*");
+        $this->db->select("P.*,BEN.*");
         $this->db->from("tbl_product AS P");
+        $this->db->join("tbl_product_benefit AS BEN", "BEN.ben_idx=P.ben_idx","left");
         $this->db->where("P.prd_idx", $prd_idx);
         $result = $this->db->get();
         $product = $result->row_array();
 
         if(! $product ) return NULL;
+
+        // 입력된 상품특전이 있으면 정리한ㄷ.
+        if( isset($product['ben_content']) && $product['ben_content'] )
+        {
+            $product['ben_content'] = json_decode($product['ben_content'], TRUE);
+        }
 
         // 연결된 일정표 목록을 가져온다.
         $this->db->select("PP.*,PR.*, AR.ail_icon, ARF.alf_adjustment");
@@ -115,6 +122,21 @@ class Product_model extends SYB_Model
         return $product;
     }
 
+    /**************************************************************************************
+     * 일정표 정보를 가져온다.
+     * @param $prg_idx
+     ************************************************************************************/
+    function get_program($prg_idx)
+    {
+        $this->db->where("prg_idx", $prg_idx);
+        $this->db->limit(1);
+        $result = $this->db->get("tbl_program");
+        $program = $result->row_array();
+        if( ! $program ) return NULL;
+        $program['schedule'] = json_decode( $program['prg_schedule'], TRUE );
+        return $program;
+    }
+
     /*******************************************************
      * 해당 카테고리에 등록된 리스트를 가져온다.
      * @param $sca_key
@@ -129,6 +151,34 @@ class Product_model extends SYB_Model
         $this->db->where("PP.sca_key", $sca_key);
         $this->db->order_by("PP.prd_sort ASC");
         $result = $this->db->get();
+        return $result->result_array();
+    }
+
+    /******************************************************
+     * 룸타입 정보를 가져온다.
+     * @param $room_idx
+     ******************************************************/
+    function get_room($room_idx)
+    {
+        $this->db->select("R.room_idx, R.room_title, P.prd_title");
+        $this->db->from("tbl_product_rooms AS R");
+        $this->db->join("tbl_product AS P","P.prd_idx=R.prd_idx");
+        $this->db->where("room_idx", $room_idx);
+        $this->db->limit(1);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
+
+    /*******************************************************
+     * 해당 룸타입의 갤러리를 가져온다.
+     * @param $room_idx
+     *******************************************************/
+    function get_gallery($room_idx)
+    {
+        $this->db->where("room_idx", $room_idx);
+        $this->db->order_by("gll_sort ASC");
+        $result = $this->db->get("tbl_product_gallery");
         return $result->result_array();
     }
 }

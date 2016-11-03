@@ -1,37 +1,90 @@
+<?=$this->site->add_js("/static/plugins/tinymce-4.3.13/tinymce.min.js")?>
+<?=$this->site->add_js("/static/js/jquery.carousel-1.1.min.js")?>
 <!--START: Breadcrumbs-->
 <aside class="container">
     <ol class="breadcrumbs">
         <li><a href="<?=base_url()?>"><i class="fa fa-home"></i></a></li>
+        <li><a href="<?=base_url("products/{$sca_parent}")?>"><?=$sca_parent?></a></li>
         <li class="active"><span><?=$product['cty_name_kr']?></span></li>
     </ol>
 </aside>
 <!--END: Breadcrumbs-->
 
-<script>
-    $(function(){
-        var gallery = $("#product-view-gallery");
-        var selected_index = 0;
-        gallery.find('li').eq(selected_index).addClass("active");
-        gallery.find('li').not('.active').css('opacity', 0);
-    });
-</script>
 
 <article class="container" id="product-view">
 
     <div class="product-view-header">
+        <!--
         <h3>HONEYMOON WITH 천생연분닷컴</h3>
-        <h1><?=$product['prd_title']?><?=($product['prd_subtitle'])?"<small>{$product['prd_subtitle']}</small>":''?></h1>
+        <h1><?=$product['prd_title']?><small><?=$program_info['prg_title']?></small></h1>
+        -->
+        <h1><?=$product['prd_title']?></h1>
+        <h3><?=$program_info['prg_title']?></h3>
+
+        <div class="navigation">
+            <select id="select-subcategory" data-toggle="syb-select">
+                <?php foreach($category['children'] as $cate) :?>
+                <option value="<?=$cate['sca_key']?>" <?=$cate['sca_key']==$sca_key?'selected':''?>><?=$cate['sca_name']?></option>
+                <?php endforeach;?>
+            </select>
+            <select id="select-products" data-toggle="syb-select" data-value="<?=$product['prd_idx']?>">
+                <?php foreach($product_list as $row) :?>
+                <option value="<?=$row['prd_idx']?>" <?=$row['prd_idx'] == $product['prd_idx']?"selected":""?>><?=$row['prd_title']?></option>
+                <?php endforeach;?>
+            </select>
+        </div>
+        <script>
+            $(function(){
+                $("#select-subcategory").off('change.category_change').on('change.category_change', function(){
+
+                    $("#select-products").empty().off('change.product_change');
+                    $("#select-products").sybSelect('update')
+                    var sca_key = $("#select-subcategory option:selected").val();
+
+                    $.get('/api/products/info', {sca_key:sca_key}, function(res){
+                        for(var i in res.result)
+                        {
+                            var option = $("<option>").attr('value', res.result[i].prd_idx).text(res.result[i].prd_title);
+                            if( res.result[i].prd_idx == $("#select-products").data('value') )
+                            {
+                                option.attr('selected', 'selected');
+                            }
+                            $("#select-products").append(option);
+                        }
+
+                        $("#select-products").sybSelect('update').on('change.product_change',function(){
+                            location.href = "/products/<?=$sca_parent?>/" + $("#select-subcategory option:selected").val() + "/" + $("#select-products option:selected").val();
+                        });
+                    });
+
+                });
+
+                $("#select-products").on('change.product_change',function(){
+                    location.href = "/products/<?=$sca_parent?>/" + $("#select-subcategory option:selected").val() + "/" + $("#select-products option:selected").val();
+                });
+            });
+        </script>
     </div>
     <div class="product-view-gallery">
-        <ul id="product-view-gallery">
-            <?php foreach($product['gallery_list'] as $gallery) : ?>
-            <li>
-                <a class="gallery-item" href="#">
-                    <img src="<?=base_url($gallery['gll_path'])?>">
-                </a>
-            </li>
-            <?php endforeach?>
-        </ul>
+        <div class="carousel">
+            <div class="slides">
+                <?php foreach($product['gallery_list'] as $gallery) : ?>
+                <div>
+                    <?php if($gallery['gll_type'] == 'ZOOM') : ?>
+                    <a class="gallery-item" href="<?=base_url($gallery['gll_path'])?>" data-toggle="bpopup">
+                    <?php elseif($gallery['gll_type'] == 'LINK' ): ?>
+                    <a class="gallery-item" href="<?=$gallery['gll_url']?>">
+                    <?php elseif($gallery['gll_type'] == 'LINK_WIN'): ?>
+                    <a class="gallery-item" href="<?=$gallery['gll_url']?>" target="_blank">
+                    <?php elseif($gallery['gll_type'] == 'VIDEO'): ?>
+                    <a class="gallery-item" href="#">
+                    <?php endif;?>
+                        <img src="<?=base_url($gallery['gll_path'])?>">
+                    </a>
+                </div>
+                <?php endforeach?>
+            </div>
+        </div>
     </div>
     <div class="product-program-list">
 
@@ -49,21 +102,19 @@
         <div class="clearfix"></div>
 
         <ol class="program-list">
-            <?php
-            $i =0;
-            foreach($product['program_list'] as $program) :?>
-            <li <?=$i==0?'class="active"':''?>>
+            <?php foreach($product['program_list'] as $prog) :?>
+            <li <?=$prog['prg_idx']==$prg_idx?'class="active"':''?>>
                 <div class="program-list-header">
-                    <h5><?=$program['prg_title']?></h5>
-                    <button type="button" data-toggle="collaspe"><i class="fa <?=$i==0?'fa-caret-down':'fa-caret-right'?>"></i></button>
-                    <img class="icon-airline" src="<?=base_url($program['ail_icon'])?>">
+                    <h5><?=$prog['prg_title']?></h5>
+                    <a class="btn" href="<?=base_url("products/{$sca_parent}/{$sca_key}/{$product['prd_idx']}/{$prog['prg_idx']}")?>"><i class="fa <?=$prg_idx==$prog['prg_idx']?'fa-caret-down':'fa-caret-right'?>"></i></a>
+                    <img class="icon-airline" src="<?=base_url($prog['ail_icon'])?>">
                 </div>
-                <div class="program-list-body" <?=$i==0?'style="display:block"':''?>>
+                <div class="program-list-body" <?=$prg_idx==$prog['prg_idx']?'style="display:block"':''?>>
                     <table class="table table-price">
                         <thead>
                         <tr>
                             <th rowspan="2">구분</th>
-                            <th colspan="4"><?=$program['ppm_desc']?></th>
+                            <th colspan="4"><?=$prog['ppm_desc']?></th>
                         </tr>
                         <tr>
                             <th>판매가</th>
@@ -73,22 +124,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($program['price_list'] as $price) : ?>
+                        <?php foreach($prog['price_list'] as $price) : ?>
                         <tr>
-                            <td><?=$price['room_title']?></td>
+                            <td><?=$price['room_title']?>&nbsp;<a href="<?=base_url("products/gallery/{$price['room_idx']}")?>" data-toggle="view-gallery""><img class="icon-gallery" src="/static/images/icons/icon_gallery.png"></a></td>
                             <td><?=number_format($price['ppr_price'])?>원</td>
-                            <td><?=number_format($program['alf_adjustment'])?>원</td>
-                            <td class="sum-price"><?=number_format($price['ppr_price']+$program['alf_adjustment'])?>원</td>
-                            <td class="total"><?=number_format($price['ppr_price']+$program['alf_adjustment']-$price['ppr_discount'])?>원</td>
+                            <td><?=number_format($prog['alf_adjustment'])?>원</td>
+                            <td class="sum-price"><?=number_format($price['ppr_price']+$prog['alf_adjustment'])?>원</td>
+                            <td class="total"><?=number_format($price['ppr_price']+$prog['alf_adjustment']-$price['ppr_discount'])?>원</td>
                         </tr>
                         <?php endforeach;?>
                         </tbody>
                     </table>
                 </div>
             </li>
-            <?php
-            $i++;
-            endforeach;?>
+            <?php endforeach;?>
         </ol>
     </div>
 
@@ -101,6 +150,21 @@
             <li><a href="#" data-toggle="open-sybqna">상품 문의하기</a></li>
         </ul>
         <h4 class="detail-title"><img src="/static/images/products/title_product_benefit.jpg"></h4>
+        <?php if( isset($product['ben_content']) && is_array($product['ben_content']) ) :?>
+        <?php foreach($product['ben_content'] as $ben_content) :?>
+        <table class="table table-benefit">
+            <tr>
+                <th rowspan="<?=count($ben_content['content'])?>"><?=$ben_content['title']?></th>
+                <td><?=nl2br($ben_content['content'][0])?></td>
+            </tr>
+            <?php for($i=1; $i<count($ben_content['content']); $i++) :?>
+            <tr>
+                <td><?=$ben_content['content'][$i]?></td>
+            </tr>
+            <?php endfor?>
+        </table>
+        <?php endforeach;?>
+        <?php endif;?>
         <table class="table table-include">
             <thead>
             <tr>
@@ -110,8 +174,8 @@
             </thead>
             <tbody>
             <tr>
-                <td></td>
-                <td></td>
+                <td><?=$product['ben_include']?></td>
+                <td><?=$product['ben_exclude']?></td>
             </tr>
             </tbody>
         </table>
@@ -164,6 +228,37 @@
             <li><a href="#" data-toggle="open-sybqna">상품 문의하기</a></li>
         </ul>
         <h4 class="detail-title"><img src="/static/images/products/title_product_program_detail.jpg"></h4>
+        <?php for($day=1; $day<count($program_info['schedule']); $day++) : ?>
+        <div class="schedule-title">
+            <span class="schedule-title-msg"><?=$day?>일차</span>
+            <ol class="day-meal-info">
+                <?=$program_info['schedule'][$day-1]['meal']['b'] ? "<li><label>B</label>{$program_info['schedule'][$day-1]['meal']['b']}</li>":""?>
+                <?=$program_info['schedule'][$day-1]['meal']['l'] ? "<li><label>L</label>{$program_info['schedule'][$day-1]['meal']['l']}</li>":""?>
+                <?=$program_info['schedule'][$day-1]['meal']['d'] ? "<li><label>D</label>{$program_info['schedule'][$day-1]['meal']['d']}</li>":""?>
+            </ol>
+        </div>
+        <table class="table table-schedule-detail">
+            <thead>
+            <tr>
+                <th class="location">지역</th>
+                <th class="transport">교통편</th>
+                <th class="time">시간</th>
+                <th class="detail">상세정보</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach($program_info['schedule'][$day-1]['items'] as $item) :
+                ?>
+                <tr>
+                    <td class="location"><?=$item['location']?></td>
+                    <td class="transport"><?=$item['transport']?></td>
+                    <td class="time"><?=$item['time']?></td>
+                    <td class="detail"><?=$item['content']?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php endfor;?>
     </div>
     <!-- END:일정표 확인하기-->
 
@@ -231,19 +326,44 @@
 
 <script>
 $(function(){
-    $(".program-list > li > .program-list-header button[data-toggle='collaspe']").on('click', function(){
-        var li = $(this).parent().parent();
-        var i = $(this).find('i.fa');
 
-        if( li.hasClass("active") ) return false;
+    $("a[data-toggle='view-gallery']").on('click',function(e){
+        e.preventDefault();
+        $.popup({url : $(this).attr('href'),width:1080,height:900});
+    });
 
-        $(".program-list > li").removeClass("active");
-        $(".program-list > li > .program-list-header button[data-toggle='collaspe'] i.fa").removeClass("fa-caret-down").removeClass("fa-caret-right").addClass("fa-caret-right");
-        $(".program-list > li > .program-list-body").slideUp('fast');
+    $('.carousel').carousel({
+        hAlign:'center',
+        vAlign:'center',
+        hMargin:0.8,
+        reflection:true,
+        shadow:false,
+        mouse:false,
+        speed:200,
+        autoplay:false,
+        slidesPerScroll:3,
+        carouselWidth:1000,
+        carouselHeight:450,
+        frontWidth:480,
+        frontHeight:360,
+        backOpacity:0.5,
+        directionNav:true
+    });
 
-        li.addClass("active");
-        i.removeClass("fa-caret-down").removeClass("fa-caret-right").addClass("fa-caret-down");
-        li.find('.program-list-body').slideDown('fast');
+    $("a[data-toggle='open-sybqna']").on('click', function(e){
+        e.preventDefault();
+        $("#pop-sybqna").remove();
+        $("body").append($("<div>").attr('id',"pop-sybqna").append($("<div>").addClass("content")));
+        $.get(base_url+'products/sybqna', {}, function(res){
+            $("#pop-sybqna .content").html(res);
+            $("#pop-sybqna").bPopup({
+                modalClose:true,
+                follow : [false, false],
+                closeClass:'close',
+            });
+        });
+
+
     });
 });
 </script>

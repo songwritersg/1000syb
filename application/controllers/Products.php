@@ -7,17 +7,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Products extends SYB_Controller {
 
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->model('product_model');
+    }
+
     /**********************************************************
      *
-     * A02 회사 소개 페이지
+     * 상품 상세보기 페이지
      *
      * Author : 장선근 <jang@tjsrms.me>
      * Design : 최건우
      * Date : 20161014
      *********************************************************/
-    function view( $sca_parent, $sca_key, $prd_idx = "" )
+    function view( $sca_parent, $sca_key, $prd_idx = "", $prg_idx="" )
     {
-        $this->load->model('product_model');
+        $this->data['sca_parent'] = $sca_parent;
+        $this->data['sca_key'] = $sca_key;
 
         if(empty($prd_idx))
         {
@@ -33,6 +40,33 @@ class Products extends SYB_Controller {
             exit;
         }
 
+        // 일정표 정보를 가져온다.
+        $this->data['prg_idx'] = $prg_idx;
+        if(empty($this->data['prg_idx']))
+        {
+            // 선택된 일정표가 없다면 해당 상품의 첫번째 일정표를 가져온다.
+            foreach($this->data['product']['program_list'] as $program_sub)
+            {
+                if($program_sub['ppm_default'] == 'Y')
+                {
+                    $this->data['prg_idx'] = $program_sub['prg_idx'];
+                    break;
+                }
+            }
+        }
+
+        $this->data['program_info'] = $this->product_model->get_program($this->data['prg_idx']);
+        if(! $this->data['program_info'] )
+        {
+            alert('잘못된 접근입니다.');
+            exit;
+        }
+
+        // 같은 지역의 카테고리 목록
+        $this->data['category'] = $this->product_model->get_category($sca_parent);
+        // 같은 카테고리의 상품들
+        $this->data['product_list'] = $this->product_model->get_list($sca_key);
+
         $this->site->meta_title = $this->data['product']['prd_title'];
         $this->site->meta_descrption = $this->data['product']['prd_subtitle'];
         $this->site->meta_keywords = "{$this->data['product']['ctr_name_kr']},{$this->data['product']['cty_name_kr']}";
@@ -40,7 +74,12 @@ class Products extends SYB_Controller {
         $this->layout = $this->site->get_layout();
         $this->view = "products/view";
     }
-
+    
+    /***********************************************************
+     * 상품 리스트
+     * @param $sca_parent
+     * @param string $sca_key
+     **********************************************************/
     function lists($sca_parent, $sca_key="")
     {
         $this->output->enable_profiler(TRUE);
@@ -49,7 +88,6 @@ class Products extends SYB_Controller {
             alert('잘못된 접근입니다.');
             exit;
         }
-        $this->load->model('product_model');
         $this->data['category'] = $this->product_model->get_category($sca_parent);
 
         if(!$this->data['category'] OR $this->data['category']['sca_depth'] != 0 )
@@ -71,5 +109,44 @@ class Products extends SYB_Controller {
         $this->active = $sca_parent;
         $this->layout = $this->site->get_layout();
         $this->view = "products/lists";
+    }
+
+    /**************************************************************
+     * 상품 이미지 갤러리
+     * @param $room_idx
+     **************************************************************/
+    function gallery($room_idx)
+    {
+        if(empty($room_idx))
+        {
+            alert_close("잘못된 접근입니다.");
+            exit;
+        }
+
+        // 룸정보를 가져온다.
+        if(!$this->data['room'] = $this->product_model->get_room($room_idx))
+        {
+            alert_close("잘못된 접근입니다.");
+            exit;
+        }
+
+        // 해당 룸의 갤러리 목록을 가져옵니다.
+        $this->data['gallery_list'] = $this->product_model->get_gallery($room_idx);
+
+        $this->layout = "popup";
+        $this->view = "products/gallery";
+    }
+
+    /***************************************************************
+     * 상품 문의하기 / 팝업레이어
+     **************************************************************/
+    function sybqna()
+    {
+        $this->load->model('board_model');
+        // 상품문의하기 게시판 카테고리를 가져온다.
+        $this->data['categories'] = $this->board_model->get_category("sybqna");
+
+        $this->layout = FALSE;
+        $this->view = "popup/products/sybqna";
     }
 }

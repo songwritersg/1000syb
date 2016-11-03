@@ -386,6 +386,20 @@ class Board_model extends SYB_Model {
         return $list;
     }
 
+    /***********************************************************
+     * 해당 게시판의 카테고리 목록을 가져온다.
+     * @param $brd_key
+     **********************************************************/
+    function get_category($brd_key)
+    {
+        if(empty($brd_key)) return NULL;
+
+        $this->db->where("brd_key", $brd_key);
+        $this->db->order_by("bca_sort ASC");
+        $result = $this->db->get("tbl_board_category");
+        return $result->result_array();
+    }
+
     /*************************************************************
      * 이전글과 다음글 가져오기
      * @param $brd_key

@@ -21,6 +21,18 @@ function alert($msg = '', $url = '')
     exit;
 }
 
+function alert_close($msg='')
+{
+    if (empty($msg)) {
+        $msg = '잘못된 접근입니다';
+    }
+    echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">';
+    echo '<script type="text/javascript">alert("' . $msg . '");';
+    echo 'window.close();';
+    echo '</script>';
+    exit;
+}
+
 /*****************************************************************************************
  * 현재 주소를 Parameter 포함해서 가져온다.
  * @return string
