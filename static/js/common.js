@@ -5,6 +5,7 @@
  * @Author : 장선근 <jang@tjsrms.me>
  *
  *****************************************************************************************************/
+/** Jquery UI Dialog Default Setting **/
 
 $(function(){
 
@@ -18,45 +19,51 @@ $(function(){
     /***************************************************************************************************
      * 유투브 링크
      **************************************************************************************************/
-    $("a[data-toggle='youtube-link']").on('click',function(e){
-        e.preventDefault();
-
-        $("#pop-youtube").remove();
-        var aside = $("<aside>").attr({id:'pop-youtube',tabindex : -1}).addClass('poplayer');
-        aside.append( $("<div>").addClass('content') );
-        $("body").append(aside);
-
-        var width = $(this).attr('data-width') ? $(this).attr('data-width') : 800;
-        var height = $(this).attr('data-height') ? $(this).attr('data-height') : 600;
-        var iframe = $("<iframe allowfullscreen>");
-
-        iframe.attr({width : width,height : height,frameborder : 0,src : $(this).attr('href')});
-
-        $("#pop-youtube").bPopup({
-            onOpen: function() {
-                $("#pop-youtube .content").html( iframe );
-            },
-            onClose : function() {
-                $("#pop-youtube .content").empty();
-                $("#pop-youtube").remove();
-            }
-        });
+    $("a[data-toggle='youtube-link']").fancybox({
+        type : 'iframe',
+        href : $(this).attr('href')
     });
 
     /***************************************************************************************************
      * 이미지 확대하기
      **************************************************************************************************/
-    $("a[data-toggle='bpopup']").on('click', function(e){
-        e.preventDefault();
-        $("#pop-image").remove();
-        $("body").append($("<div>").attr('id',"pop-image"));
-        $("#pop-image").append($("<div>").addClass("content"));
-        $("#pop-image").bPopup({
-            content : 'image',
-            contentContainer : '.content',
-            loadUrl : $(this).attr('href'),
-            modalClose:true
-        })
+    $("a[data-toggle='image-preview']").fancybox({});
+
+
+    /***************************************************************************************************
+     * 핸드폰 번호 자동 하이픈
+     **************************************************************************************************/
+    $("input[data-toggle='phone-check']").blur(function(){
+        if($(this).val() == '') return;
+        var trans_num = $(this).val().replace(/-/gi,'');
+        if(trans_num != null && trans_num != '') {
+            if(trans_num.length==11 || trans_num.length==10) {
+                var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+                if(regExp_ctn.test(trans_num)) {
+                    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");
+                    $(this).val(trans_num);
+                    return true;
+                }
+            }
+            alert("유효하지 않은 전화번호 입니다.");
+            $(this).val("");
+            $(this).focus();
+        }
+    });
+
+    /***************************************************************************************************
+     * 이메일 유효성 체크
+     **************************************************************************************************/
+    $("input[data-toggle='email-check']").blur(function(){
+        if($(this).val() == '') return;
+        var regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        if( ! regex.test($(this).val()) )
+        {
+            alert("유효하지 않은 이메일 주소 입니다.");
+            $(this).val('');
+            $(this).focus();
+            return false;
+        }
     });
 
     /***************************************************************************************************
@@ -103,6 +110,26 @@ $(function(){
         return false;
     });
 });
+
+/******************************************************************************************************
+ *
+ * Get Parameter 값 가져오기
+ *
+ *****************************************************************************************************/
+function validation_check(el, msg)
+{
+    if( el.length <=0 ) return false;
+
+    if( el.val().trim() == '' )
+    {
+        alert(msg);
+        el.focus();
+        return false;
+    }
+
+    return true;
+}
+
 
 /******************************************************************************************************
  *
@@ -196,6 +223,8 @@ function getQuerystring(paramName){
         }
     };
 })(jQuery);
+
+
 /******************************************************************************************************
  *
  * SelectBox

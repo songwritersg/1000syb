@@ -4,12 +4,16 @@
 <?=$this->site->display_meta()?>
 <?=$this->site->add_css("//fonts.googleapis.com/earlyaccess/notosanskr.css", TRUE)?>
 <?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css", TRUE)?>
+<?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css", TRUE)?>
+
 <?=$this->site->add_css("/static/css/common.css", TRUE)?>
 <?=$this->site->display_css()?>
 </head>
 <body>
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js", TRUE)?>
-<?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js", TRUE)?>
+<?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js")?>
+<?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")?>
+<?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js")?>
 <?=$this->site->add_js("/static/js/common.js", TRUE)?>
 <?=$this->site->display_js();?>
 <script>
@@ -30,7 +34,11 @@ var base_url = '<?=base_url()?>';
         <h1 class="logo"><a href="<?=base_url()?>">천생연분닷컴</a></h1>
         <ul class="right-top-menu">
             <li><a href="<?=base_url()?>"><i class="fa fa-home"></i>&nbsp;HOME</a></li>
+            <?php if($this->member->is_login()) :?>
+            <li><a href="<?=base_url('members/logout')?>"><i class="fa fa-power-off"></i>&nbsp;LOGOUT</a></li>
+            <?php else :?>
             <li><a href="<?=base_url('members/login')?>"><i class="fa fa-power-off"></i>&nbsp;LOGIN</a></li>
+            <?php endif;?>
             <li><a href="javascript:;" data-toggle="add-favorite"><i class="fa fa-star"></i>&nbsp;FAVORITE</a></li>
             <li><a href="<?=base_url('board/article')?>"><i class="fa  fa-newspaper-o"></i>&nbsp;BLOG</a></li>
         </ul>

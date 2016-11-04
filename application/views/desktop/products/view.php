@@ -4,20 +4,13 @@
 <aside class="container">
     <ol class="breadcrumbs">
         <li><a href="<?=base_url()?>"><i class="fa fa-home"></i></a></li>
-        <li><a href="<?=base_url("products/{$sca_parent}")?>"><?=$sca_parent?></a></li>
+        <li><a href="<?=base_url("products/{$sca_parent}")?>"><?=$category['sca_name']?></a></li>
         <li class="active"><span><?=$product['cty_name_kr']?></span></li>
     </ol>
 </aside>
 <!--END: Breadcrumbs-->
-
-
 <article class="container" id="product-view">
-
     <div class="product-view-header">
-        <!--
-        <h3>HONEYMOON WITH 천생연분닷컴</h3>
-        <h1><?=$product['prd_title']?><small><?=$program_info['prg_title']?></small></h1>
-        -->
         <h1><?=$product['prd_title']?></h1>
         <h3><?=$program_info['prg_title']?></h3>
 
@@ -33,37 +26,6 @@
                 <?php endforeach;?>
             </select>
         </div>
-        <script>
-            $(function(){
-                $("#select-subcategory").off('change.category_change').on('change.category_change', function(){
-
-                    $("#select-products").empty().off('change.product_change');
-                    $("#select-products").sybSelect('update')
-                    var sca_key = $("#select-subcategory option:selected").val();
-
-                    $.get('/api/products/info', {sca_key:sca_key}, function(res){
-                        for(var i in res.result)
-                        {
-                            var option = $("<option>").attr('value', res.result[i].prd_idx).text(res.result[i].prd_title);
-                            if( res.result[i].prd_idx == $("#select-products").data('value') )
-                            {
-                                option.attr('selected', 'selected');
-                            }
-                            $("#select-products").append(option);
-                        }
-
-                        $("#select-products").sybSelect('update').on('change.product_change',function(){
-                            location.href = "/products/<?=$sca_parent?>/" + $("#select-subcategory option:selected").val() + "/" + $("#select-products option:selected").val();
-                        });
-                    });
-
-                });
-
-                $("#select-products").on('change.product_change',function(){
-                    location.href = "/products/<?=$sca_parent?>/" + $("#select-subcategory option:selected").val() + "/" + $("#select-products option:selected").val();
-                });
-            });
-        </script>
     </div>
     <div class="product-view-gallery">
         <div class="carousel">
@@ -71,7 +33,7 @@
                 <?php foreach($product['gallery_list'] as $gallery) : ?>
                 <div>
                     <?php if($gallery['gll_type'] == 'ZOOM') : ?>
-                    <a class="gallery-item" href="<?=base_url($gallery['gll_path'])?>" data-toggle="bpopup">
+                    <a class="gallery-item" href="<?=base_url($gallery['gll_path'])?>" data-toggle="image-preview">
                     <?php elseif($gallery['gll_type'] == 'LINK' ): ?>
                     <a class="gallery-item" href="<?=$gallery['gll_url']?>">
                     <?php elseif($gallery['gll_type'] == 'LINK_WIN'): ?>
@@ -324,46 +286,176 @@
     </div>
 </article>
 
+<div id="dialog-sybqna">
+    <div id="pop-sybqna">
+        <img src="/static/images/products/title_sybqna.png">
+        <a class="close" onclick="$('#dialog-sybqna').dialog('close');">&times;</a>
+        <form id="form-sybqna" method="post" action="<?=base_url("api/products/sybqna")?>">
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="form-sybqna-usrname">이름</label>
+                    <div class="input-box">
+                        <input id="form-sybqna-usrname" type="text" name="usr_name" class="form-control input-md" placeholder="작성자 이름을 입력하세요" style="width:290px;" required>
+                    </div>
+                    <div class="input-box">
+                        <div class="radio">
+                            <input type="radio" class="form-control" name="usr_gender" id="usr_gender_m" value="M"><label for="usr_gender_m">신랑</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" class="form-control" name="usr_gender" id="usr_gender_f" value="F" checked><label for="usr_gender_f">신부</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="form-sybqna-phone">연락처</label>
+                    <div class="input-box">
+                        <input type="text" class="form-control input-md" data-toggle="phone-check" name="usr_phone" placeholder="" id="form-sybqna-phone" style="width:390px;" required>
+                        <p class="help-block">※ 빠른 상담을 위해 핸드폰 번호를 입력해주세요.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="form-sybqna-email">이메일</label>
+                    <div class="input-box">
+                        <input type="email" class="form-control input-md" data-toggle="email-check" name="usr_email" placeholder="" id="form-sybqna-email" style="width:390px;" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="form-sybqna-category">문의지사</label>
+                    <div class="input-box">
+                        <select class="form-control input-md" name="post_category" id="form-sybqna-category" style="width:200px;">
+                            <?php foreach($qna_category as $cate) :?>
+                                <option value="<?=$cate['bca_key']?>"><?=$cate['bca_key']?></option>
+                            <?php endforeach?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="form-sybqna-title">제목</label>
+                    <div class="input-box">
+                        <input type="text" class="form-control input-md" name="post_title" id="form-sybqna-title" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="form-sybqna-usrpass">비밀번호</label>
+                    <div class="input-box">
+                        <input type="password" class="form-control input-md" name="usr_pass" id="form-sybqna-usrpass" style="width:150px;" required minlength="4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="tinymce" rows="20" id="post_content" name="post_content"></textarea>
+                </div>
+
+                <div class="policy">
+                    <textarea class="form-control" readonly="readonly" rows="3" style="resize:none"><?=$this->site->config('site_privacy');?></textarea>
+                    <div class="checkbox pull-right margin-top-10">
+                        <input type="checkbox" value="Y" id="agree_privacy" checked><label for="agree_privacy">위 개인정보 취급방침에 동의합니다.</label>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="text-center margin-top-30">
+                    <button type="submit" class="btn btn-primary btn-xlg">작성하기</button>
+                    <button type="button" class="btn btn-default btn-xlg" onclick="$('#dialog-sybqna').dialog('close');">닫기</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
 <script>
 $(function(){
-
     $("a[data-toggle='view-gallery']").on('click',function(e){
         e.preventDefault();
         $.popup({url : $(this).attr('href'),width:1080,height:900});
     });
+    $('.carousel').carousel({ hAlign:'center', vAlign:'center', hMargin:0.8, reflection:true, shadow:false, mouse:false, speed:200, autoplay:false, slidesPerScroll:3, carouselWidth:1000, carouselHeight:450, frontWidth:480, frontHeight:360, backOpacity:0.5, directionNav:true});
+    $("#dialog-sybqna").dialog({ autoOpen : false, draggable : false, dialogClass : 'close', resizeable : false, modal: true, width:800});
 
-    $('.carousel').carousel({
-        hAlign:'center',
-        vAlign:'center',
-        hMargin:0.8,
-        reflection:true,
-        shadow:false,
-        mouse:false,
-        speed:200,
-        autoplay:false,
-        slidesPerScroll:3,
-        carouselWidth:1000,
-        carouselHeight:450,
-        frontWidth:480,
-        frontHeight:360,
-        backOpacity:0.5,
-        directionNav:true
+    tinymce.init({
+        selector:'textarea#post_content',
+        height : 300,
+        width : "99%",
+        theme_advanced_resizing: true,
+        theme_advanced_resizing_use_cookie : false,
+        menubar : false,
+        plugins : 'advlist autolink link image imagetools media lists print preview emoticons table textcolor colorpicker code pagebreak jsplus_easy_image',
+        language: "ko",
+        toolbar1: 'preview code | jsplus_easy_image image media table emoticons | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | link pagebreak',
+        toolbar2: 'formatselect fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough removeformat',
+        font_formats : "나눔고딕=Nanum Gothic;돋움=돋움,Dotum;굴림=굴림,Gulim;바탕=바탕,Batang;궁서=궁서;Arial=Arial;Comic Sans MS=Comic Sans MS;Courier New=Courier New;Tahoma=Tahoma;Times New Roman=Times New Roman;Verdana=Verdana",
+        fontsize_formats : "10px 11px 12px 14px 16px 18px 20px 24px 28px",
     });
 
-    $("a[data-toggle='open-sybqna']").on('click', function(e){
+    $("#form-sybqna").on('submit', function(e){
         e.preventDefault();
-        $("#pop-sybqna").remove();
-        $("body").append($("<div>").attr('id',"pop-sybqna").append($("<div>").addClass("content")));
-        $.get(base_url+'products/sybqna', {}, function(res){
-            $("#pop-sybqna .content").html(res);
-            $("#pop-sybqna").bPopup({
-                modalClose:true,
-                follow : [false, false],
-                closeClass:'close',
+        var form = $("#form-sybqna");
+        if(! validation_check( $(this).find('input[name="usr_name"]'), '작성자 이름을 입력하세요' )) return false;
+        if( $(this).find('input[name="usr_gender"]:checked').length <= 0 )
+        {
+            alert("성별을 선택하셔야 합니다.");
+            $(this).find('input[name="usr_gender"]').focus();
+            return false;
+        }
+        if(! validation_check( $(this).find('input[name="usr_phone"]'), '연락처를 입력하세요' )) return false;
+        if(! validation_check( $(this).find('input[name="usr_email"]'), '이메일 주소를 입력하세요' )) return false;
+        if(! validation_check( $(this).find('input[name="post_title"]'), '제목을 입력하세요' )) return false;
+        if(! validation_check( $(this).find('input[name="usr_pass"]'), '비밀번호를 입력하세요' )) return false;
+        if($(this).find('input[name="usr_pass"]').val().length < 4 )
+        {
+            alert('비밀번호는 최소 4자리 이상 입력하셔야 합니다.');
+            $(this).find('input[name="usr_pass"]').focus();
+            return false;
+        }
+        if(tinymce.activeEditor.getContent({format:'text'}).trim().length<=0){
+            alert('글 내용을 입력하셔야합니다.');
+            tinymce.activeEditor.focus();
+            return false;
+        }
+        $.post('/api/products/sybqna', form.serialize(), function(res){
+            if(res.status==true){
+                alert('문의 작성이 완료되었습니다.');
+                location.reload();
+            }
+            else
+            {
+                alert('문의 작성도중 오류가 발생하였습니다.\n관리자에게 문의하세요');
+                $("#dialog-sybqna").dialog('close');
+                return false;
+            }
+        });
+    });
+
+    $("a[data-toggle='open-sybqna']").on('click',function(e){
+        e.preventDefault();
+        $("#form-sybqna")[0].reset();
+        $("#dialog-sybqna").dialog('open');
+    });
+
+    $("#select-subcategory").off('change.category_change').on('change.category_change', function(){
+
+        $("#select-products").empty().off('change.product_change');
+        $("#select-products").sybSelect('update')
+        var sca_key = $("#select-subcategory option:selected").val();
+
+        $.get('/api/products/info', {sca_key:sca_key}, function(res){
+            for(var i in res.result)
+            {
+                var option = $("<option>").attr('value', res.result[i].prd_idx).text(res.result[i].prd_title);
+                if( res.result[i].prd_idx == $("#select-products").data('value') )
+                {
+                    option.attr('selected', 'selected');
+                }
+                $("#select-products").append(option);
+            }
+
+            $("#select-products").sybSelect('update').on('change.product_change',function(){
+                location.href = "/products/<?=$sca_parent?>/" + $("#select-subcategory option:selected").val() + "/" + $("#select-products option:selected").val();
             });
         });
 
+    });
 
+    $("#select-products").on('change.product_change',function(){
+        location.href = "/products/<?=$sca_parent?>/" + $("#select-subcategory option:selected").val() + "/" + $("#select-products option:selected").val();
     });
 });
 </script>

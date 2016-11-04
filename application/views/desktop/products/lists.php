@@ -1,6 +1,6 @@
 <article class="container-fluid" id="product-lists-info">
     <div class="video-container">
-        <video id="videobg" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
+        <video id="videobg" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0" poster="<?=$category['sca_info_bg_thumb']?>">
             <source src="<?=$category['sca_info_bg_mp4']?>" type="video/mp4">
             <source src="<?=$category['sca_info_bg_ogv']?>" type="video/ogv">
         </video>

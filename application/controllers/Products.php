@@ -11,6 +11,7 @@ class Products extends SYB_Controller {
     {
         parent::__construct();
         $this->load->model('product_model');
+        $this->load->model('board_model');
     }
 
     /**********************************************************
@@ -66,6 +67,9 @@ class Products extends SYB_Controller {
         $this->data['category'] = $this->product_model->get_category($sca_parent);
         // 같은 카테고리의 상품들
         $this->data['product_list'] = $this->product_model->get_list($sca_key);
+
+        // 상품문의하기 게시판 카테고리를 가져온다.
+        $this->data['qna_category'] = $this->board_model->get_category("sybqna");
 
         $this->site->meta_title = $this->data['product']['prd_title'];
         $this->site->meta_descrption = $this->data['product']['prd_subtitle'];
@@ -137,16 +141,14 @@ class Products extends SYB_Controller {
         $this->view = "products/gallery";
     }
 
-    /***************************************************************
-     * 상품 문의하기 / 팝업레이어
-     **************************************************************/
-    function sybqna()
+    /*******************************************************************************************
+     *
+     * 월별 허니문 추천 지역
+     *
+     *******************************************************************************************/
+    function recommend()
     {
-        $this->load->model('board_model');
-        // 상품문의하기 게시판 카테고리를 가져온다.
-        $this->data['categories'] = $this->board_model->get_category("sybqna");
-
-        $this->layout = FALSE;
-        $this->view = "popup/products/sybqna";
+        $this->layout = $this->site->get_layout();
+        $this->view = "products/recommend";
     }
 }

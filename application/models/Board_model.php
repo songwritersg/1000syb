@@ -140,7 +140,25 @@ class Board_model extends SYB_Model {
     function insert_post($data)
     {
         $this->db->insert("tbl_board_post", $data);
-        return $this->db->insert_id();
+        $id = $this->db->insert_id();
+
+        // 질문과 답변의 경우 글작성후 처리
+        if($data['brd_key'] == 'sybqna' && $data['post_depth'] == 0 && $data['post_category'] == '서울 본사')
+        {
+            // 답글 자동 등록
+            $re_data = $data;
+            $re_data['post_title'] = "Re ".$data['post_title'];
+            $re_data['post_content'] = "<p>안녕하세요. 천생연분 닷컴입니다.<br>전문 상담사 통하여 신속하게 연락드리도록 하겠습니다.<br>감사합니다.</p>";
+            $re_data['post_depth'] = 1;
+            $re_data['usr_name'] = "천생연분닷컴";
+            $re_data['usr_phone'] = "02-720-8876";
+            $re_data['usr_email'] = "";
+            $this->insert_post($re_data);
+
+            // 컨설팅 DB 자동등록
+        }
+
+        return $id;
     }
 
     /**********************************************************
@@ -355,11 +373,11 @@ class Board_model extends SYB_Model {
         return $row;
     }
 
-
-    /**
+    /***************************************************************************************************
+     * 최근글을 가져온다.
      * @param $brd_key
      * @param $limit
-     */
+     **************************************************************************************************/
     function get_recent( $brd_key, $limit = 5)
     {
         if(empty($brd_key)) return NULL;
