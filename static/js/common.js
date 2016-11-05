@@ -52,6 +52,17 @@ $(function(){
     });
 
     /***************************************************************************************************
+     * 플로팅 배너 위치 조절
+     **************************************************************************************************/
+    if( $(".floating-banner").length > 0 ) {
+        var top = $("#sybSection").offset().top;
+        if( $("#main-slide").length > 0 ) top += 640;
+        if( $("#product-lists-info").length > 0) top += 660;
+        top += $(".breadcrumbs").outerHeight(true);
+        $(".floating-banner").css('top', top);
+    }
+
+    /***************************************************************************************************
      * 이메일 유효성 체크
      **************************************************************************************************/
     $("input[data-toggle='email-check']").blur(function(){
@@ -224,6 +235,45 @@ function getQuerystring(paramName){
     };
 })(jQuery);
 
+
+(function($) {
+    $.fn.favorite = function(option) {
+        $.fn.favorite.default = {
+            title : '천생연분닷컴',
+            url : 'http://www.1000syb.com'
+        };
+
+        var options = $.extend({}, $.fn.favorite.default, option);
+
+        return this.each(function(){
+            var _this = $(this);
+            $(this).on('click', function(e){
+                e.preventDefault();
+                if (window.sidebar && window.sidebar.addPanel) {
+                    // Firefox version < 23
+                    window.sidebar.addPanel(options.title, options.url, '');
+                } else if ((window.sidebar && (navigator.userAgent.toLowerCase().indexOf('firefox') > -1)) || (window.opera && window.print)) {
+                    // Firefox version >= 23 and Opera Hotlist
+                    var $this = $(this);
+                    $this.attr('href', options.url);
+                    $this.attr('title', options.title);
+                    $this.attr('rel', 'sidebar');
+                    $this.off(e);
+                    triggerDefault = true;
+                } else if (window.external && ('AddFavorite' in window.external)) {
+                    // IE Favorite
+                    window.external.AddFavorite(options.url, options.title);
+                } else {
+                    // WebKit - Safari/Chrome
+                    alert((navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D 키를 눌러 즐겨찾기에 등록하실 수 있습니다.');
+                }
+            });
+        });
+    };
+})(jQuery);
+$(function(){
+    $("a[data-toggle='add-favorite']").favorite();
+});
 
 /******************************************************************************************************
  *

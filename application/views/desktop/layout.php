@@ -259,11 +259,19 @@ var base_url = '<?=base_url()?>';
                     <option value="">전국지사 바로가기</option>
                     <option value="">광주 지사</option>
                     <option value="">인천 지사</option>
+                    <option value="">부산 지사</option>
+                    <option value="">창원 지사</option>
+                    <option value="">천안 지사</option>
+                    <option value="">대구 지사</option>
+                    <option value="">청주 지사</option>
                 </select>
             </div>
         </div>
     </div>
 </footer>
+
+<?php $this->load->view('desktop/banners');?>
+
 <!--[if lt IE 9]>
 <script src="<?=base_url('static/js/poly-checked.min.js')?>"></script>
 <![endif]-->

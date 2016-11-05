@@ -86,7 +86,6 @@ class Products extends SYB_Controller {
      **********************************************************/
     function lists($sca_parent, $sca_key="")
     {
-        $this->output->enable_profiler(TRUE);
         if(empty($sca_parent))
         {
             alert('잘못된 접근입니다.');
