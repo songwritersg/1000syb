@@ -17,7 +17,7 @@
         <div class="navigation">
             <select id="select-subcategory" data-toggle="syb-select">
                 <?php foreach($category['children'] as $cate) :?>
-                <option value="<?=$cate['sca_key']?>" <?=$cate['sca_key']==$sca_key?'selected':''?>><?=$cate['sca_name']?></option>
+                <option value="<?=$cate['sca_key']?>" <?=$cate['sca_key']==$sca_key?'selected':''?>><?=htmlspecialchars($cate['sca_name'])?></option>
                 <?php endforeach;?>
             </select>
             <select id="select-products" data-toggle="syb-select" data-value="<?=$product['prd_idx']?>">
@@ -88,7 +88,7 @@
                         <tbody>
                         <?php foreach($prog['price_list'] as $price) : ?>
                         <tr>
-                            <td><?=$price['room_title']?>&nbsp;<a href="<?=base_url("products/gallery/{$price['room_idx']}")?>" data-toggle="view-gallery""><img class="icon-gallery" src="/static/images/icons/icon_gallery.png"></a></td>
+                            <td><?=$price['room_title']?>&nbsp;<a href="<?=base_url("products/gallery/{$price['room_idx']}")?>" data-toggle="view-gallery"><img class="icon-gallery" src="/static/images/icons/icon_gallery.png"></a></td>
                             <td><?=number_format($price['ppr_price'])?>원</td>
                             <td><?=number_format($prog['alf_adjustment'])?>원</td>
                             <td class="sum-price"><?=number_format($price['ppr_price']+$prog['alf_adjustment'])?>원</td>
@@ -367,7 +367,12 @@ $(function(){
         e.preventDefault();
         $.popup({url : $(this).attr('href'),width:1080,height:900});
     });
-    $('.carousel').carousel({ hAlign:'center', vAlign:'center', hMargin:0.8, reflection:true, shadow:false, mouse:false, speed:200, autoplay:false, slidesPerScroll:3, carouselWidth:1000, carouselHeight:450, frontWidth:480, frontHeight:360, backOpacity:0.5, directionNav:true});
+    if( $(".carousel .slides div").length > 0 )
+    {
+        $('.carousel').carousel({ hAlign:'center', vAlign:'center', hMargin:0.8, reflection:true, shadow:false, mouse:false, speed:200, autoplay:false, slidesPerScroll:3, carouselWidth:1000, carouselHeight:450, frontWidth:480, frontHeight:360, backOpacity:0.5, directionNav:true});
+    }
+
+
     $("#dialog-sybqna").dialog({ autoOpen : false, draggable : false, dialogClass : 'close', resizeable : false, modal: true, width:800});
 
     tinymce.init({

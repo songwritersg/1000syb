@@ -9,7 +9,7 @@
 
 <!--START: 메인컨텐츠-->
 <article class="container">
-
+    <h2 class="hide">천생연분닷컴 회사소개 네비게이션</h2>
     <img class="wide-banner margin-bottom-30" src="/static/images/about/top_banner.jpg" alt="천생연분닷컴 회사소개 배너">
 
     <ul class="tab tab-default tab-justified">
@@ -153,6 +153,7 @@
 
 <!-- START:계좌 안내-->
 <article class="container-fluid" id="account">
+    <h2 class="hide">천생연분닷컴 계좌번호 안내</h2>
     <div class="container">
         <table class="table table-account margin-top-30" summary="천생연분닷컴 계좌번호안내">
             <colgroup>

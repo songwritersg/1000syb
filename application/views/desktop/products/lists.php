@@ -1,6 +1,6 @@
 <article class="container-fluid" id="product-lists-info">
     <div class="video-container">
-        <video id="videobg" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0" poster="<?=$category['sca_info_bg_thumb']?>">
+        <video id="videobg" preload="auto" autoplay loop="loop" muted="muted" <?=$category['sca_info_bg_thumb']?'poster="'.$category['sca_info_bg_thumb'].'"':''?>>
             <source src="<?=$category['sca_info_bg_mp4']?>" type="video/mp4">
             <source src="<?=$category['sca_info_bg_ogv']?>" type="video/ogv">
         </video>
@@ -8,7 +8,7 @@
     <div  id="info-container">
         <div class="container">
             <div class="title-container">
-                <h1 class="category-title"><?=$category['sca_info_title']?></h1>
+                <h2 class="category-title"><?=$category['sca_info_title']?></h2>
                 <p class="category-subtitle"><?=$category['sca_info_subtitle']?></p>
             </div>
             <div class="desc-container"><?=nl2br($category['sca_info_description'])?></div>
@@ -54,7 +54,7 @@
 
 <article class="container-fluid" id="product-lists">
     <div class="container">
-        <h1 class="category-title"><strong><?=strtoupper($category['sca_info_title'])?></strong>&nbsp;AREA</h1>
+        <h2 class="category-title"><strong><?=strtoupper($category['sca_info_title'])?></strong>&nbsp;AREA</h2>
         <ul class="category-list">
             <?php foreach($category['children'] as $cate) : ?>
             <li <?=$selected==$cate['sca_key']?'class="active"':''?>><a href="<?=base_url("products/{$category['sca_key']}/{$cate['sca_key']}")?>"><?=$cate['sca_name']?></a></li>
@@ -66,7 +66,7 @@
                 <li>
                     <a href="<?=base_url("products/{$category['sca_key']}/{$cate['sca_key']}/{$row['prd_idx']}")?>">
                         <div class="thumbnails">
-                            <img src="<?=base_url($row['prd_thumb'])?>">
+                            <img src="<?=base_url($row['prd_thumb'])?>" alt="<?=$row['prd_title']?>">
                         </div>
                         <div class="info">
                             <h4 class="city-name"><?=$row['cty_name']?></h4>

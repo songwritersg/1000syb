@@ -210,8 +210,8 @@ class Site {
         // 기본태그
         $return = "";
         $return .= '<meta charset="utf-8">';
-        $return .=  ($this->viewmode() == DEVICE_DESKTOP) ? '<meta name="viewport" contnet="width=device-width,initial-scale=1">' : '<meta name="viewport" contnet="width=device-width,initial-scale=1">';
-        $return .= '<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">';
+        $return .=  ($this->viewmode() == DEVICE_DESKTOP) ? '<meta name="viewport" content="width=device-width,initial-scale=1">' : '<meta name="viewport" content="width=device-width,initial-scale=1">';
+        $return .= '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
         // 기본 메타 태그
         $return .= '<title>' . $this->meta_title . '</title>';
         $return .= '<meta name="description" content="'.$this->meta_description.'">';
@@ -224,10 +224,6 @@ class Site {
         $return .= $this->meta_image ? '<meta property="og:image" content="'.$this->meta_image.'" />': '';
         $return .= '<meta property="og:description" content="'.$this->meta_description.'" />';
         $return .= '<meta property="og:site_name" content="'.$this->config('site_title').'" />';
-        // 구글 메타 태그
-        $return .= '<meta itemprop="name" content="'.$this->config('site_title').'"/>';
-        $return .= '<meta itemprop="description" content="'.$this->config('meta_description').'"/>';
-        $return .= $this->meta_image ? '<meta itemprop="image" content="'.$this->meta_image.'"/>' : '';
         // 트위터 메타 태그
         $return .= '<meta name="twitter:card" content="summary"/>';
         $return .= '<meta name="twitter:site" content="'.$this->config('site_title').'"/>';

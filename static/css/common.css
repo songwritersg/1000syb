@@ -36,7 +36,7 @@ input[type='search']::-webkit-search-cancel-button {-webkit-appearance:none}
 /** Web Accessibility **/
 .alt-txt { display:block; overflow:hidden; font-size:0px; line-height:0; text-indent:-9999px; }
 .sr-only { overflow:hidden; position:absolute; width:0; height:0; line-height:0; text-indent:-9999px}
-
+.hide { display:none; visibility: hidden; }
 /** Clearfix **/
 .container:before, .container:after,
 .row:before, .row:after,
@@ -595,12 +595,12 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #movie-slider { border:1px solid #d9d9d9; margin-bottom:20px; }
 #movie-slider .card { display:block; position:relative; width:100%; min-height:1px; z-index:5; height:400px; color:inherit}
 #movie-slider .card a { color:inherit; text-decoration:none !important;}
-#movie-slider .card figure.thumbnail { position:relative; }
-#movie-slider .card figure.thumbnail > img { display:block; max-width:100%; }
-#movie-slider .card figure.thumbnail > figcaption { display:none; }
-#movie-slider .card figure.thumbnail .mask { width:100%; height:100%; position:absolute; top:0px; left:0px; -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50); filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50); opacity:0.5; background:#4a4a4a; -moz-opacity:0.5; -webkit-opacity:0.5; z-index:9; }
-#movie-slider .card figure.thumbnail .youtube-icon { position:absolute; display:block; top:50%; left:50%; width:76px; height:76px; margin-left:-38px; margin-top:-38px; background:url(../images/icons/icon_play_youtube.png) no-repeat; z-index:10;}
-#movie-slider .card figure.thumbnail .youtube-icon:hover { opacity:0.5; -webkit-opacity:0.5; -moz-opacity:0.5; transition:all .2s; }
+#movie-slider .card .thumbnail { position:relative; }
+#movie-slider .card .thumbnail figure > img { display:block; max-width:100%; }
+#movie-slider .card .thumbnail figure > figcaption { display:none; }
+#movie-slider .card .thumbnail .mask { width:100%; height:100%; position:absolute; top:0px; left:0px; -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50); filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50); opacity:0.5; background:#4a4a4a; -moz-opacity:0.5; -webkit-opacity:0.5; z-index:9; }
+#movie-slider .card .thumbnail .youtube-icon { position:absolute; display:block; top:50%; left:50%; width:76px; height:76px; margin-left:-38px; margin-top:-38px; background:url(../images/icons/icon_play_youtube.png) no-repeat; z-index:10;}
+#movie-slider .card .thumbnail .youtube-icon:hover { opacity:0.5; -webkit-opacity:0.5; -moz-opacity:0.5; transition:all .2s; }
 #movie-slider .card  div.desc { padding:20px; }
 #movie-slider .card  div.desc > h4.desc-title { display:block; text-align:center; color:#0597d8; margin:0 0 10px 0; font-size:33px; font-family:Times; text-shadow:1px 1px rgba(0,0,0,0.3);}
 #movie-slider .card  div.desc > span.sub-title { display:block; text-align:center; color:#767676; }
@@ -616,10 +616,10 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #best-honeymoon { padding-top:30px; background:#f7f7f7; border-top:1px solid #ddd; }
 #best-honeymoon h4 { font-size:21px; padding:0; margin:0; margin-bottom:10px; color:#282828; }
 #best-honeymoon h4 strong { color:#33bfb2; }
-#best-honeymoon h4 .slide-indicator { position:absolute; right:10px; top:0px;}
-#best-honeymoon h4 .slide-indicator li { display:inline-block; }
-#best-honeymoon h4 .slide-indicator li > a { display:inline-block; width:25px; height:25px; font-size:12px; line-height:25px; background-color:#dddddd; color:#fff; text-align:center;}
-#best-honeymoon h4 .slide-indicator li > a:hover { background-color:#33bfb2; }
+#best-honeymoon .slide-indicator { position:absolute; right:10px; top:0px;}
+#best-honeymoon .slide-indicator li { display:inline-block; }
+#best-honeymoon .slide-indicator li > a { display:inline-block; width:25px; height:25px; font-size:12px; line-height:25px; background-color:#dddddd; color:#fff; text-align:center;}
+#best-honeymoon .slide-indicator li > a:hover { background-color:#33bfb2; }
 #best-honeymoon #slide-best-honeymoon { width:100%; overflow:hidden; }
 #best-honeymoon #slide-best-honeymoon ul.slides { margin:0; padding:0; list-style:none; height:250px;}
 #best-honeymoon #slide-best-honeymoon ul.slides li { display:block; float:left; padding-left:1px; padding-right:1px; }
@@ -788,7 +788,7 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 
 #product-lists-info #info-container { height:120px; background:rgba(0,0,0,0.5)}
 #product-lists-info #info-container .title-container { display:block; float:left; width:330px; padding-top:30px; }
-#product-lists-info #info-container .title-container h1.category-title { font-size:50px; color:#fff; margin:0; padding:0; height:auto; line-height:1;}
+#product-lists-info #info-container .title-container h2.category-title { font-size:50px; color:#fff; margin:0; padding:0; height:auto; line-height:1;}
 #product-lists-info #info-container .title-container .category-subtitle { color:#fff; font-size:16px;}
 #product-lists-info #info-container .desc-container { float:left; color:#fff; padding-top:30px; font-size:14px; font-weight:200;}
 
@@ -806,8 +806,8 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 
 
 #product-lists { padding-top:30px;  }
-#product-lists h1.category-title { font-size:32px; color:#282828; font-weight:bold; font-family:Arial, sans-serif}
-#product-lists h1.category-title strong { color:#33bfb2; }
+#product-lists h2.category-title { font-size:32px; color:#282828; font-weight:bold; font-family:Arial, sans-serif}
+#product-lists h2.category-title strong { color:#33bfb2; }
 #product-lists .category-list { margin:0; padding:0; list-style:none; white-space:nowrap; display:table; width:100%; table-layout: fixed; border-collapse: collapse; border:1px solid #ddd; position:relative; margin-bottom:30px;}
 #product-lists .category-list li { display:table-cell; vertical-align:middle;  }
 #product-lists .category-list li + li:before { content:''; display:inline-block; position:absolute; background:#ddd; width:1px; height:16px; top:15px; }

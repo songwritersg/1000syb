@@ -30,7 +30,7 @@ var base_url = '<?=base_url()?>';
 <!--START:헤더-->
 <header id="sybHeader">
     <div class="container">
-        <a class="left-top-banner"><img src="/static/images/common/banner_top_insurance.gif"></a>
+        <a class="left-top-banner"><img src="/static/images/common/banner_top_insurance.gif" alt="믿고 맡기는 허니문 보증보험 9억 3천 가입"></a>
         <h1 class="logo"><a href="<?=base_url()?>">천생연분닷컴</a></h1>
         <ul class="right-top-menu">
             <li><a href="<?=base_url()?>"><i class="fa fa-home"></i>&nbsp;HOME</a></li>
@@ -65,6 +65,7 @@ var base_url = '<?=base_url()?>';
 
 <!--START:본문영역-->
 <section id="sybSection">
+    <h2 class="hide">본문영역</h2>
     <?=$yield?>
 </section>
 <!--END:본문영역-->
@@ -121,7 +122,7 @@ var base_url = '<?=base_url()?>';
     <article class="container" id="footer-cscenter">
         <h4>고객 센터</h4>
         <div class="cscenter">
-            <img class="wide-banner" src="/static/images/layout/footer_cscenter.jpg">
+            <img class="wide-banner" src="/static/images/layout/footer_cscenter.jpg" alt="고객센터">
         </div>
 
         <div class="csbuttons">
@@ -144,7 +145,7 @@ var base_url = '<?=base_url()?>';
                         <?php foreach($recent_list as $post ) :?>
                             <li>
                                 <a href="<?=$post['post_link']?>">
-                                    <span class="title"><?=$post['post_title']?><?=($post['is_new'])?'<img class="icon-new" src="/static/images/common/icon_new.gif">':''?></span>
+                                    <span class="title"><?=$post['post_title']?><?=($post['is_new'])?'<img alt="NEW" class="icon-new" src="/static/images/common/icon_new.gif">':''?></span>
                                     <span class="regtime"><?=board_date_format($post['post_regtime'])?></span>
                                 </a>
 
@@ -166,7 +167,7 @@ var base_url = '<?=base_url()?>';
                             <?php foreach($recent_list as $post ) :?>
                                 <li>
                                     <a href="<?=$post['post_link']?>">
-                                        <span class="title"><?=$post['post_title']?><?=($post['is_new'])?'<img class="icon-new" src="/static/images/common/icon_new.gif">':''?></span>
+                                        <span class="title"><?=$post['post_title']?><?=($post['is_new'])?'<img class="icon-new" alt="NEW" src="/static/images/common/icon_new.gif">':''?></span>
                                         <span class="regtime"><?=board_date_format($post['post_regtime'])?></span>
                                     </a>
 
@@ -188,7 +189,7 @@ var base_url = '<?=base_url()?>';
                             <?php foreach($recent_list as $post ) :?>
                                 <li>
                                     <a href="<?=$post['post_link']?>">
-                                        <span class="title"><?=$post['post_title']?><?=($post['is_new'])?'<img class="icon-new" src="/static/images/common/icon_new.gif">':''?></span>
+                                        <span class="title"><?=htmlspecialchars($post['post_title'])?><?=($post['is_new'])?'<img alt="NEW"  class="icon-new" src="/static/images/common/icon_new.gif">':''?></span>
                                         <span class="regtime"><?=board_date_format($post['post_regtime'])?></span>
                                     </a>
 
@@ -232,7 +233,7 @@ var base_url = '<?=base_url()?>';
                 </p>
             </div>
 
-            <address class="address">
+            <div class="address">
                 <h5>ADDRESS</h5>
                 <p>
                     <a href="tel:02-72-8876" class="phone"><i class="fa fa-mobile"></i>&nbsp;02-720-8876</a>&nbsp;|&nbsp;Fax.02) 2179-9481, 02) 720-8881<br>
@@ -250,11 +251,11 @@ var base_url = '<?=base_url()?>';
                 <p>
                     <span>Copyright &copy; 천생연분닷컴 All rights reserved.</span>
                 </p>
-            </address>
+            </div>
 
             <div class="footer-award">
                 <h5>AWARDS</h5>
-                <img src="/static/images/layout/footer_banner_award.png"><br>
+                <img src="/static/images/layout/footer_banner_award.png" alt="브랜드 대상 수상, 서비스지수1위 수상"><br>
                 <select data-toggle="syb-select">
                     <option value="">전국지사 바로가기</option>
                     <option value="">광주 지사</option>
