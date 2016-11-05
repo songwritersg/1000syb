@@ -38,7 +38,7 @@
 <section id="section">
     <ul class="directionNav">
         <li><a class="prev flex-prev" href="javascript:;"><img src="/static/images/carousel/prev_button.png"></a></li>
-        <li><a class="next flex-next" href="javasscipt:;"><img src="/static/images/carousel/next_button.png"></a></li>
+        <li><a class="next flex-next" href="javascipt:;"><img src="/static/images/carousel/next_button.png"></a></li>
     </ul>
     <div id="slider" class="flexslider">
         <ul class="slides">
@@ -51,7 +51,7 @@
 <footer id="footer">
     <div class="thumb-custom-nav">
         <li><a class="prev flex-prev" href="javascript:;"><img src="/static/images/carousel/button_thumb_prev.png"></a></li>
-        <li><a class="next flex-next" href="javasscipt:;"><img src="/static/images/carousel/button_thumb_next.png"></a></li>
+        <li><a class="next flex-next" href="javascipt:;"><img src="/static/images/carousel/button_thumb_next.png"></a></li>
     </div>
     <div id="slider-thumb" class="flexslider">
         <ul class="slides">
