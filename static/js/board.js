@@ -42,6 +42,15 @@ $(function(){
                 e.preventDefault();
                 return false;
             }
+            if( formWrite.find('#agree_privacy').length > 0 )
+            {
+                if(! formWrite.find('#agree_privacy').prop("checked") )
+                {
+                    alert('개인정보 취급방침에 동의하셔야 합니다.');
+                    e.preventDefault();
+                    return false;
+                }
+            }
 
             return true;
         });

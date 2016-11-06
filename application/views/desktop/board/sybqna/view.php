@@ -1,7 +1,17 @@
-<?php $this->load->view('desktop/board/customer_common');?>
-<article id="skin-alliance-view" class="container">
+<?php
+// 이글의 답글 목록을 가져옴
+$reply_list = $this->board_model->get_reply_list($board['brd_key'], $post['post_num']);
+?>
+<?php $this->load->view('desktop/board/qna_common');?>
+<article id="skin-sybqna-view" class="container">
     <div class="post-header">
-        <h1 class="post-title"><?=$post['post_title']?></h1>
+        <h1 class="post-title"><?=$post['post_title']?><small>질문과 답변</small><small><?=number_format($post['post_hit'])?></small></h1>
+        <dl>
+            <dt>글쓴이</dt>
+            <dd><?=$post['usr_name']?></dd>
+            <dt>작성일</dt>
+            <dd><?=board_date_format($post['post_regtime'])?></dd>
+        </dl>
     </div>
     <?php if(isset($post['post_attach_list']) && count($post['post_attach_list']) > 0  && $post['post_attach_image_count'] != count($post['post_attach_list']) ) :?>
     <div class="post-attach-list">
@@ -13,32 +23,6 @@
     </div>
     <?php endif;?>
     <div class="post-content">
-        <table class="table">
-            <colgroup>
-                <col width="200" />
-                <col width="*" />
-            </colgroup>
-            <tr>
-                <th>업체명</th>
-                <td><?=$post['post_title']?></td>
-            </tr>
-            <tr>
-                <th>담당자 성명</th>
-                <td><?=$post['usr_name']?></td>
-            </tr>
-            <tr>
-                <th>대표 번호</th>
-                <td><?=$post['post_ext1']?></td>
-            </tr>
-            <tr>
-                <th>핸드폰</th>
-                <td><?=$post['usr_phone']?></td>
-            </tr>
-            <tr>
-                <th>E-mail</th>
-                <td><?=$post['usr_email']?></td>
-            </tr>
-        </table>
         <?php
         if(isset($post['post_attach_image_count']) && $post['post_attach_image_count']  >0) :
             foreach($post['post_attach_list'] as $attach) :
@@ -53,10 +37,15 @@
             endforeach;
         endif;?>
         <?=$post['contents']?>
+        <?php foreach($reply_list as $reply) :?>
+        <div class="post-reply">
+            <h2><?=$reply['post_title']?><small><?=$reply['post_regtime']?></small></h2>
+            <div class="post-reply-contents"><?=$reply['post_content']?></div>
+        </div>
+        <?php endforeach;?>
     </div>
 
     <div class="post-actions">
-        <?php if($this->member->level() >= 8) :?>
         <div class="pull-left">
             <a class="btn btn-dark" href="<?=base_url("board/{$board['brd_key']}").$querystring?>">목록</a>
         </div>
@@ -65,8 +54,7 @@
             <a href="<?=base_url("board/{$board['brd_key']}/reply/{$post['post_idx']}")?>" class="btn btn-primary">답글달기</a>
         <?php endif;?>
 
-        <a class="btn btn-default" href="<?=base_url("board/{$board['brd_key']}/{$post['post_idx']}/edit")?>">글 수정</a>
-        <a class="btn btn-default" href="<?=base_url("board/{$board['brd_key']}/delete/{$post['post_idx']}").$querystring?>" onclick="return confirm('해당 글을 삭제하시겠습니까?');">삭제</a>
-        <?php endif;?>
+        <a class="btn btn-white" href="<?=base_url("board/{$board['brd_key']}/{$post['post_idx']}/edit")?>">글 수정</a>
+        <a class="btn btn-white" href="<?=base_url("board/{$board['brd_key']}/delete/{$post['post_idx']}").$querystring?>" onclick="return confirm('해당 글을 삭제하시겠습니까?');">삭제</a>
     </div>
 </article>

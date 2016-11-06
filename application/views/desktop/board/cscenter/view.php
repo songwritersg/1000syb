@@ -19,24 +19,16 @@
                 <col width="*" />
             </colgroup>
             <tr>
-                <th>업체명</th>
-                <td><?=$post['post_title']?></td>
-            </tr>
-            <tr>
-                <th>담당자 성명</th>
+                <th>작성자</th>
                 <td><?=$post['usr_name']?></td>
             </tr>
             <tr>
-                <th>대표 번호</th>
-                <td><?=$post['post_ext1']?></td>
-            </tr>
-            <tr>
-                <th>핸드폰</th>
+                <th>연락처</th>
                 <td><?=$post['usr_phone']?></td>
             </tr>
             <tr>
-                <th>E-mail</th>
-                <td><?=$post['usr_email']?></td>
+                <th>여행지</th>
+                <td><?=$post['post_ext1']?></td>
             </tr>
         </table>
         <?php

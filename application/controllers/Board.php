@@ -44,6 +44,7 @@ class Board extends SYB_Controller {
 
         $this->data['stxt'] = $param['stxt'] = $this->input->get("stxt", TRUE);
         $this->data['scol'] = $param['scol'] = $this->input->get("scol", TRUE);
+        $this->data['category'] = $param['category'] = $this->input->get("category", TRUE);
 
         // 게시판 목록 가져오기
         $this->data['page'] = $param['page'] = $this->input->get("page", TRUE, 1);
@@ -60,6 +61,9 @@ class Board extends SYB_Controller {
         if( $this->data['stxt'] && $this->data['scol'] ) {
             $qs['stxt'] =$this->data['stxt'];
             $qs['scol'] =$this->data['scol'];
+        }
+        if( $this->data['category'] ) {
+            $qs['category'] = $this->data['category'];
         }
 
         // 게시판 페이지네이션 생성하기
@@ -159,6 +163,12 @@ class Board extends SYB_Controller {
             exit;
         }
 
+        // 질문과 답변게시판은 지사일경우 자신의 카테고리에 관한한 subadmin 권한 획득
+        if( $brd_key == 'sybqna' && $this->member->level() == 7 && $this->member->info('ath_name') == $this->data['post']['post_category'] )
+        {
+            $this->data['auth']['is_subadmin'] = TRUE;
+        }
+
         if( ! $this->data['post']['post_idx'] ){
             alert('존재하지 않는 글이거나, 이미 삭제된 글입니다.');
             exit;
@@ -194,7 +204,7 @@ class Board extends SYB_Controller {
             if( $this->member->is_login() )
             {
                 if(!$this->data['auth']['is_admin'] && !$this->data['auth']['is_subadmin'] && $this->member->info('usr_id') != $this->data['post']['usr_id']) {
-                    alert('비밀글을 열람할 권한이 없습니다.');
+                    alert('비밀글을 열람할 권한이 없습니다.'.$this->member->info('ath_name'));
                     exit;
                 }
             }
@@ -218,6 +228,9 @@ class Board extends SYB_Controller {
         if( $this->input->get('scol', TRUE) && $this->input->get('stxt', TRUE) ) {
             $qs['scol'] = $this->input->get("scol", TRUE);
             $qs['stxt'] = $this->input->get("stxt", TRUE);
+        }
+        if( $this->input->get('category', TRUE)) {
+            $qs['category'] = $this->input->get("category", TRUE);
         }
         $this->data['querystring'] = "?".http_build_query($qs);
 

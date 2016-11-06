@@ -244,6 +244,24 @@ class Board_model extends SYB_Model {
         }
     }
 
+    function get_reply_list( $brd_key, $post_num )
+    {
+        $this->db->where("brd_key", $brd_key);
+        $this->db->where("post_num", $post_num);
+        $this->db->where("post_depth >","0");
+        $this->db->where("post_status", "Y");
+        $this->db->order_by("post_depth ASC");
+        $result = $this->db->get("tbl_board_post");
+        $list = $result->result_array();
+
+        foreach($list as &$row)
+        {
+            $row = $this->adjust_row($row, 0);
+        }
+
+        return $list;
+    }
+
     /**********************************************************
      * 게시판 목록을 가져옵니다.
      * @param array $param
@@ -259,6 +277,7 @@ class Board_model extends SYB_Model {
         $param['stxt']      = element('stxt', $param);
         $param['scol']      = element('scol', $param);
         $param['start']     = ($param['page'] -1) * $param['page_rows'];
+        $param['category']  = element('category',$param);
 
         // 공지글이 아닌 글 가져오기
         $this->db->select("SQL_CALC_FOUND_ROWS *", FALSE);
@@ -267,6 +286,18 @@ class Board_model extends SYB_Model {
         $this->db->where("post_notice","N");
         $this->db->limit( $param['page_rows'] , $param['start'] );
         $this->db->order_by("post_num DESC, post_depth ASC");
+
+        if($param['category']) {
+            $this->db->where("post_category", $param['category']);
+        }
+
+        // 질문과 답변의 경우 원글만 가져온다.
+        if( $param['brd_key']  == 'sybqna')
+        {
+            $this->db->where("post_secret", "Y");
+            $this->db->where("post_depth", "0");
+            $this->db->join("(SELECT COUNT(*)-1 AS `answer_count`, post_idx FROM tbl_board_post WHERE brd_key='sybqna' GROUP BY post_num) AS SC","SC.post_idx=tbl_board_post.post_idx","left");
+        }
 
         // 검색어 처리
         if( $param['stxt'] && $param['scol'] && in_array($param['scol'], $permit_stxt) )
@@ -308,7 +339,6 @@ class Board_model extends SYB_Model {
 
         $result = $this->db->get("tbl_board_post");
         $return['list'] = $result->result_array();
-
         $result = $this->db->query("SELECT FOUND_ROWS() AS `cnt`");
         $return['total_count'] = (int)$result->row(0)->cnt;
 
@@ -508,7 +538,7 @@ class Board_model extends SYB_Model {
         else if( $CI->member->level() >= 7 )
         {
             // 지사일경우
-            $return['is_subadmin'] = TRUE;
+            $return['is_subadmin'] = FALSE;
         }
 
         return $return;
