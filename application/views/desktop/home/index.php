@@ -75,11 +75,11 @@
             <div class="col-7 col">
                 <div class="row" id="image-section">
                     <div class="col col-6">
-                        <a href="#" class="imgcard imgcard-honeymoon">허니문 견적문의</a>
+                        <a href="<?=base_url("board/sybqna/write")?>" class="imgcard imgcard-honeymoon">허니문 견적문의</a>
                     </div>
 
                     <div class="col col-6">
-                        <a href="#" class="imgcard imgcard-estimate">1:1상담신청하기</a>
+                        <a href="<?=base_url("counseling/call")?>" class="imgcard imgcard-estimate">1:1상담신청하기</a>
                     </div>
                 </div>
             </div>
@@ -148,3 +148,11 @@
     </div>
 </article>
 <!-- End:Best 허니문 추천지역-->
+
+<!--
+<div id="mask" style="position:fixed; top:0; left:0; width:100%; height:100%; opacity:0.8; background:#000; -moz-opacity:0.8; z-index:99;"></div>
+<div style="position:fixed; top:50%; left:50%; width:300px; height:300px; margin-left:-150px; margin-top:-150px; background:#fff; z-index:10000">
+    하하하<br>
+    심대리 바보
+</div>
+-->

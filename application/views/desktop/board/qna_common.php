@@ -1,8 +1,8 @@
 <?php
 $board_array = array(
     array("title"=>"Q/A","key"=>"sybqna","url"=>base_url("board/sybqna")),
-    array("title"=>"전화상담신청","key"=>"alliance","url"=>base_url("board/alliance/write")),
-    array("title"=>"평일방문상담","key"=>"article","url"=>base_url("board/article")),
+    array("title"=>"전화상담신청","key"=>"call","url"=>base_url("counseling/call")),
+    array("title"=>"평일방문상담","key"=>"visit","url"=>base_url("counseling/visit")),
 );
 ?>
 <!--END: Breadcrumbs-->

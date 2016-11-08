@@ -29,18 +29,21 @@
                     <input type="text" class="form-control input-md" name="post_title" id="post_title" placeholder="글 제목" value="<?=element('post_title', $post)?>" required="required" data-title="제목">
                 </div>
                 <div class="desc-box">
-                    <?php if($board['brd_use_secret'] == 'Y') :?>
-                    <div class="checkbox checkbox-md">
-                        <input type="checkbox" value="Y" id="post_secret" name="post_secret" <?=element('post_secret', $post)=='Y'?'checked':''?>><label for="post_secret">비밀글</label>
-                    </div>
-                    <?php endif;?>
-
                     <?php if($auth['is_admin']) :?>
                         <div class="checkbox checkbox-md">
                             <input type="checkbox" value="Y" id="post_notice" name="post_notice" <?=element('post_notice', $post)=='Y'?'checked':''?>><label for="post_notice">공지</label>
                         </div>
                     <?php endif;?>
                 </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="form-group-label" for="post_tag">주요 태그</label>
+                <div class="input-box">
+                    <input type="text" class="form-control input-md" name="post_tag" id="post_tag" placeholder="주요 태그" value="<?=element('post_tag', $post)?>">
+                </div>
+                <div class="desc-box">쉼표(,)를 이용하여 여러 키워드를 입력하실수 있습니다.</div>
             </div>
 
             <?php if(! $this->member->is_login()) :?>

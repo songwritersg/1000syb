@@ -37,13 +37,17 @@ $reply_list = $this->board_model->get_reply_list($board['brd_key'], $post['post_
             endforeach;
         endif;?>
         <?=$post['contents']?>
-        <?php foreach($reply_list as $reply) :?>
+    </div>
+
+    <?php foreach($reply_list as $reply) :?>
+        <table class="table table-reply">
+            <th>답변</th>
+            <td><?=$reply['post_content']?></td>
+        </table>
         <div class="post-reply">
             <h2><?=$reply['post_title']?><small><?=$reply['post_regtime']?></small></h2>
-            <div class="post-reply-contents"><?=$reply['post_content']?></div>
         </div>
-        <?php endforeach;?>
-    </div>
+    <?php endforeach;?>
 
     <div class="post-actions">
         <div class="pull-left">

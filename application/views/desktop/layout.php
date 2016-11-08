@@ -70,6 +70,8 @@ var base_url = '<?=base_url()?>';
 </section>
 <!--END:본문영역-->
 
+<?php $branches_list = $this->site_branch_model->get_branch_list(); ?>
+
 <!--START:푸터영역-->
 <footer id="sybFooter">
     <div class="container-fluid" id="sybFooter-header">
@@ -113,8 +115,8 @@ var base_url = '<?=base_url()?>';
 
             <ul class="footer-navigation">
                 <li><a href="http://www.wnfair.com" target="_blank">잠실롯데호텔 <strong>허니문&웨딩 박람회</strong>&nbsp;<i class="fa fa-chevron-circle-right"></i></a></li>
-                <li><a href="#">전국 지사안내&nbsp;<i class="fa fa-chevron-circle-right"></i></a></li>
-                <li><a href="#">보증보험안내&nbsp;<i class="fa fa-chevron-circle-right"></i></a></li>
+                <li><a href="<?=base_url("about/branch")?>">전국 지사안내&nbsp;<i class="fa fa-chevron-circle-right"></i></a></li>
+                <li><a href="<?=base_url("about/#insurance")?>">보증보험안내&nbsp;<i class="fa fa-chevron-circle-right"></i></a></li>
             </ul>
         </div>
     </div>
@@ -126,8 +128,8 @@ var base_url = '<?=base_url()?>';
         </div>
 
         <div class="csbuttons">
-            <a href="" class="btn btn-01">견적문의 요청</a>
-            <a href="" class="btn btn-02">전화문의 요청</a>
+            <a href="<?=base_url("board/sybqna/write")?>" class="btn btn-01">견적문의 요청</a>
+            <a href="<?=base_url("counseling/call")?>" class="btn btn-02">전화문의 요청</a>
         </div>
         <div class="clearfix"></div>
     </article>
@@ -240,13 +242,9 @@ var base_url = '<?=base_url()?>';
                 </p>
                     <dl class="address-list">
                         <dt>본사 주소</dt><dd>서울시 강남구 봉은사로 437, (소암빌딩 4F)</dd>
-                        <dt>광주 지사</dt><dd>광주광역시 동구 서석로 7</dd>
-                        <dt>인천 지사</dt><dd>인천광역시 남구 주안동 1422-3 펠로다이아몬드 2F</dd>
-                        <dt>부산 지사</dt><dd>부산 부산진구 부전2동 155-4 전자랜드 본점 5F</dd>
-                        <dt>창원 지사</dt><dd>경남 창원 의창구 명서동 서울종합상가 101호</dd>
-                        <dt>천안 지사</dt><dd>충남 천안시 서북구 쌍용동 210-27 우준빌딩 3F</dd>
-                        <dt>대구 지사</dt><dd>대구광역시 중구 공평로 11</dd>
-                        <dt>청주 지사</dt><dd></dd>
+                        <?php foreach($branches_list as $row) :?>
+                        <dt><?=$row['bnc_name']?></dt><dd><?=$row['bnc_address']?></dd>
+                        <?php endforeach;?>
                     </dl>
                 <p>
                     <span>Copyright &copy; 천생연분닷컴 All rights reserved.</span>
@@ -256,15 +254,12 @@ var base_url = '<?=base_url()?>';
             <div class="footer-award">
                 <h5>AWARDS</h5>
                 <img src="/static/images/layout/footer_banner_award.png" alt="브랜드 대상 수상, 서비스지수1위 수상"><br>
-                <select data-toggle="syb-select">
+
+                <select data-toggle="syb-select" onchange="location.href=this.value;">
                     <option value="">전국지사 바로가기</option>
-                    <option value="">광주 지사</option>
-                    <option value="">인천 지사</option>
-                    <option value="">부산 지사</option>
-                    <option value="">창원 지사</option>
-                    <option value="">천안 지사</option>
-                    <option value="">대구 지사</option>
-                    <option value="">청주 지사</option>
+                    <?php foreach($branches_list as $row):?>
+                    <option value="<?=base_url("about/branch/".urlencode($row['bnc_name']))?>"><?=$row['bnc_name']?></option>
+                    <?php endforeach;?>
                 </select>
             </div>
         </div>

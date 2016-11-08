@@ -46,6 +46,16 @@ class Board_model extends SYB_Model {
                 }
             }
 
+            // 해당 게시판의 extra field를 가져온다.
+            $this->db->where("brd_key", $brd_key);
+            $result = $this->db->get("tbl_board_extra");
+            $list = $result->result_array();
+            $board['extra'] = array();
+            foreach($list as $row)
+            {
+                $board['extra'][$row['ext_key']] = $row['ext_value'];
+            }
+
             $this->cache->save("board_info_".$brd_key, $board, 60*5);
         }
 
@@ -278,6 +288,7 @@ class Board_model extends SYB_Model {
         $param['scol']      = element('scol', $param);
         $param['start']     = ($param['page'] -1) * $param['page_rows'];
         $param['category']  = element('category',$param);
+        $param['get_reply'] = element('get_reply', $param) == TRUE ? TRUE : FALSE;
 
         // 공지글이 아닌 글 가져오기
         $this->db->select("SQL_CALC_FOUND_ROWS *", FALSE);
@@ -292,11 +303,22 @@ class Board_model extends SYB_Model {
         }
 
         // 질문과 답변의 경우 원글만 가져온다.
-        if( $param['brd_key']  == 'sybqna')
+        if( $param['brd_key'] == 'sybqna' )
         {
             $this->db->where("post_secret", "Y");
+        }
+        else if ($param['brd_key'] == 'trstory')
+        {
+            $CI =& get_instance();
+            if($CI->member->level() < 8) {
+                $this->db->where("post_ext1", "Y");
+            }
+        }
+
+        if( !$param['get_reply'])
+        {
             $this->db->where("post_depth", "0");
-            $this->db->join("(SELECT COUNT(*)-1 AS `answer_count`, post_idx FROM tbl_board_post WHERE brd_key='sybqna' GROUP BY post_num) AS SC","SC.post_idx=tbl_board_post.post_idx","left");
+            $this->db->join("(SELECT COUNT(*)-1 AS `answer_count`, post_idx FROM tbl_board_post WHERE brd_key='{$param['brd_key']}' GROUP BY post_num) AS SC","SC.post_idx=tbl_board_post.post_idx","left");
         }
 
         // 검색어 처리

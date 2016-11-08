@@ -245,6 +245,8 @@ class Board extends SYB_Controller {
 
         // 메타태그 설정
         $this->site->meta_title = $this->data['post']['post_title'];
+        $this->site->meta_keywords = $this->data['post']['post_tag'];
+        $this->site->meta_description = trim(preg_replace('/\s\s+/', ' ', cut_str(strip_tags($this->data['post']['post_content']),300)));
 
         // Device에 따른 스킨 설정
         $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_mobile'] : $this->data['board']['brd_skin'];

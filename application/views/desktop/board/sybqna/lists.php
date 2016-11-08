@@ -25,7 +25,7 @@
         <tbody>
         <?php if(count($list) == 0) :?>
             <tr>
-                <td colspan="5">등록된 글이 없습니다.</td>
+                <td colspan="7">등록된 글이 없습니다.</td>
             </tr>
         <?php else :?>
             <?php foreach($notice as $row) :?>
