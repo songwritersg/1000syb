@@ -149,10 +149,31 @@
 </article>
 <!-- End:Best 허니문 추천지역-->
 
+<?php
+if($this->site->config('site_poplayer') && ! $this->input->cookie('syb_poplayer')) :
+    $poplayer = json_decode($this->site->config('site_poplayer'), TRUE);
+    if($poplayer['active'] == 'Y') : ?>
+    <div id="mask"></div>
+    <div id="popup-layer" style="width:<?=$poplayer['width']?>px; height:<?=$poplayer['height']?>px; margin-left:-<?=$poplayer['width']/2?>px; margin-top:-<?=$poplayer['height']/2?>px;">
+        <img src="<?=base_url($poplayer['file_name'])?>" style="width:<?=$poplayer['width']?>px; height:<?=$poplayer['height']?>px;" alt="팝업 공지">
+        <button type="button" data-toggle="close">&times;</button>
+        <button type="button" data-toggle="cookie-close">오늘 하루 열지 않기</button>
+    </div>
+    <script>
+        $("#popup-layer [data-toggle='close']").on('click',function(){
+            $("#popup-layer").remove();
+            $('#mask').remove();
+        });
+        $("#popup-layer [data-toggle='cookie-close']").on('click',function(){
+            $.cookie('syb_poplayer', 1, {expires:1});
+            $("#popup-layer").remove();
+            $('#mask').remove();
+        });
+    </script>
+    <?php
+    endif;
+endif;?>
+
 <!--
-<div id="mask" style="position:fixed; top:0; left:0; width:100%; height:100%; opacity:0.8; background:#000; -moz-opacity:0.8; z-index:99;"></div>
-<div style="position:fixed; top:50%; left:50%; width:300px; height:300px; margin-left:-150px; margin-top:-150px; background:#fff; z-index:10000">
-    하하하<br>
-    심대리 바보
-</div>
+
 -->

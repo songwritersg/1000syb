@@ -66,7 +66,7 @@ class Counseling extends SYB_Controller {
             }
 
             if( $this->db->insert("tbl_consulting", $data) ) {
-                alert("신청이 완료되었습니다.");
+                alert("신청이 완료되었습니다.", base_url());
                 exit;
             }
             else

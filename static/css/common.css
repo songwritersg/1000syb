@@ -498,6 +498,14 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 .ui-state-active { background:#33bfb2; color:#fff; }
 .ui-datepicker td a:hover { color:#33bfb2; }
 
+/** 팝업레이어 **/
+#mask {position:fixed; top:0; left:0; width:100%; height:100%; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; filter:progid:DxImageTransform.Microsoft.Alpha(opacity=80); opacity:0.8; background:#000; -moz-opacity:0.8; z-index:999;}
+#popup-layer {position:fixed; top:50%; left:50%; z-index:1000;}
+#popup-layer button { position:absolute; border:0px; background:transparent; color:#fff; outline:none; cursor:pointer;}
+#popup-layer button[data-toggle="close"] { top:-40px; right:0px; font-size:32px; }
+#popup-layer button[data-toggle="cookie-close"] { top:-30px; left:0px; font-size:16px;}
+#popup-layer button:hover { color:#33bfb2; }
+
 /******************************************************************************************************
  * LAYOUT
  *****************************************************************************************************/
