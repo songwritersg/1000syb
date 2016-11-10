@@ -184,7 +184,7 @@ class Site {
     public function display_meta(){
         // Default 값 설정
         $this->meta_title = $this->meta_title ? $this->meta_title : $this->config('site_subtitle');
-        if( ! empty($this->meta_title) ) $this->meta_title .= ' | ';
+        if( ! empty($this->meta_title) ) $this->meta_title .= ' :: ';
         $this->meta_title .= $this->config('site_title');
         $this->meta_description = $this->meta_description ? $this->meta_description : $this->config('meta_description');
         $this->meta_keywords = $this->meta_keywords ? $this->meta_keywords : "";

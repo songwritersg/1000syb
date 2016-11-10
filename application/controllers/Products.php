@@ -150,4 +150,119 @@ class Products extends SYB_Controller {
         $this->layout = $this->site->get_layout();
         $this->view = "products/recommend";
     }
+
+    function mail_preview()
+    {
+        $data['mail_subject'] = "이메일 템플릿";
+        $data['sales_comment'] = "";
+        $this->load->view("mail/program",$data);
+    }
+
+    /*******************************************************************************************
+     *
+     * 메일 보내기
+     *
+     *******************************************************************************************/
+    function mailform()
+    {
+        $this->load->library("form_validation");
+
+        $this->form_validation->set_rules("mail_subject", "메일 제목", "required|trim");
+        $this->form_validation->set_rules("mail_sender", "보내는 이", "required|trim");
+        $this->form_validation->set_rules("mail_receiver", "받는 이", "required|trim");
+
+        if( $this->form_validation->run() == FALSE )
+        {
+            $this->data['sca_parent'] = $this->input->get("sca_parent");
+            $this->data['sca_key'] = $this->input->get("sca_parent");
+            $this->data['prd_idx'] = $this->input->get("prd_idx");
+            $this->data['prg_idx'] = $this->input->get("prg_idx");
+
+            if(empty($this->data['prd_idx']))
+            {
+                alert_close('잘못된 접근입니다.');
+                exit;
+            }
+
+            $this->data['product'] = $this->product_model->get_product($this->data['prd_idx']);
+
+            if( empty($this->data['product']) )
+            {
+                alert('잘못된 접근입니다.');
+                exit;
+            }
+
+            // 일정표 정보를 가져온다.
+            $this->data['program_info'] = $this->product_model->get_program($this->data['prg_idx']);
+            if(! $this->data['program_info'] )
+            {
+                alert('잘못된 접근입니다.');
+                exit;
+            }
+
+            $this->site->meta_title = "메일 보내기";
+            $this->layout = "popup";
+            $this->view = "products/mailform";
+        }
+        else
+        {
+            $config['protocol'] = 'sendmail';
+            $config['mailpath'] = '/usr/sbin/sendmail';
+            $config['wordwrap'] = TRUE;
+            $config['crlf'] = "\r\n";
+            $config['newline'] = "\r\n";
+            $config['mailtype'] = 'html';
+            $this->load->library('email');
+            $this->email->initialize($config);
+
+            $mail_data['sca_parent'] = $this->input->post("sca_parent");
+            $mail_data['sca_key'] = $this->input->post("sca_parent");
+            $mail_data['prd_idx'] = $this->input->post("prd_idx");
+            $mail_data['prg_idx'] = $this->input->post("prg_idx");
+
+            $mail_data['product'] = $this->product_model->get_product($mail_data['prd_idx']);
+            $mail_data['program_info'] = $this->product_model->get_program($mail_data['prg_idx']);
+
+            $mail_data['sales_comment'] = $this->input->post("sales_comment", TRUE);
+            $mail_data['mail_subject'] = $this->input->post("mail_subject");
+            $mail_content = $this->load->view("mail/program",$mail_data,TRUE);
+
+            $attach_list = $this->input->post("attach_list");
+            $attach_name = $this->input->post("attach_name");
+
+            $this->email->from( $this->input->post('mail_sender') );
+            $this->email->to( $this->input->post('mail_receiver') );
+            $this->email->subject($this->input->post("mail_subject"));
+            $this->email->set_mailtype("html");
+            $this->email->message($mail_content);
+
+            for($i=0; $i<count($attach_list); $i++)
+            {
+                $this->email->attach($attach_list[$i],'attachment',$attach_name[$i]);
+            }
+
+            /*
+$this->load->view('mail/program', $mail_data);
+            */
+            if( $this->email->send() )
+            {
+                foreach($attach_list as $file)
+                {
+                    //@unlink($file);
+                }
+                alert_close("메일 전송이 완료되었습니다.");
+                exit;
+            }
+            else
+            {
+                foreach($attach_list as $file)
+                {
+                    //@unlink($file);
+                }
+                alert('메일전송에 실패하였습니다.');
+                exit;
+            }
+
+        }
+    }
 }

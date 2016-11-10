@@ -20,6 +20,56 @@ class Products extends REST_Controller {
         $this->return['message'] = NULL;
     }
 
+    /*******************************************************************************************************
+     * 이메일 보내기 파일첨부
+     *******************************************************************************************************/
+    function attach_post()
+    {
+        $this->load->library("upload");
+
+        $upload_url = "files/attach/".date('Y')."/".date('m')."/";
+        make_dir($upload_url);
+        $upload_path = "./".$upload_url;
+
+        if (isset($_FILES)
+            && isset($_FILES['userfile'])
+            && isset($_FILES['userfile']['name'])) {
+
+            $uploadconfig = array( 'upload_path' => $upload_path, 'allowed_types' => '*', 'max_size' => 15 * 1024, 'encrypt_name' => true);
+            $this->upload->initialize($uploadconfig);
+
+            if ($this->upload->do_upload('userfile')) {
+                $filedata = $this->upload->data();
+                $this->response(["status"=>TRUE, "result"=>$filedata],SELF::HTTP_OK );
+
+            } else {
+                $this->response(["status"=>FALSE, "result"=>$this->upload->display_errors(' ',' ')],SELF::HTTP_OK );
+            }
+
+        }
+    }
+
+    /*******************************************************************************************************
+     * 이메일 보내기 파일첨부 삭제
+     *******************************************************************************************************/
+    function attach_delete()
+    {
+        $path = $this->delete('path', TRUE);
+        if($path && file_exists($path))
+        {
+            if( @unlink($path) ) {
+                echo "SUCCESS";
+            }
+            else {
+                echo "REMOVE FAILED";
+            }
+        }
+        else
+        {
+            echo "FILE NOT FOUND";
+        }
+    }
+
     function sybqna_post()
     {
         $this->load->model('board_model');

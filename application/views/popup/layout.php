@@ -11,6 +11,9 @@
 <body>
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js", TRUE)?>
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js")?>
+<?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")?>
+<?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js")?>
+<?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js")?>
 <?=$this->site->add_js("/static/js/common.js", TRUE)?>
 <?=$this->site->display_js();?>
 

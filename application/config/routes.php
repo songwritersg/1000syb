@@ -54,7 +54,7 @@ $route['404_override'] = 'helptool/page_404';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['404'] = 'helptool/page_404';
-
+$route['products/mailform'] = 'products/mailform';
 $route['products/gallery/(:num)']= 'products/gallery/$1';
 $route['products/(:any)'] = 'products/lists/$1';
 $route['products/(:any)/(:any)']= 'products/lists/$1/$2';

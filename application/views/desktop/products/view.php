@@ -59,7 +59,7 @@
                 <li class=""><a href="#" data-toggle="sns-share" data-service="band" data-title="<?=$product['prd_title']?>" data-url="<?=current_url()?>">밴드 공유하기</a></li>
                 <li class=""><a href="#" data-toggle="sns-share" data-service="naver" data-title="<?=$product['prd_title']?>" data-url="<?=current_url()?>">네이버 공유하기</a></li>
             </ul>
-            <button type="button" class="btn btn-primary">메일 보내기</button>
+            <button type="button" class="btn btn-primary" data-toggle="send-mail" data-idx="<?=$product['prd_idx']?>" data-prg="<?=$prg_idx?>" data-key="<?=$sca_key?>" data-parent="<?=$sca_parent?>">메일 보내기</button>
         </div>
         <div class="clearfix"></div>
 
@@ -427,6 +427,18 @@ $(function(){
                 return false;
             }
         });
+    });
+
+    $("[data-toggle='send-mail']").on('click', function(e){
+        var prd_idx = $(this).data('idx');
+        var sca_key = $(this).data('key');
+        var sca_parent = $(this).data('parent');
+        var prg_idx = $(this).data('prg');
+        if( ! prd_idx || ! sca_key || !sca_parent ) return false;
+        $.popup({
+            url : '/products/mailform/?prd_idx='+prd_idx+"&prg_idx="+prg_idx+"&sca_key="+sca_key+"&sca_parent="+sca_parent,
+            width : 700
+        })
     });
 
     $("a[data-toggle='open-sybqna']").on('click',function(e){

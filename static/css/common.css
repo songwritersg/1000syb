@@ -62,8 +62,9 @@ input[type='search']::-webkit-search-cancel-button {-webkit-appearance:none}
 .text-center {text-align:center !important;}
 .text-right {text-align:right !important;}
 
-.text-color-blue {color:#395cb3}
-.text-color-green {color:#50a232}
+.text-color-blue { color:#395cb3; }
+.text-color-green { color:#50a232; }
+.text-color-red { color:#ff0000; }
 
 .table .thead-icon { vertical-align:middle; display:inline-block; margin-right:20px;}
 
@@ -659,17 +660,20 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #best-honeymoon #slide-best-honeymoon ul.slides { margin:0; padding:0; list-style:none; height:250px;}
 #best-honeymoon #slide-best-honeymoon ul.slides li { display:block; float:left; padding-left:1px; padding-right:1px; }
 #best-honeymoon #slide-best-honeymoon ul.slides li > a { display:block; float:left;}
-#best-honeymoon #slide-best-honeymoon ul.slides li > a > img { width:531px; height:250px; }
-#best-honeymoon #slide-best-honeymoon ul.slides li > a + a { margin-left:26px; }
+#best-honeymoon #slide-best-honeymoon ul.slides li > a > img { width:535px; height:250px; }
+#best-honeymoon #slide-best-honeymoon ul.slides li > a + a { margin-left:20px; }
 #best-honeymoon #slide-best-honeymoon ul.slides:after { clear:both; content:''; display:table;}
 
-#best-honeymoon #slide-best-honeymoon-list ul.slides li {  width:260px; height:auto; float:left; margin-right:16px; }
+#best-honeymoon #slide-best-honeymoon-list ul.slides li {  width:260px; height:auto; float:left; margin-right:16px; box-shadow:0px 1px 1px rgba(0,0,0,0.4);}
 #best-honeymoon #slide-best-honeymoon-list ul.slides li > a {}
 #best-honeymoon #slide-best-honeymoon-list ul.slides li > a > img { display:block; width:260px; height:195px;border:1px solid #ddd; border-bottom:0px; }
-#best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content { background:#fff; height:130px; width:260px;border:1px solid #ddd; border-top:0px; padding:25px 55px 25px 35px; position:relative;}
-#best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content i { position:absolute; right:10px; bottom:40px; }
+
+#best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content { background:#fff; height:130px; width:260px;border:1px solid #ddd; border-top:0px; padding:25px 55px 25px 35px; position:relative; }
+#best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content i { position:absolute; right:20px; bottom:40px; }
 #best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content h6 { font-size:13px; color:#828282; font-family:Arial,sans-serif; padding:0; margin:0; margin-bottom:20px;}
-#best-honeymoon #slide-best-honeymoon-list ul.slides li > a:hover .content { color:#33bfb2; border-color:#33bfb2;}
+#best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content p { font-size:14px; letter-spacing:-0.075em; }
+
+#best-honeymoon #slide-best-honeymoon-list ul.slides li > a:hover .content { color:#33bfb2; border-color:#33bfb2; }
 #best-honeymoon #slide-best-honeymoon-list ul.slides li > a:hover > img { border-color:#33bfb2; }
 #best-honeymoon #slide-best-honeymoon-list .slide-indicator { position:absolute; width:100%; top:50%; margin-top:-12.5px; }
 #best-honeymoon #slide-best-honeymoon-list .slide-indicator li { position:absolute; display:block; width:25px; height:25px; left:15px; z-index:10; }
@@ -974,6 +978,26 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #product-view #product-common .common-panel .common-header h5 { height:40px; background:#404040; font-size:20px; color:#fff; padding-left:30px; line-height:40px;}
 #product-view #product-common .common-panel .common-body { border:1px solid #404040; padding:15px; font-size:12px; font-family:'돋움','Dotum' !important;}
 
+
+/** 메일 보내기 **/
+#mailform { width:620px; margin:auto;}
+#mailform .product-view-header { padding:15px;}
+#mailform .product-view-header h1 { font-size:28px; font-weight:bold; }
+#mailform .product-view-header h3 { font-size:18px; font-weight:200; }
+
+#mailform .mail-form-container .form-group { border:1px solid #ddd; background:#f9f9f9; }
+#mailform .mail-form-container .form-group + .form-group { border-top:0px; }
+#mailform .mail-form-container .form-group.action-box { padding:30px; text-align:center; }
+#mailform .mail-form-container .form-group.action-box .btn { padding:10px 45px;}
+#mailform .mail-form-container .form-group:after {display:table; content:' '; clear:both;}
+#mailform .mail-form-container .form-group label.form-group-label { display:block; float:left; width:170px; text-align:center; height:70px; line-height:70px; background:#fff;}
+#mailform .mail-form-container .form-group .input-box { display:block; float:left; width:415px; line-height:70px; padding:15px 10px;  }
+#mailform .mail-form-container .form-group .input-box input + input { margin-top:15px; }
+#mailform .mail-form-container .form-group .help-block { margin:0; padding:0; height:auto; line-height:1.4; margin-top:5px; }
+#mailform .mail-form-container .form-group .input-box.button-box { line-height:1.4; }
+#mailform .mail-form-container .form-group .attach-list { line-height:1.2; margin:0; padding:0; list-style:none; margin-top:10px; border:1px solid #ddd; width:100%; background:#fff; padding:20px; }
+#mailform .mail-form-container .form-group .attach-list li { display:block; }
+#mailform .mail-form-container .form-group .attach-list li + li { margin-top:5px; }
 
 /******************************************************************************************************
  * 상담신청 페이지 (방문상담/전화상담)

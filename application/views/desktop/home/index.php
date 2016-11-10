@@ -132,17 +132,17 @@
                 <li class="right"><a href="javascript:;" onclick="best_honeymonn_list_slider.move_next();"><i class="fa fa-chevron-right"></i></a> </li>
             </ol>
             <ul class="slides">
-                <?php for($i=0; $i<=12; $i++):?>
+                <?php foreach($best_products as $row):?>
                 <li>
-                    <a href="#">
-                        <img src="http://placehold.it/260x195" alt="260x195">
+                    <a href="<?=base_url("products/{$row['sca_parent']}/{$row['sca_key']}/{$row['prd_idx']}")?>">
+                        <img src="<?=base_url($row['prd_thumb'])?>" alt="260x195">
                         <div class="content">
-                            <h6>KOH KOKUT</h6>
-                            <p>[오전출발] 반얀트리<br>풀빌라 4박5일<i class="fa fa-chevron-circle-right "></i></p>
+                            <h6><?=$row['cty_name']?></h6>
+                            <p><?=preg_replace("/\\[|\\]/","",$row['prd_title'])?><i class="fa fa-chevron-circle-right "></i></p>
                         </div>
                     </a>
                 </li>
-                <?php endfor;?>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>

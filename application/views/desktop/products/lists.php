@@ -24,7 +24,7 @@
                     <img class="product-thumbnail" src="<?=base_url($category["sca_top_".$i]['prd_thumb'])?>" alt="<?=$category["sca_top_".$i]['prd_title']?>">
                     <div class="img-overlay"></div>
                     <div class="product-detail">
-                        <h4><?=$category["sca_top_".$i]['prd_title']?></h4>
+                        <h4><?=preg_replace("/\\[|\\]/","",$category["sca_top_".$i]['prd_title'])?></h4>
                         <p><?=$category["sca_top_".$i]['prd_detail']?></p>
                         <a class="btn btn-primary" href="<?=base_url("products/{$category['sca_top_'.$i]['sca_parent']}/{$category['sca_top_'.$i]['sca_key']}/{$category['sca_top_'.$i]['prd_idx']}")?>">상품보기&nbsp;<i class="fa fa-caret-right"></i></a>
                     </div>

@@ -17,6 +17,16 @@ class Home extends SYB_Controller {
         $this->data['main_middle_banners'] = $this->banner->lists("MAIN_MIDDLE");
         $this->data['main_best_banners'] = $this->banner->lists("MAIN_BEST");
 
+        // BEST 상품목록을 가져온다.
+        $this->db->select("B.*,P.prd_title, P.prd_thumb, C.cty_name");
+        $this->db->from("tbl_site_product_best AS B");
+        $this->db->join("tbl_product AS P","P.prd_idx=B.prd_idx","inner");
+        $this->db->join("tbl_country_city AS C","C.cty_key=P.cty_key","inner");
+        $this->db->order_by("B.spb_sort ASC");
+        $result = $this->db->get();
+
+        $this->data['best_products'] = $result->result_array();
+
 	    $this->view = "home/index";
         $this->layout = "desktop";
 	}
