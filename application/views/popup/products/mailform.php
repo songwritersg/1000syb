@@ -50,15 +50,65 @@
         <div class="editor-form">
             <textarea id="sales_comment" name="sales_comment" class="tinymce"></textarea>
         </div>
+
+        <img class="wide-banner margin-top-30" src="<?=base_url("/static/images/mailform/title_schedule.jpg")?>">
+        <?php for($day=1; $day<count($program_info['schedule']); $day++) : ?>
+        <table class="table table-bordered table-schedules">
+            <thead>
+            <tr>
+                <th style="width:80px;" class="days-info"><?=$day?>일차</th>
+                <th style="width:240px;border:0px"></th>
+                <th style="border:0px" class="days-meal-b"><?=$program_info['schedule'][$day-1]['meal']['b']?'<img style="vertical-align:middle" src="/static/images/mailform/icon_meal_b.png">'.$program_info['schedule'][$day-1]['meal']['b']:'&nbsp;'?></th>
+                <th style="border:0px" class="days-meal-l"><?=$program_info['schedule'][$day-1]['meal']['l']?'<img style="vertical-align:middle" src="/static/images/mailform/icon_meal_l.png">'.$program_info['schedule'][$day-1]['meal']['l']:'&nbsp;'?></th>
+                <th style="border:0px" class="days-meal-d"><?=$program_info['schedule'][$day-1]['meal']['d']?'<img style="vertical-align:middle" src="/static/images/mailform/icon_meal_d.png">'.$program_info['schedule'][$day-1]['meal']['d']:'&nbsp;'?></th>
+            </tr>
+            </thead>
+            <tbody class="tbody-schedule-detail">
+            <?php foreach($program_info['schedule'][$day-1]['items'] as $item) : ?>
+                <tr>
+                    <td colspan="5"><?=$item['content']?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php endfor;?>
     </div>
-    
+    <textarea name="content" class="hide"></textarea>
     <div class="text-center margin-top-30 margin-bottom-50">
-        <button type="submit" class="btn btn-primary btn-lg">메일 보내기</button>
+        <button type="submit" class="btn btn-primary btn-lg" onclick="get_data();">메일 보내기</button>
     </div>
     <?=form_close()?>
 </article>
 
 <script>
+    function get_data()
+    {
+        var data =[];
+        $(".table-schedules").each(function(){
+            var day = $(this).find('.days-info').text();
+            var meal_b = $(this).find('.days-meal-b').text();
+            var meal_l = $(this).find('.days-meal-l').text();
+            var meal_d = $(this).find('.days-meal-d').text();
+            var detail = [];
+
+            $(this).find('.tbody-schedule-detail > tr').each(function(){
+                detail.push( $(this).find('td').html() );
+            });
+
+            var tmp = {
+                day: day,
+                meal : {
+                    b: meal_b,
+                    l: meal_l,
+                    d: meal_d
+                },
+                content : detail
+            };
+            data.push(tmp);
+        });
+        $("textarea[name='content']").val( JSON.stringify(data));
+    }
+
     $(function(){
         $(".tinymce").each(function(){
             var editor_id = $(this).attr('id');
