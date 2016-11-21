@@ -231,7 +231,7 @@ class Products extends SYB_Controller {
             $attach_list = $this->input->post("attach_list");
             $attach_name = $this->input->post("attach_name");
 
-            $this->email->from("no-reply@1000syb.com");
+            $this->email->from("no-reply@1000syb.com",'천생연분닷컴');
             $this->email->to( $this->input->post('mail_receiver') );
             $this->email->reply_to($this->input->post('mail_sender'));
             $this->email->subject($this->input->post("mail_subject"));
@@ -243,8 +243,8 @@ class Products extends SYB_Controller {
                 $this->email->attach($attach_list[$i],'attachment',$attach_name[$i]);
             }
 
-            //$this->load->view('mail/program', $mail_data);
-
+            $this->load->view('mail/program', $mail_data);
+            /*
             if( $this->email->send() )
             {
                 foreach($attach_list as $file)
@@ -263,6 +263,7 @@ class Products extends SYB_Controller {
                 alert('메일전송에 실패하였습니다.');
                 exit;
             }
+            */
         }
     }
 }

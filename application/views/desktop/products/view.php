@@ -437,7 +437,7 @@ $(function(){
         if( ! prd_idx || ! sca_key || !sca_parent ) return false;
         $.popup({
             url : '/products/mailform/?prd_idx='+prd_idx+"&prg_idx="+prg_idx+"&sca_key="+sca_key+"&sca_parent="+sca_parent,
-            width : 700
+            width : 900
         })
     });
 

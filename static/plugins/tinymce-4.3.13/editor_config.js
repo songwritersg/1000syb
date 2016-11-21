@@ -4,14 +4,14 @@ $(document).ready(function(){
 		var editor_id = $(this).attr('id');
 		var width = $(this).data('width');
 		if( typeof width == 'undefined' || ! width ) {
-			width = '99%';
+			width = '100%';
 		}
 		if( !editor_id || $(this).prop("nodeName") != 'TEXTAREA' ) return true;
 
 		tinymce.init({ 
 			selector:'textarea#'+editor_id,
 			height : 600,
-			width : width,
+			width : '100%',
 			theme_advanced_resizing: true,
     		theme_advanced_resizing_use_cookie : false,
 			menubar : false,
