@@ -1,4 +1,4 @@
-<?=$this->site->add_js("/static/js/members.js")?>
+<?=$this->site->add_js("/static/js/members.min.js")?>
 <article class="container">
     <div id="login-box">
         <?=form_open(NULL, array("id"=>"form-login", "onsubmit"=>"return members.login();"))?>

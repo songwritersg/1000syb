@@ -1,5 +1,4 @@
 <?php $this->load->view('desktop/board/customer_common');?>
-<?=$this->site->add_js("/static/js/board.js");?>
 <?=$this->site->add_js("/static/plugins/tinymce-4.3.13/tinymce.min.js");?>
 <?=$this->site->add_js("/static/plugins/tinymce-4.3.13/editor_config.js");?>
 <article id="skin-cscenter-write" class="container">

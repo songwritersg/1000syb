@@ -549,7 +549,7 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #sybFooter #sybFooter-header { background:#f7f7f7; padding-top:30px; border-bottom:1px solid #ddd;}
 #sybFooter .footer-navigation {margin:0; padding:0; list-style:none;}
 #sybFooter .footer-navigation li { display:block; float:left;  }
-#sybFooter .footer-navigation li > a {display:block; width:100%; height:70px; line-height:70px; border:1px solid #ddd; width:363px; border-bottom:0px; text-align:center; background:#f8f7f8; font-size:16px; font-weight:bold;}
+#sybFooter .footer-navigation li > a {display:block; width:100%; height:70px; line-height:70px; border:1px solid #ddd; width:363px; border-bottom:0px; text-align:center; background:#f8f7f8; font-size:16px;}
 #sybFooter .footer-navigation li > a >i {color:#7d7d7d;}
 #sybFooter .footer-navigation li > a:hover {background:#fff; }
 #sybFooter .footer-navigation:after {clear:both; content:''; display:table;}
@@ -564,7 +564,7 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #sybFooter #footer-cscenter .csbuttons .btn.btn-01:hover { background:url(../images/layout/footer_cs_button_01_hover.jpg) no-repeat; }
 #sybFooter #footer-cscenter .csbuttons .btn.btn-02:hover { background:url(../images/layout/footer_cs_button_02_hover.jpg) no-repeat; }
 
-#sybFooter .recent { position:relative; margin-bottom:20px;}
+#sybFooter .recent { position:relative; margin-bottom:40px;}
 #sybFooter .recent .recent-header {  }
 #sybFooter .recent .recent-header h5 { display:block; margin:0; padding:0px 10px; width:100%; height:50px; background:#f8f7f8; color:#979797; border:1px solid #ddd;  line-height:50px; font-size:14px;}
 #sybFooter .recent .recent-header h5 > strong { font-size:16px; color:#282828; margin-right:5px; }
@@ -632,7 +632,7 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #movie-slider .card { display:block; position:relative; width:100%; min-height:1px; z-index:5; height:400px; color:inherit}
 #movie-slider .card a { color:inherit; text-decoration:none !important;}
 #movie-slider .card .thumbnail { position:relative; }
-#movie-slider .card .thumbnail figure > img { display:block; max-width:100%; }
+#movie-slider .card .thumbnail figure > img { display:block; max-width:100%; width:441px; height:294px; }
 #movie-slider .card .thumbnail figure > figcaption { display:none; }
 #movie-slider .card .thumbnail .mask { width:100%; height:100%; position:absolute; top:0px; left:0px; -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50); filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50); opacity:0.5; background:#4a4a4a; -moz-opacity:0.5; -webkit-opacity:0.5; z-index:9; }
 #movie-slider .card .thumbnail .youtube-icon { position:absolute; display:block; top:50%; left:50%; width:76px; height:76px; margin-left:-38px; margin-top:-38px; background:url(../images/icons/icon_play_youtube.png) no-repeat; z-index:10;}
@@ -847,7 +847,7 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #product-lists { padding-top:30px;  }
 #product-lists h2.category-title { font-size:32px; color:#282828; font-weight:bold; font-family:Arial, sans-serif}
 #product-lists h2.category-title strong { color:#33bfb2; }
-#product-lists .category-list { margin:0; padding:0; list-style:none; white-space:nowrap; display:table; width:100%; table-layout: fixed; border-collapse: collapse; border:1px solid #ddd; position:relative; margin-bottom:30px;}
+#product-lists .category-list { margin:0; padding:0; list-style:none; white-space:nowrap; display:table; width:100%; table-layout: fixed; border-collapse: collapse; border:1px solid #ddd; position:relative; margin-bottom:30px; margin-top:20px;}
 #product-lists .category-list li { display:table-cell; vertical-align:middle;  }
 #product-lists .category-list li + li:before { content:''; display:inline-block; position:absolute; background:#ddd; width:1px; height:16px; top:15px; }
 #product-lists .category-list li a { display:block; text-align:center; font-size:15px; height:48px; vertical-align:middle; line-height:48px;}
@@ -855,13 +855,14 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #product-lists .category-list li + li.active:before { background:#282828; }
 
 #product-lists .product-list { width:100%;}
-#product-lists .product-list ul { margin:0;padding:0; list-style:none; position:relative; margin-left:-10px; margin-right:-10px;}
+#product-lists .product-list ul { margin:0;padding:0; list-style:none; position:relative; margin-left:-10px; margin-right:-10px; margin-bottom:50px;}
+#product-lists .product-list ul:after { clear:both; content:''; display:block; }
 #product-lists .product-list ul > li { height:400px; width:370px; float:left; padding-left:10px; padding-right:10px; margin-bottom:15px;}
 #product-lists .product-list ul > li > a { display:block; }
 #product-lists .product-list ul > li > a > .thumbnails { width:350px; height:260px; }
 #product-lists .product-list ul > li > a >.thumbnails img { width:350px; height:260px; border:1px solid #ddd; display:block; transition:border-color .5s; border-bottom:0px;}
 #product-lists .product-list ul > li > a > .info { height:140px; background:#fff; border:1px solid #ddd; border-top:0px;transition:border-color .5s; padding:25px;}
-#product-lists .product-list ul > li > a > .info > h3.product-title { font-size:16px; color:#404040; font-weight:bold; line-height:1; letter-spacing:-0.05em;}
+#product-lists .product-list ul > li > a > .info > h3.product-title { font-size:16px; color:#404040; font-weight:normal; line-height:1; letter-spacing:-0.05em;}
 #product-lists .product-list ul > li > a > .info > h4.city-name { font-size:14px; color:#767676; font-weight:200; margin-bottom:10px; line-height:1; letter-spacing:-0.05em;}
 #product-lists .product-list ul > li > a > .info > p.description { margin:0; padding:0; margin-top:25px;}
 #product-lists .product-list ul > li > a > .info > p.description > .price { color:#33bfb2; font-size:22px; font-family:Tahoma; }
@@ -936,13 +937,13 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #product-view #product-benefit .table-include td { padding:25px 35px; text-align:center; vertical-align:middle;}
 
 #product-view #product-program-detail {}
-#product-view #product-program-detail .schedule-title { border:1px solid #ddd; padding:25px 30px; background:#f9f9f9; }
+#product-view #product-program-detail .schedule-title { border:1px solid #ddd; padding:15px 30px; background:#f9f9f9; }
 #product-view #product-program-detail .schedule-title .schedule-title-msg { font-size:20px; font-weight:bold; }
 #product-view #product-program-detail .schedule-title .day-meal-info { float:right; margin:0; padding:0; list-style:none }
-#product-view #product-program-detail .schedule-title .day-meal-info li { display:inline-block; color:#767676; font-size:14px;}
+#product-view #product-program-detail .schedule-title .day-meal-info li { display:inline-block; color:#767676; font-size:14px; line-height:20px;}
 #product-view #product-program-detail .schedule-title .day-meal-info li + li { margin-left:15px; }
-#product-view #product-program-detail .schedule-title .day-meal-info li >label { padding:5px 7px; font-weight:bold; border-radius:3px; background:#767676; color:#fff; margin-right:5px; }
-#product-view #product-program-detail .table.table-schedule-detail { margin:20px 0px; }
+#product-view #product-program-detail .schedule-title .day-meal-info li >label { padding:5px 7px; font-weight:bold; border-radius:3px; background:#767676; color:#fff; margin-right:5px; vertical-align:middle}
+#product-view #product-program-detail .table.table-schedule-detail { margin:-1px 0px 20px }
 #product-view #product-program-detail .table.table-schedule-detail th { text-align:center; color:#767676; font-size:16px; font-weight:bold; background:#f9f9f9; height:50px; vertical-align:middle; }
 #product-view #product-program-detail .table.table-schedule-detail td { text-align:center; padding:20px; background:#f9f9f9; font-size:13px; }
 #product-view #product-program-detail .table.table-schedule-detail .location { width:100px; }
@@ -998,6 +999,13 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #mailform .mail-form-container .form-group .attach-list { line-height:1.2; margin:0; padding:0; list-style:none; margin-top:10px; border:1px solid #ddd; width:100%; background:#fff; padding:20px; }
 #mailform .mail-form-container .form-group .attach-list li { display:block; }
 #mailform .mail-form-container .form-group .attach-list li + li { margin-top:5px; }
+#mailform .editable { cursor:pointer; }
+#mailform button[data-toggle='add-schedule-table'] { padding:3px 6px; font-size:12px; border:1px solid #cbcbcb; background:#f4f4f4; cursor:pointer; display:block; margin-left:auto; margin-right:auto; margin-top:5px; margin-bottom:5px; }
+#mailform button[data-toggle='remove-schedule-table'] {padding:3px 6px; font-size:12px; border:1px solid #cbcbcb; background:#f4f4f4; cursor:pointer; }
+#mailform .tbody-schedule-detail tr td {position:relative;}
+#mailform .tbody-schedule-detail tr td .button-area {display:none;}
+#mailform .tbody-schedule-detail tr:hover td .button-area { display:block; position:absolute; top:5px; right:5px; font-size:0px;}
+#mailform .tbody-schedule-detail tr:hover td .button-area > a { font-size:12px; padding:3px 6px; border:1px solid #cbcbcb; background:#f4f4f4; }
 
 /******************************************************************************************************
  * 상담신청 페이지 (방문상담/전화상담)
@@ -1028,6 +1036,7 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #pop-sybqna #form-sybqna .form-group .input-box select{ background-color:#f9f9f9; }
 #pop-sybqna #form-sybqna .policy { margin-top:20px; }
 #pop-sybqna #form-sybqna .policy .form-control {font-size:12px;}
+
 
 /******************************************************************************************************
  * 게시판스킨

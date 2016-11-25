@@ -1,4 +1,6 @@
 <?=$this->site->add_js("/static/plugins/tinymce-4.3.13/tinymce.min.js");?>
+<?=$this->site->add_js("http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js")?>
+<?=$this->site->add_js("/static/js/mailform.js")?>
 <article id="mailform">
     <div class="product-view-header">
         <h1><?=$product['prd_title']?></h1>
@@ -53,145 +55,106 @@
 
         <img class="wide-banner margin-top-30" src="<?=base_url("/static/images/mailform/title_schedule.jpg")?>">
         <?php for($day=1; $day<count($program_info['schedule']); $day++) : ?>
+        <div class="button-area">
+            <button type="button" data-toggle="add-schedule-table">일차 추가</button>
+        </div>
         <table class="table table-bordered table-schedules">
             <thead>
             <tr>
-                <th style="width:80px;" class="days-info"><?=$day?>일차</th>
-                <th style="width:240px;border:0px"></th>
+                <th style="width:80px;" class="days-info"><a class="editable"><?=$day?>일차</a></th>
+                <th style="width:240px;border:0px;text-align:left">
+                    <button type="button" data-toggle="remove-schedule-table">해당 일차 삭제</button>
+                </th>
                 <th style="border:0px" class="days-meal-b">
                     <img style="vertical-align:middle" src="/static/images/mailform/icon_meal_b.png">&nbsp;
-                    <a class="editable"><?=$program_info['schedule'][$day-1]['meal']['b']?></a>
+                    <a class="editable"><?=$program_info['schedule'][$day-1]['meal']['b']?$program_info['schedule'][$day-1]['meal']['b']:'없음'?></a>
                 </th>
                 <th style="border:0px" class="days-meal-l">
                     <img style="vertical-align:middle" src="/static/images/mailform/icon_meal_l.png">&nbsp;
-                    <a class="editable"><?=$program_info['schedule'][$day-1]['meal']['l']?></a>
+                    <a class="editable"><?=$program_info['schedule'][$day-1]['meal']['l']?$program_info['schedule'][$day-1]['meal']['l']:'없음'?></a>
                 </th>
                 <th style="border:0px" class="days-meal-d">
                     <img style="vertical-align:middle" src="/static/images/mailform/icon_meal_d.png">&nbsp;
-                    <a class="editable"><?=$program_info['schedule'][$day-1]['meal']['d']?></a>
+                    <a class="editable"><?=$program_info['schedule'][$day-1]['meal']['d']?$program_info['schedule'][$day-1]['meal']['d']:'없음'?></a>
                 </th>
             </tr>
             </thead>
             <tbody class="tbody-schedule-detail">
             <?php foreach($program_info['schedule'][$day-1]['items'] as $item) : ?>
                 <tr>
-                    <td colspan="5"><div class="content"><?=$item['content']?></div></td>
+                    <td colspan="5">
+                        <div class="content"><?=$item['content']?></div>
+                        <div class="button-area">
+                            <a href="#" data-toggle="prepend-schedule-row">이전행 추가</a>
+                            <a href="#" data-toggle="append-schedule-row">다음행 추가</a>
+                            <a href="#" data-toggle="remove-schedule-row"><i class="fa fa-trash"></i>&nbsp;삭제</a>
+                        </div>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
         <?php endfor;?>
+        <div class="button-area">
+            <button type="button" data-toggle="add-schedule-table">일차 추가</button>
+        </div>
     <textarea name="content" class="hide"></textarea>
     <div class="text-center margin-top-30 margin-bottom-50">
         <button type="submit" class="btn btn-primary btn-lg" onclick="get_data();">메일 보내기</button>
     </div>
     <?=form_close()?>
 </article>
-
-<script>
-    $(function(){
-        $(".tinymce").each(function(){
-            var editor_id = $(this).attr('id');
-            if( !editor_id || $(this).prop("nodeName") != 'TEXTAREA' ) return true;
-            tinymce.init({
-                selector:'textarea#'+editor_id,
-                height : 300,
-                width : '618px',
-                theme_advanced_resizing: true,
-                theme_advanced_resizing_use_cookie : false,
-                menubar : false,
-                plugins : 'advlist autolink link image imagetools media lists print preview emoticons table textcolor colorpicker code pagebreak jsplus_easy_image',
-                language: "ko",
-                toolbar1: 'jsplus_easy_image image media table | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | link pagebreak',
-                toolbar2: 'formatselect fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough removeformat',
-                font_formats : "나눔고딕=Nanum Gothic;돋움=돋움,Dotum;굴림=굴림,Gulim;바탕=바탕,Batang;궁서=궁서;Arial=Arial;Comic Sans MS=Comic Sans MS;Courier New=Courier New;Tahoma=Tahoma;Times New Roman=Times New Roman;Verdana=Verdana",
-                fontsize_formats : "10px 11px 12px 14px 16px 18px 20px 24px 28px",
-            });
-        });
-
-        $("[data-toggle='add-attach']").on('click', function(){
-            $("input[type='file']").click().off('change.attach_selected').on('change.attach_selected', function(){
-                if( ! $(this).val() ) return;
-                if( ! confirm('선택한 파일을 첨부하시겠습니까?') ) return false;
-                var formData = new FormData();
-                formData.append('userfile', $(this)[0].files[0]);
-                $.ajax({
-                    url : '/api/products/attach',
-                    type : 'POST',
-                    processData : false,
-                    contentType : false,
-                    data:formData,
-                    fail:function(){
-                        alert('파일 업로드에 실패하였습니다.');
-                    },
-                    success:function(res) {
-                        if( res.status == true )
-                        {
-                            var li = $("<li>");
-                            var input = $("<input>").attr({'type' : 'hidden','name' : 'attach_list[]','value' : res.result.full_path});
-                            var input2 = $("<input>").attr({'type' : 'hidden','name' : 'attach_name[]','value' : res.result.orig_name});
-                            var a = $("<a>").attr({
-                                'href' : 'javascript:;',
-                                'data-toggle' : 'remove-attach',
-                                'data-value' : res.result.full_path
-                            }).addClass("text-color-red").html('&times;');
-                            li.text(res.result.orig_name).append(input2).append(input).append(a);
-                            $(".attach-list").append(li);
-
-                            $("a[data-toggle='remove-attach']").off('click.remove_attach').on('click.remove_attach', function(){
-                                var path = $(this).data('value');
-                                var _this = $(this);
-                                $.ajax({
-                                    url : '/api/products/attach',
-                                    type : 'DELETE',
-                                    beforeSend: function(xhr){ xhr.setRequestHeader("Content-Type", "application/json"); },
-                                    data : {
-                                        path : path
-                                    },
-                                    success:function() {
-                                        _this.parent().remove();
-                                    }
-                                });
-                            });
-                        }
-                        else {
-                            alert('파일 업로드 도중 오류가 발생하였습니다.\n' + res.result);
-                        }
-                    }
-                })
-            });
-        });
-    });
-
-    function get_data()
-    {
-        var data =[];
-        $(".table-schedules").each(function(){
-            var day = $(this).find('.days-info').text();
-            var meal_b = $(this).find('.days-meal-b>.editable').text();
-            var meal_l = $(this).find('.days-meal-l>.editable').text();
-            var meal_d = $(this).find('.days-meal-d>.editable').text();
-            meal_b = meal_b == '없음' ? '' : meal_b;
-            meal_l = meal_l == '없음' ? '' : meal_l;
-            meal_d = meal_d == '없음' ? '' : meal_d;
-
-            var detail = [];
-
-            $(this).find('.tbody-schedule-detail > tr').each(function(){
-                detail.push( $(this).find('td > div.content').html() );
-            });
-
-            var tmp = {
-                day: day,
-                meal : {
-                    b: meal_b,
-                    l: meal_l,
-                    d: meal_d
-                },
-                content : detail
-            };
-            data.push(tmp);
-        });
-        $("textarea[name='content']").val( JSON.stringify(data));
-    }
+<script id="tmpl-new-row" type="text/x-jquery-tmpl">
+    <tr>
+        <td colspan="5">
+            <div class="content"></div>
+            <div class="button-area">
+                <a href="#" data-toggle="prepend-schedule-row">이전행 추가</a>
+                <a href="#" data-toggle="append-schedule-row">다음행 추가</a>
+                <a href="#" data-toggle="remove-schedule-row"><i class="fa fa-trash"></i>&nbsp;삭제</a>
+            </div>
+        </td>
+    </tr>
 </script>
+<script id="tmpl-new-table" type="text/x-jquery-tmpl">
+     <div class="button-area">
+        <button type="button" data-toggle="add-schedule-table">일차 추가</button>
+    </div>
+    <table class="table table-bordered table-schedules">
+    <thead>
+        <tr>
+            <th style="width:80px;" class="days-info"><a class="editable">일차</a></th>
+            <th style="width:240px;border:0px;text-align:left">
+                <button type="button" data-toggle="remove-schedule-table">해당 일차 삭제</button>
+            </th>
+            <th style="border:0px" class="days-meal-b">
+                <img style="vertical-align:middle" src="/static/images/mailform/icon_meal_b.png">&nbsp;
+                <a class="editable">없음</a>
+            </th>
+            <th style="border:0px" class="days-meal-l">
+                <img style="vertical-align:middle" src="/static/images/mailform/icon_meal_l.png">&nbsp;
+                <a class="editable">없음</a>
+            </th>
+            <th style="border:0px" class="days-meal-d">
+                <img style="vertical-align:middle" src="/static/images/mailform/icon_meal_d.png">&nbsp;
+                <a class="editable">없음</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody class="tbody-schedule-detail">
+        <tr>
+            <td colspan="5">
+                <div class="content"></div>
+                <div class="button-area">
+                    <a href="#" data-toggle="prepend-schedule-row">이전행 추가</a>
+                    <a href="#" data-toggle="append-schedule-row">다음행 추가</a>
+                    <a href="#" data-toggle="remove-schedule-row"><i class="fa fa-trash"></i>&nbsp;삭제</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+<style>
+
+</style>

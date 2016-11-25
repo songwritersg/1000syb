@@ -21,6 +21,7 @@ $(function(){
      **************************************************************************************************/
     $("a[data-toggle='youtube-link']").fancybox({
         type : 'iframe',
+        fitToView : false,
         href : $(this).attr('href')
     });
 
@@ -55,11 +56,41 @@ $(function(){
      * 플로팅 배너 위치 조절
      **************************************************************************************************/
     if( $(".floating-banner").length > 0 ) {
-        var top = $("#sybSection").offset().top;
-        if( $("#main-slide").length > 0 ) top += 640;
-        if( $("#product-lists-info").length > 0) top += 660;
-        top += $(".breadcrumbs").outerHeight(true);
-        $(".floating-banner").css('top', top);
+        $(function(){
+            var floatPosition = $("#sybSection").offset().top;
+            if( $("#main-slide").length > 0 ) floatPosition += 640;
+            if( $("#product-lists-info").length > 0) floatPosition += 680;
+            floatPosition += $(".breadcrumbs").outerHeight(true);
+            $(".floating-banner").css('top', floatPosition);
+
+            $(window).scroll(function(e){
+                var footer_about_position = $("#sybFooter .footer-about").offset().top;
+
+                var floating_height = [];
+
+                $(".floating-banner").each(function(){
+                    floating_height.push( parseInt($(this).height()) );
+                });
+
+                var scrollTop = $(window).scrollTop();
+                // 새로운 포지션 설정
+                var newPosition = ( scrollTop > floatPosition) ? scrollTop + 30  : floatPosition;
+                // 만약 새로운 포지션 + 양쪽배너의 가장 긴 Height 가 푸터에 닿는다면
+                var height = Math.max.apply(null, floating_height);
+
+                console.log(newPosition, height, (scrollTop > floatPosition ? 30 : floatPosition)  ,footer_about_position);
+                if( newPosition + height >= parseInt(footer_about_position)) {
+                    newPosition = footer_about_position - height;
+                }
+
+                if( newPosition < floatPosition ) {
+                    newPosition = floatPosition;
+                }
+
+                $(".floating-banner").stop().animate({ "top" : newPosition }, 200);
+            });
+        });
+
     }
 
     /***************************************************************************************************
@@ -230,15 +261,15 @@ function getQuerystring(paramName){
  * Popup창을 띄웁니다.
  *****************************************************************************************************/
 (function($) {
-    $.popup = function(option) {
-        $.popup.default = {
+    $.popup=function(option) {
+        var defaults={
             title : '_blank',
             width : 800,
             height : 600,
             url : ''
         };
 
-        var options = $.extend({}, $.popup.default, option);
+        var options = $.extend({}, defaults, option);
 
         cw = screen.availWidth;
         ch = screen.availHeight;
@@ -260,12 +291,12 @@ function getQuerystring(paramName){
 
 (function($) {
     $.fn.favorite = function(option) {
-        $.fn.favorite.default = {
+        var defaults = {
             title : '천생연분닷컴',
             url : 'http://www.1000syb.com'
         };
 
-        var options = $.extend({}, $.fn.favorite.default, option);
+        var options = $.extend({}, defaults, option);
 
         return this.each(function(){
             var _this = $(this);

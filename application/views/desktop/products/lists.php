@@ -66,7 +66,7 @@
                 <li>
                     <a href="<?=base_url("products/{$category['sca_key']}/{$cate['sca_key']}/{$row['prd_idx']}")?>">
                         <div class="thumbnails">
-                            <img src="<?=base_url($row['prd_thumb'])?>" alt="<?=$row['prd_title']?>">
+                            <img src="<?=$row['prd_thumb']?>" alt="<?=$row['prd_title']?>">
                         </div>
                         <div class="info">
                             <h4 class="city-name"><?=$row['cty_name']?></h4>

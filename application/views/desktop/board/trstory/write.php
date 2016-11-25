@@ -1,4 +1,3 @@
-<?=$this->site->add_js("/static/js/board.js");?>
 <?=$this->site->add_js("/static/plugins/tinymce-4.3.13/tinymce.min.js");?>
 <?=$this->site->add_js("/static/plugins/tinymce-4.3.13/editor_config.js");?>
 <?php $this->load->view("desktop/board/trstory/common_header")?>

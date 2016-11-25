@@ -82,7 +82,7 @@ class Board extends SYB_Controller {
         $this->data['querystring'] = "?".http_build_query($qs);
 
         // Device에 따른 스킨 설정
-        $this->site->add_js("/static/js/board.js");
+        $this->site->add_js("/static/js/board.min.js");
         $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_mobile'] : $this->data['board']['brd_skin'];
         $this->layout = $this->site->get_layout();
         $this->view = "board/{$skin}/lists";
@@ -113,6 +113,7 @@ class Board extends SYB_Controller {
 
         if( $this->form_validation->run() == FALSE )
         {
+            $this->site->add_js("/static/js/board.min.js");
             $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_mobile'] : $this->data['board']['brd_skin'];
             $this->layout = $this->site->get_layout();
             $this->view = "board/{$skin}/password";
@@ -249,6 +250,7 @@ class Board extends SYB_Controller {
         $this->site->meta_description = trim(preg_replace('/\s\s+/', ' ', cut_str(strip_tags($this->data['post']['post_content']),300)));
 
         // Device에 따른 스킨 설정
+        $this->site->add_js("/static/js/board.min.js");
         $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_mobile'] : $this->data['board']['brd_skin'];
         $this->layout = $this->site->get_layout();
         $this->view = "board/{$skin}/view";
@@ -302,6 +304,7 @@ class Board extends SYB_Controller {
 
         if( $this->form_validation->run() == FALSE )
         {
+            $this->site->add_js("/static/js/board.min.js");
             $skin = $this->site->viewmode() == DEVICE_MOBILE ? $this->data['board']['brd_skin_mobile'] : $this->data['board']['brd_skin'];
             $this->layout = $this->site->get_layout();
             $this->view = "board/{$skin}/" . ($is_reply ? "reply" : "write");

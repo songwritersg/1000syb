@@ -151,7 +151,12 @@ class Product_model extends SYB_Model
         $this->db->where("PP.sca_key", $sca_key);
         $this->db->order_by("PP.prd_sort ASC");
         $result = $this->db->get();
-        return $result->result_array();
+        $list = $result->result_array();
+        foreach($list as &$row)
+        {
+            $row['prd_thumb'] = base_url($row['prd_thumb']);
+        }
+        return $list;
     }
 
     /******************************************************

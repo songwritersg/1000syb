@@ -54,6 +54,10 @@ $route['404_override'] = 'helptool/page_404';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['404'] = 'helptool/page_404';
+$route['products/eur'] = "euro/lists/eur";
+$route['products/eur/(:any)'] = "euro/lists/eur/$1";
+$route['products/eur/(:any)/(:num)'] = "euro/view/eur/$1/$2";
+
 $route['products/mailform'] = 'products/mailform';
 $route['products/gallery/(:num)']= 'products/gallery/$1';
 $route['products/(:any)'] = 'products/lists/$1';

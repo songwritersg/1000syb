@@ -1,5 +1,5 @@
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/jquery.flexslider.min.js")?>
-<?=$this->site->add_js("/static/js/main.js")?>
+<?=$this->site->add_js("/static/js/main.min.js")?>
 <?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/flexslider.min.css")?>
 
 <?php if( count($main_slide_banners) > 0 ) :?>
@@ -37,34 +37,30 @@
                         <li class="card">
                             <div class="thumbnail">
                                 <figure>
-                                    <img src="<?=base_url("static/images/main/sample_maldives.png")?>" alt="몰디브 사진">
-                                    <figcaption>몰디브</figcaption>
+                                    <img src="<?=base_url("static/images/main/thumb_canc.png")?>" alt="시크릿 더 바인">
+                                    <figcaption>시크릿 더 바인</figcaption>
                                 </figure>
                                 <div class="mask"></div>
-                                <a href="https://www.youtube.com/embed/_WpcDGqV79M" class="youtube-icon" data-toggle="youtube-link" data-width="800" data-height="600"></a>
+                                <a href="https://player.vimeo.com/video/193016225" class="youtube-icon" data-toggle="youtube-link" data-width="800" data-height="600"></a>
                             </div>
                             <div class="desc">
-                                <h4 class="desc-title">#Maldives.</h4>
-                                <span class="sub-title">올인크루시브 리조트 특별혜택</span>
+                                <h4 class="desc-title">#Cancun</h4>
+                                <span class="sub-title">Secrets The Vine</span>
                             </div>
                         </li>
 
                         <li class="card">
                             <div class="thumbnail">
                                 <figure>
-                                    <img src="<?=base_url("static/images/main/sample_maldives.png")?>" alt="몰디브 사진">
-                                    <figcaption>몰디브</figcaption>
+                                    <img src="<?=base_url("static/images/main/thumb_bali.png")?>" alt="발리 로얄 산트리안">
+                                    <figcaption>발리 로얄 산트리안</figcaption>
                                 </figure>
                                 <div class="mask"></div>
-                                <a href="https://www.youtube.com/embed/_WpcDGqV79M" class="youtube-icon" data-toggle="youtube-link" data-width="800" data-height="600"></a>
+                                <a href="https://player.vimeo.com/video/178277388" class="youtube-icon" data-toggle="youtube-link" data-width="800" data-height="600"></a>
                             </div>
                             <div class="desc">
-                                <h4 class="desc-title">#Maldives.</h4>
-                                <span class="sub-title">올인크루시브 리조트 특별혜택</span>
-                            </div>
-                            <div class="desc">
-                                <h4 class="desc-title">#Maldives.</h4>
-                                <span class="sub-title">올인크루시브 리조트 특별혜택</span>
+                                <h4 class="desc-title">#Bali</h4>
+                                <span class="sub-title">로얄 산트리안</span>
                             </div>
                         </li>
 
@@ -90,7 +86,7 @@
 
 <!-- START: Middle Banner -->
 <?php foreach( $main_middle_banners as $banner) : ?>
-<article class="container-fluid">
+<article class="container-fluid" style="margin-bottom:30px">
     <h2 class="hide">허니문 소개 배너</h2>
     <div class="container">
         <a<?=$banner['tag']?> style="display:block;"><img style="width:100%" class="wide-banner img-hover" src="<?=base_url($banner['ban_image'])?>" alt="<?=$banner['ban_title']?>"></a>
