@@ -1,6 +1,6 @@
 <article class="container-fluid" id="product-lists-info">
     <div class="video-container">
-        <video id="videobg" preload="auto" autoplay loop="loop" muted="muted" <?=$category['sca_info_bg_thumb']?'poster="'.$category['sca_info_bg_thumb'].'"':''?>>
+        <video id="videobg" preload="auto" autoplay loop="loop" muted="muted" <?=$category['sca_info_bg_thumb']?'poster="'.$category['sca_info_bg_thumb'].'" style="background:url('.$category['sca_info_bg_thumb'].');"':''?>>
             <source src="<?=$category['sca_info_bg_mp4']?>" type="video/mp4">
             <source src="<?=$category['sca_info_bg_ogv']?>" type="video/ogv">
         </video>
@@ -64,7 +64,7 @@
             <ul>
                 <?php foreach($lists as $row) :?>
                 <li>
-                    <a href="<?=base_url("products/{$category['sca_key']}/{$cate['sca_key']}/{$row['prd_idx']}")?>">
+                    <a href="<?=base_url("products/{$category['sca_key']}/{$selected}/{$row['prd_idx']}")?>">
                         <div class="thumbnails">
                             <img src="<?=$row['prd_thumb']?>" alt="<?=$row['prd_title']?>">
                         </div>

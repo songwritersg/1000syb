@@ -58,7 +58,7 @@ $(function(){
     if( $(".floating-banner").length > 0 ) {
         $(function(){
             var floatPosition = $("#sybSection").offset().top;
-            if( $("#main-slide").length > 0 ) floatPosition += 640;
+            if( $("#main-slide").length > 0 ) floatPosition += 540;
             if( $("#product-lists-info").length > 0) floatPosition += 680;
             floatPosition += $(".breadcrumbs").outerHeight(true);
             $(".floating-banner").css('top', floatPosition);
@@ -78,7 +78,6 @@ $(function(){
                 // 만약 새로운 포지션 + 양쪽배너의 가장 긴 Height 가 푸터에 닿는다면
                 var height = Math.max.apply(null, floating_height);
 
-                console.log(newPosition, height, (scrollTop > floatPosition ? 30 : floatPosition)  ,footer_about_position);
                 if( newPosition + height >= parseInt(footer_about_position)) {
                     newPosition = footer_about_position - height;
                 }

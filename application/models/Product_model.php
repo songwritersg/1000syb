@@ -154,7 +154,11 @@ class Product_model extends SYB_Model
         $list = $result->result_array();
         foreach($list as &$row)
         {
-            $row['prd_thumb'] = base_url($row['prd_thumb']);
+            $row['prd_thumb'] = base_url("static/images/products/no_product_thumb.jpg");
+            if ( $row['prd_thumb_origin'] && file_exists(FCPATH . $row['prd_thumb_origin']) )
+            {
+                $row['prd_thumb'] = base_url(str_replace(FCPATH, "", thumbnail($row['prd_thumb_origin'], 350, 260 )));
+            }
         }
         return $list;
     }

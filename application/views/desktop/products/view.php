@@ -166,13 +166,17 @@
                 <img class="img-a-2" src="<?=file_check($product['prd_info_img_a_2'])?base_url($product['prd_info_img_a_2']):'/static/images/common/no_image_306x200.jpg'?>">
                 <img class="img-a-3" src="<?=file_check($product['prd_info_img_a_3'])?base_url($product['prd_info_img_a_3']):'/static/images/common/no_image_306x200.jpg'?>">
                 <img class="img-a-4" src="<?=file_check($product['prd_info_img_a_4'])?base_url($product['prd_info_img_a_4']):'/static/images/common/no_image_306x200.jpg'?>">
+                <?php if(element('prd_info_img_a_desc',$product)) :?>
                 <p class="img-description"><?=nl2br(element('prd_info_img_a_desc',$product,"이미지 그룹 설명이 없습니다."))?></p>
+                <?php endif;?>
             </div>
             <div class="info-detail-second">
                 <h4 class="img-title"><?=element('prd_info_img_b_title',$product,"이미지 그룹 이름이 없습니다.")?></h4>
                 <img class="img-b-1" src="<?=file_check($product['prd_info_img_b_1'])?base_url($product['prd_info_img_b_1']):'/static/images/common/no_image_464x575.jpg'?>">
                 <img class="img-b-2" src="<?=file_check($product['prd_info_img_b_2'])?base_url($product['prd_info_img_b_2']):'/static/images/common/no_image_464x575.jpg'?>">
-                <p class="img-description"><?=nl2br(element('prd_info_img_b_desc',$product,"이미지 그룹 설명이 없습니다."))?></p>
+                <?php if(element('prd_info_img_b_desc',$product)) :?>
+                <p class="img-description"><?=nl2br(element('prd_info_img_b_desc',$product,""))?></p>
+                <?php endif;?>
             </div>
             <p class="info-extra"><?=nl2br($product['prd_info_extra'])?></p>
         </div>
@@ -190,7 +194,8 @@
             <li><a href="#" data-toggle="open-sybqna">상품 문의하기</a></li>
         </ul>
         <h4 class="detail-title"><img src="/static/images/products/title_product_program_detail.jpg"></h4>
-        <?php for($day=1; $day<count($program_info['schedule']); $day++) : ?>
+
+        <?php for($day=1; $day<=count($program_info['schedule']); $day++) : ?>
         <div class="schedule-title">
             <span class="schedule-title-msg"><?=$day?>일차</span>
             <ol class="day-meal-info">
