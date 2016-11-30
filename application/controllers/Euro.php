@@ -14,6 +14,9 @@ class Euro extends SYB_Controller
         parent::__construct();
 
         $this->load->model('product_model');
+        $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+
+        $this->load->library('intereuro');
     }
 
     /***********************************************************
@@ -28,67 +31,94 @@ class Euro extends SYB_Controller
      * @param $sca_parent
      * @param string $category
      *********************************************************/
-    function lists($sca_parent, $category="weuro")
+    function lists($sca_parent, $sca_key="weuro")
     {
-        $areacode = strtoupper(str_replace("uro","",$category));
+        $areacode = strtoupper(str_replace("uro","",$sca_key));
 
-        $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
-
-        if(! $this->data['lists'] = $this->cache->get('intereuro_list_'.$areacode) )
+        // 상품목록을 불러와 저장한다.
+        if(! $this->data['lists'] = $this->intereuro->get_product_list($areacode))
         {
-            // InterEuro CURL GET
-            $url = "http://papi.intereuro.co.kr/01_B2B/Product/Package/ProductList.aspx?key={$this->intereuro_key}&txtAreaCode={$areacode}&txtPageSize=50";
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-            $output=curl_exec($ch);
-            if(curl_errno($ch))
-            {
-                alert('해당페이지의 정보를 불러오는데 실패하였습니다.\\n관리자에게 문의하세요');
-            }
-            curl_close($ch);
-            $output = json_decode($output, TRUE);
+           alert('해당페이지의 정보를 불러오는데 실패하였습니다.\\n관리자에게 문의하세요');
+           exit;
+        }
+        $this->data['category'] = $this->product_model->get_category($sca_parent);
+        $this->data['selected'] = $sca_key;
 
-            if(! $output OR !$output['RESULT'][0]['Result']) {
+        $this->site->meta_title =  $this->data['category']['sca_info_title'] . " - " .$this->data['category']['sca_info_subtitle'] ;
+        $this->site->meta_descrption = $this->data['category']['sca_info_description'];
+        $this->site->meta_keywords = $this->data['category']['sca_info_title'];
+        $this->active = $sca_parent;
+        $this->layout = $this->site->get_layout();
+        $this->view = "products/lists";
+    }
 
-                if(! $this->data['lists'] = $this->cache->get('intereuro_saved_list_'.$areacode))
-                {
-                    alert('해당페이지의 정보를 불러오는데 실패하였습니다.\\n관리자에게 문의하세요');
-                    exit;
-                }
-            }
-            else
-            {
-                $list = $output['PRODUCT_LIST_INFO'];
+    /****************************************************************
+     * 유로 상품보기
+     * @param $sca_parent
+     * @param $sca_key
+     * @param string $prd_idx
+     * @param string $prg_idx
+     ****************************************************************/
+    function view( $sca_parent, $sca_key, $prd_idx = "", $prg_idx="" )
+    {
+        $this->data['sca_parent'] = $sca_parent;
+        $this->data['sca_key'] = $sca_key;
 
-                $this->data['lists'] = array();
+        $areacode = strtoupper(str_replace("uro","",$sca_key));
 
-                foreach($list as $row)
-                {
-                    $tmp = explode("(",$row['ProductName']);
-
-                    $this->data['lists'][] = array(
-                        'prd_idx' => $row['ProductIdx'],
-                        'prd_thumb' => $row['ImageUrl'],
-                        'prd_title' => $tmp[0],
-                        'cty_name' => $row['ProductCountryName'],
-                        'ppr_price' => $row['LowProductPrice']
-                    );
-
-                }
-                $this->cache->save('intereuro_list_'.$areacode, $this->data['lists'], 60);  // 60초동안 저장
-                $this->cache->save('intereuro_saved_list_'.$areacode, $this->data['lists'], 60*60*24*7);  // 7일동안 저장
-            }
+        if(empty($prd_idx))
+        {
+            alert('잘못된 접근입니다.'.$prd_idx);
+            exit;
         }
 
+        // 상품에 대한 정보 가져오기
+        if(! $this->data['product_list'] = $this->intereuro->get_product_list($areacode))
+        {
+            alert('해당페이지의 정보를 불러오는데 실패하였습니다.\\n관리자에게 문의하세요');
+            exit;
+        }
+
+        if(! $this->data['product'] = $this->intereuro->get_product($areacode, $prd_idx))
+        {
+            alert('해당하는 상품정보가 없습니다.');
+            exit;
+        }
+
+        if(! $this->data['program_list'] = $this->intereuro->get_product_program_list($prd_idx))
+        {
+            alert('해당하는 상품에 현재 예약가능한 상품이 없습니다.');
+            exit;
+        }
+
+        // 상품상세 데이타 불러오기
+        // 넘어온 상품상세 IDX가 없다면 리스트중 가장 첫번째걸 선택
+        $prg_idx = (empty($prg_idx)) ? $this->data['program_list'][0]['prg_idx'] : $prg_idx;
+
+        if(! $this->data['view'] = $this->intereuro->get_product_detail($prd_idx, $prg_idx))
+        {
+            alert('해당 상품정보를 불러올 수 없습니다.');
+            return false;
+        }
+
+        $this->data['product']['gallery_list'] = array();
+        foreach($this->data['view']['TOUR_LOCATION_INFO'] as $tour_info)
+        {
+            $this->data['product']['gallery_list'] = array_merge($this->data['product']['gallery_list'], explode("|",$tour_info['Images']) );
+        }
+
+
+        $this->data['prd_idx'] = $prd_idx;
+        $this->data['prg_idx'] = $prg_idx;
+
         $this->data['category'] = $this->product_model->get_category($sca_parent);
-        $this->data['selected'] = $category;
 
         $this->site->meta_title = "";
         $this->site->meta_descrption = "";
         $this->site->meta_keywords = "";
         $this->active = $sca_parent;
         $this->layout = $this->site->get_layout();
-        $this->view = "products/lists";
+        $this->view = "products/euro_view";
     }
+
 }

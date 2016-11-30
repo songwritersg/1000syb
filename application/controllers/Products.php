@@ -59,7 +59,7 @@ class Products extends SYB_Controller {
         $this->data['program_info'] = $this->product_model->get_program($this->data['prg_idx']);
         if(! $this->data['program_info'] )
         {
-            alert('잘못된 접근입니다.');
+            alert('현재 상품에 등록된 일정표가 없습니다.');
             exit;
         }
 

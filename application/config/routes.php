@@ -54,9 +54,16 @@ $route['404_override'] = 'helptool/page_404';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['404'] = 'helptool/page_404';
+
+$route['sitemap\.xml'] = "sitemap";
+$route['sitemap_board_([a-zA-Z0-9_-]+)\.xml'] = "sitemap/board/$1";
+$route['sitemap_product_([a-zA-Z0-9_-]+)\.xml'] = "sitemap/product/$1";
+$route['rss'] = "sitemap/rss";
+
 $route['products/eur'] = "euro/lists/eur";
 $route['products/eur/(:any)'] = "euro/lists/eur/$1";
 $route['products/eur/(:any)/(:num)'] = "euro/view/eur/$1/$2";
+$route['products/eur/(:any)/(:num)/(:num)'] = "euro/view/eur/$1/$2/$3";
 
 $route['products/mailform'] = 'products/mailform';
 $route['products/gallery/(:num)']= 'products/gallery/$1';
