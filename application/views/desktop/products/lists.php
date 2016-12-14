@@ -1,11 +1,5 @@
 <article class="container-fluid" id="product-lists-info">
     <div class="video-container">
-        <!--
-        <video id="videobg" preload="auto" autoplay loop="loop" muted="muted" <?=$category['sca_info_bg_thumb']?'poster="'.$category['sca_info_bg_thumb'].'" style="background:url('.$category['sca_info_bg_thumb'].');"':''?>>
-            <source src="<?=$category['sca_info_bg_mp4']?>" type="video/mp4">
-            <source src="<?=$category['sca_info_bg_ogv']?>" type="video/ogv">
-        </video>
-        -->
         <div id="bgplayer"></div>
         <div id="bgthumb" style="background:url(<?=$category['sca_info_bg_thumb']?>) no-repeat top center;"></div>
         <script>
@@ -49,10 +43,12 @@
             }
 
             $(function(){
-                var iframe_height = $(document).width() * 1080 / 1920;
-                $(".video-container").css({'width': $(document).width(),'height':iframe_height});
-                $(".video-container #bgplayer").attr({'height':'500px','width':$(document).width()});
-            })
+                $(window).resize(function(){
+                    var iframe_height = $(document).width() * 1080 / 1920;
+                    $(".video-container").css({'width': $(document).width(),'height':iframe_height});
+                    $(".video-container #bgplayer").attr({'height':'500px','width':$(document).width()});
+                }).resize();
+            });
         </script>
     </div>
     <div  id="info-container">

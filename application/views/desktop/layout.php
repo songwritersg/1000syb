@@ -208,12 +208,12 @@ var base_url = '<?=base_url()?>';
     <div class="footer-about">
         <div class="container">
             <ul class="footer-about-list">
+                <li><a href="<?=base_url("about")?>">회사소개</a></li>
                 <li><a href="<?=base_url("about/#location")?>">찾아오시는길</a></li>
                 <li><a href="<?=base_url("about/agreement")?>">이용약관</a></li>
                 <li class="privacy"><a href="<?=base_url("about/privacy")?>">개인정보 취급방침</a></li>
                 <li><a href="<?=base_url("about/travel")?>">여행약관</a></li>
                 <li><a href="<?=base_url("about/#insurance")?>">해외여행자보험</a></li>
-                <li><a href="<?=base_url("about/#account")?>">계좌번호안내</a></li>
             </ul>
         </div>
     </div>
