@@ -109,6 +109,16 @@ class Products extends SYB_Controller {
         // 등록된 리스트를 가져온다.
         $this->data['lists'] = $this->product_model->get_list($sca_key);
 
+
+        $this->site->meta_title = $this->data['category']['sca_info_subtitle'];
+        $this->site->meta_descrption = $this->data['category']['sca_info_description'];
+        $this->site->meta_keywords = $this->data['category']['sca_name'] . ",";
+
+        foreach($this->data['category']['children'] as $child)
+        {
+            $this->site->meta_keywords .= $child['sca_name'] . ",";
+        }
+
         $this->active = $sca_parent;
         $this->layout = $this->site->get_layout();
         $this->view = "products/lists";
@@ -243,8 +253,8 @@ class Products extends SYB_Controller {
                 $this->email->attach($attach_list[$i],'attachment',$attach_name[$i]);
             }
 
-            $this->load->view('mail/program', $mail_data);
-            /*
+            //$this->load->view('mail/program', $mail_data);
+
             if( $this->email->send() )
             {
                 foreach($attach_list as $file)
@@ -263,7 +273,6 @@ class Products extends SYB_Controller {
                 alert('메일전송에 실패하였습니다.');
                 exit;
             }
-            */
         }
     }
 }

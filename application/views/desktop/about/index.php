@@ -36,7 +36,7 @@
 
                 <div class="togglebar" data-toggle="togglebar">
                     <div class="togglebar-header">
-                        <img class="icon" src="/static/images/icons/icon_insurance.gif">&nbsp;ESP 보증보험<i class="caret"></i>
+                        <img class="icon" src="/static/images/icons/icon_insurance.gif">&nbsp;BSP 보증보험<i class="caret"></i>
                     </div>
                     <div class="togglebar-body">
                         <img class="img-responsive" src="/static/images/about/insurance_esp.jpg" alt="이행(지급)보증보험 계약변경증권">

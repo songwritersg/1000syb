@@ -1,9 +1,59 @@
 <article class="container-fluid" id="product-lists-info">
     <div class="video-container">
+        <!--
         <video id="videobg" preload="auto" autoplay loop="loop" muted="muted" <?=$category['sca_info_bg_thumb']?'poster="'.$category['sca_info_bg_thumb'].'" style="background:url('.$category['sca_info_bg_thumb'].');"':''?>>
             <source src="<?=$category['sca_info_bg_mp4']?>" type="video/mp4">
             <source src="<?=$category['sca_info_bg_ogv']?>" type="video/ogv">
         </video>
+        -->
+        <div id="bgplayer"></div>
+        <div id="bgthumb" style="background:url(<?=$category['sca_info_bg_thumb']?>) no-repeat top center;"></div>
+        <script>
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/player_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            var player;
+
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('bgplayer', {
+                    height: $(document).width() * 1080 / 1920,
+                    width:  $(document).width(),
+                    videoId: '<?=$category['sca_info_bg_mp4']?>',
+                    playerVars : {
+                        showinfo : 0,
+                        autoplay : 1,
+                        loop : 1,
+                        controls : 0,
+                        playlist : '<?=$category['sca_info_bg_mp4']?>'
+                    },
+                    rel: 0,
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange' : onStateChange
+                    }
+                });
+            }
+            function onPlayerReady(event){
+                player.setPlaybackQuality( player.getAvailableQualityLevels() );
+                player.mute();
+            }
+
+            function onStateChange(event){
+                if( event.data == YT.PlayerState.PLAYING) {
+                    $("#bgthumb").hide();
+                }
+                else {
+                    $("#bgthumb").show();
+                }
+            }
+
+            $(function(){
+                var iframe_height = $(document).width() * 1080 / 1920;
+                $(".video-container").css({'width': $(document).width(),'height':iframe_height});
+                $(".video-container #bgplayer").attr({'height':'500px','width':$(document).width()});
+            })
+        </script>
     </div>
     <div  id="info-container">
         <div class="container">
@@ -52,7 +102,7 @@
     });
 </script>
 
-<article class="container-fluid" id="product-lists">
+<article class="container-fluid" id="product-lists" style="background:#fff;">
     <div class="container">
         <h2 class="category-title"><strong><?=strtoupper($category['sca_info_title'])?></strong>&nbsp;AREA</h2>
         <ul class="category-list">
@@ -72,7 +122,7 @@
                             <h4 class="city-name"><?=$row['cty_name']?></h4>
                             <h3 class="product-title"><?=$row['prd_title']?></h3>
                             <p class="description">
-                                <span class="price"><?=number_format($row['ppr_price'])?><small>원~</small></span>
+                                <span class="price"><?=($row['ppr_price'] >0 ? number_format($row['ppr_price']). '<small>원~</small>' : '<small>가격문의</small>')?></span>
                                 <i class="fa fa-chevron-circle-right"></i>
                             </p>
                         </div>

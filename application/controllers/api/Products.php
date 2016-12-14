@@ -83,7 +83,7 @@ class Products extends REST_Controller {
         $data['post_content'] = $this->post("post_content", FALSE);
         $data['post_mobile'] = $this->site->viewmode() == DEVICE_MOBILE ? 'Y':'N';
         $data['post_notice'] = "N";
-        $data['post_secret'] = "Y";
+        $data['post_secret'] = $this->post('post_secret') == 'Y'? "Y":'N';
         $data['usr_id'] = "";
         $data['usr_name'] = $this->post("usr_name", TRUE);
         $data['usr_pass'] = hash('md5', $this->config->item('encryption_key').$this->post('usr_pass', TRUE));

@@ -1,11 +1,13 @@
 'use strict';
 
+
 $(function(){
     $.preload('/static/images/main/card_section_01_hover.png', '/static/images/main/card_section_02_hover.png');
 
     $('#main-slide').flexslider({
         animation: "slide",
-        slideshow:false,
+        slideshow:true,
+        slideshowSpeed : 5000,
         prevText:"",
         nextText:"",
         manualControls:$(".slide-indicator ol li")

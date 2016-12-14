@@ -7,7 +7,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Euro extends SYB_Controller
 {
-    protected $intereuro_key = "5798a2bacfa313df9c3a3612a28f9220";
 
     function __construct()
     {
@@ -34,6 +33,7 @@ class Euro extends SYB_Controller
     function lists($sca_parent, $sca_key="weuro")
     {
         $areacode = strtoupper(str_replace("uro","",$sca_key));
+        if(strtolower($sca_key) == 'duba') $areacode = 'WA';
 
         // 상품목록을 불러와 저장한다.
         if(! $this->data['lists'] = $this->intereuro->get_product_list($areacode))
@@ -65,6 +65,7 @@ class Euro extends SYB_Controller
         $this->data['sca_key'] = $sca_key;
 
         $areacode = strtoupper(str_replace("uro","",$sca_key));
+        if(strtolower($sca_key) == 'duba') $areacode = 'WA';
 
         if(empty($prd_idx))
         {

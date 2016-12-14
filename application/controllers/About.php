@@ -16,6 +16,10 @@ class About extends SYB_Controller {
      *********************************************************/
     function index()
     {
+
+        $this->site->meta_title = "본사 소개";
+        $this->site->meta_description = "대한민국 모든 예비 신혼부부에게 설레임과 추억을 선물해드립니다. 허니문 여행사의 기준, 천생연분닷컴";
+
         $this->layout = $this->site->get_layout();
         $this->view = "about/index";
     }
@@ -44,6 +48,10 @@ class About extends SYB_Controller {
             //redirect('404');
             exit;
         }
+
+        $this->site->meta_title = "지사 안내 - " . $row['bnc_name'];
+        $this->site->meta_description = "천생연분 닷컴 {$row['bnc_name']} 지사 안내 입니다. 대표전화:".$this->data['view']['bnc_tel'] . " FAX:".$this->data['view']['bnc_fax']. " 주소:".$this->data['view']['bnc_address'];
+
         $this->layout = $this->site->get_layout();
         $this->view = "about/branch";
     }
@@ -53,6 +61,9 @@ class About extends SYB_Controller {
      *********************************************************/
     function agreement()
     {
+        $this->site->meta_title = "이용약관";
+        $this->site->meta_description = "";
+
         $this->layout = $this->site->get_layout();
         $this->view = "about/agreement";
     }
@@ -62,6 +73,10 @@ class About extends SYB_Controller {
      *********************************************************/
     function privacy()
     {
+        
+        $this->site->meta_title = "개인정보 취급방침";
+        $this->site->meta_description = "";
+
         $this->layout = $this->site->get_layout();
         $this->view = "about/privacy";
     }
@@ -71,6 +86,9 @@ class About extends SYB_Controller {
      *********************************************************/
     function travel()
     {
+        $this->site->meta_title = "여행약관";
+        $this->site->meta_description = "";
+        
         $this->layout = $this->site->get_layout();
         $this->view = "about/travel";
     }

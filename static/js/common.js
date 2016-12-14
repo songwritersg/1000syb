@@ -59,7 +59,7 @@ $(function(){
         $(function(){
             var floatPosition = $("#sybSection").offset().top;
             if( $("#main-slide").length > 0 ) floatPosition += 540;
-            if( $("#product-lists-info").length > 0) floatPosition += 680;
+            if( $("#product-lists-info").length > 0) floatPosition += 540;
             floatPosition += $(".breadcrumbs").outerHeight(true);
             $(".floating-banner").css('top', floatPosition);
 

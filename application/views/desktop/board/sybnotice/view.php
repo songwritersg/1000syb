@@ -33,7 +33,7 @@
         <?=$post['contents']?>
     </div>
 
-    <?php if($board['brd_use_comment']) : ?>
+    <?php if($board['brd_use_comment'] == 'Y') : ?>
     <!-- START:댓글-->
     <div class="post-comment">
         <?php if($auth['comment']) :?>

@@ -3,13 +3,13 @@
     <table class="post-list" summary="<?=$board['brd_title']?> 게시판 <?=$page?>페이지 목록">
         <caption><?=$board['brd_title']?> 게시판 <?=$page?>페이지</caption>
         <colgroup>
-            <col width="150px" />
-            <col width="150px" />
+            <col width="80px" />
+            <col width="100px" />
             <col width="*" />
             <col width="150px" />
-            <col width="150px" />
-            <col width="150px" />
-            <col width="150px" />
+            <col width="100px" />
+            <col width="100px" />
+            <col width="80px" />
         </colgroup>
         <thead>
             <tr>

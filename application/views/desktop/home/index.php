@@ -1,10 +1,12 @@
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/jquery.flexslider.min.js")?>
 <?=$this->site->add_js("/static/js/main.min.js")?>
 <?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/flexslider.min.css")?>
-
+<style>
+    .flexslider { border:0px;}
+</style>
 <?php if( count($main_slide_banners) > 0 ) :?>
 <!-- START:메인 슬라이드-->
-<article class="container-fluid">
+<article class="container-fluid" id="main-slide-container">
     <h2 class="hide">메인 슬라이드</h2>
     <div class="flexslider" id="main-slide">
         <ul class="slides">
@@ -133,7 +135,7 @@
                     <a href="<?=base_url("products/{$row['sca_parent']}/{$row['sca_key']}/{$row['prd_idx']}")?>">
                         <img src="<?=base_url($row['prd_thumb'])?>" alt="260x195">
                         <div class="content">
-                            <h6><?=$row['cty_name']?></h6>
+                            <h6><?=$row['cty_name_kr']?></h6>
                             <p><?=preg_replace("/\\[|\\]/","",$row['prd_title'])?><i class="fa fa-chevron-circle-right "></i></p>
                         </div>
                     </a>

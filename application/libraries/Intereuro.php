@@ -89,7 +89,7 @@ class Intereuro {
             $view['schedule'] = $program_detail;
             unset($view['SCHEDULE_INFO']);
 
-            //$this->CI->cache->save('intereuro_product_detail_'.$prd_idx.'_'.$prg_idx, $view, 60);
+            $this->CI->cache->save('intereuro_product_detail_'.$prd_idx.'_'.$prg_idx, $view, 60);
         }
 
         return $view;
@@ -110,6 +110,7 @@ class Intereuro {
             $param['txtProductIdx'] = $prd_idx;
             $param['txtSearchCnt'] = 0;
             $url = self::INTEREURO_PROGRAM_LIST_URL."?".http_build_query($param);
+
             if(! $output = $this->curl_response($url) OR ! $output['RESULT'][0]['Result'] ) {
                 $list = $this->CI->cache->get('intereuro_program_list_saved_'.$prd_idx);
             }
@@ -153,7 +154,6 @@ class Intereuro {
             $param['txtPageSize'] = $page_rows;
             
             $url = self::INTEREURO_LIST_URL . "?". http_build_query($param);
-
             if(!$output = $this->curl_response($url) ) return FALSE;
 
             // 결과가 false일경우
@@ -169,11 +169,12 @@ class Intereuro {
             $list = array();
             foreach($lists as $row)
             {
-                $tmp = explode("(",$row['ProductName']);
+                $tmp = explode("_",$row['ProductName']);
+                $prd_title = $tmp[0];
                 $array = array(
                     'prd_idx' => $row['ProductIdx'],
                     'prd_thumb' => $row['ImageUrl'],
-                    'prd_title' => $tmp[0],
+                    'prd_title' => $prd_title,
                     'cty_name' => $row['ProductCountryName'],
                     'ppr_price' => $row['LowProductPrice']
                 );

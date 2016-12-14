@@ -39,7 +39,7 @@
                     <?php elseif($gallery['gll_type'] == 'LINK_WIN'): ?>
                     <a class="gallery-item" href="<?=$gallery['gll_url']?>" target="_blank">
                     <?php elseif($gallery['gll_type'] == 'VIDEO'): ?>
-                    <a class="gallery-item" href="#">
+                    <a class="gallery-item gallery-video" href="<?=$gallery['gll_url']?>" data-toggle="youtube-link" data-width="800" data-height="600">
                     <?php endif;?>
                         <img src="<?=base_url($gallery['gll_path'])?>">
                     </a>
@@ -169,6 +169,7 @@
                 <?php if(element('prd_info_img_a_desc',$product)) :?>
                 <p class="img-description"><?=nl2br(element('prd_info_img_a_desc',$product,"이미지 그룹 설명이 없습니다."))?></p>
                 <?php endif;?>
+                <div class="clearfix"></div>
             </div>
             <div class="info-detail-second">
                 <h4 class="img-title"><?=element('prd_info_img_b_title',$product,"이미지 그룹 이름이 없습니다.")?></h4>
@@ -177,6 +178,7 @@
                 <?php if(element('prd_info_img_b_desc',$product)) :?>
                 <p class="img-description"><?=nl2br(element('prd_info_img_b_desc',$product,""))?></p>
                 <?php endif;?>
+                <div class="clearfix"></div>
             </div>
             <p class="info-extra"><?=nl2br($product['prd_info_extra'])?></p>
         </div>
@@ -339,6 +341,11 @@
                     <div class="input-box">
                         <input type="text" class="form-control input-md" name="post_title" id="form-sybqna-title" required>
                     </div>
+                    <div class="input-box">
+                        <div class="checkbox">
+                            <input type="checkbox" name="post_secret" id="syb_secret" value="Y" checked><label for="syb_secret">비밀글</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="form-sybqna-usrpass">비밀번호</label>
@@ -376,7 +383,12 @@ $(function(){
     {
         $('.carousel').carousel({ hAlign:'center', vAlign:'center', hMargin:0.8, reflection:true, shadow:false, mouse:false, speed:200, autoplay:false, slidesPerScroll:3, carouselWidth:1000, carouselHeight:450, frontWidth:480, frontHeight:360, backOpacity:0.5, directionNav:true});
     }
-
+    $("table.table.table-schedule-detail").each(function(){
+        var $table = $(this);
+        $table.find("tbody > tr").each(function(row) {
+            $table.rowspan(row);
+        });
+    });
 
     $("#dialog-sybqna").dialog({ autoOpen : false, draggable : false, dialogClass : 'close', resizeable : false, modal: true, width:800});
 
@@ -399,6 +411,12 @@ $(function(){
         e.preventDefault();
         var form = $("#form-sybqna");
         if(! validation_check( $(this).find('input[name="usr_name"]'), '작성자 이름을 입력하세요' )) return false;
+        if( ! $(this).find('input[name="agree_privacy"]').prop('checked') )
+        {
+            alert('개인정보 취급방침에 동의하셔야 합니다.');
+            $(this).find('input[name="agree_privacy"]').focus();
+            return false;
+        }
         if( $(this).find('input[name="usr_gender"]:checked').length <= 0 )
         {
             alert("성별을 선택하셔야 합니다.");

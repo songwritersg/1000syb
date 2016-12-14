@@ -22,6 +22,10 @@ class Sitemap extends CI_Controller  {
         echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?".">\n";
         echo "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 
+        echo "<sitemap>".PHP_EOL;
+        echo "<loc>".base_url("sitemap_about.xml")."</loc>".PHP_EOL;
+        echo "</sitemap>\n";
+
         foreach($product_list as $product)
         {
             echo "<sitemap>\n";
@@ -40,6 +44,65 @@ class Sitemap extends CI_Controller  {
 
         $xml = ob_get_clean();
 
+        $this->output
+            ->set_content_type('text/xml')
+            ->set_header('Cache-control', 'no-cache, must-revalidate')
+            ->set_header('Pragma','no-cache')
+            ->set_output($xml);
+    }
+
+    function about()
+    {
+        $branch_list =
+            $this->db->from('tbl_site_branch')
+                 ->order_by("bnc_sort ASC")
+                 ->get()
+                 ->result_array();
+
+        echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?".">\n";
+        echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+
+        echo "<url>".PHP_EOL;
+        echo "<loc>".base_url("about")."</loc>".PHP_EOL;
+        echo "<lastmod>".date('Y-m-d', filemtime(VIEWPATH."desktop/about/index.php"))."</lastmod>".PHP_EOL;
+        echo "<priority>0.9</priority>".PHP_EOL;
+        echo "<changefreq>monthly</changefreq>".PHP_EOL;
+        echo "</url>".PHP_EOL;
+
+        foreach($branch_list as $branch)
+        {
+            echo "<url>".PHP_EOL;
+            echo "<loc>".base_url("about/branch/".urlencode($branch['bnc_name']))."</loc>".PHP_EOL;
+            echo "<lastmod>2016-11-05</lastmod>".PHP_EOL;
+            echo "<priority>0.9</priority>".PHP_EOL;
+            echo "<changefreq>monthly</changefreq>".PHP_EOL;
+            echo "</url>".PHP_EOL;
+        }
+
+        echo "<url>".PHP_EOL;
+        echo "<loc>".base_url("about/agreement")."</loc>".PHP_EOL;
+        echo "<lastmod>".date('Y-m-d', filemtime(VIEWPATH."desktop/about/agreement.php"))."</lastmod>".PHP_EOL;
+        echo "<priority>0.9</priority>".PHP_EOL;
+        echo "<changefreq>monthly</changefreq>".PHP_EOL;
+        echo "</url>".PHP_EOL;
+
+        echo "<url>".PHP_EOL;
+        echo "<loc>".base_url("about/privacy")."</loc>".PHP_EOL;
+        echo "<lastmod>".date('Y-m-d', filemtime(VIEWPATH."desktop/about/privacy.php"))."</lastmod>".PHP_EOL;
+        echo "<priority>0.9</priority>".PHP_EOL;
+        echo "<changefreq>monthly</changefreq>".PHP_EOL;
+        echo "</url>".PHP_EOL;
+
+        echo "<url>".PHP_EOL;
+        echo "<loc>".base_url("about/travel")."</loc>".PHP_EOL;
+        echo "<lastmod>".date('Y-m-d', filemtime(VIEWPATH."desktop/about/travel.php"))."</lastmod>".PHP_EOL;
+        echo "<priority>0.9</priority>".PHP_EOL;
+        echo "<changefreq>monthly</changefreq>".PHP_EOL;
+        echo "</url>".PHP_EOL;
+
+        echo "</urlset>".PHP_EOL;
+
+        $xml = ob_get_clean();
         $this->output
             ->set_content_type('text/xml')
             ->set_header('Cache-control', 'no-cache, must-revalidate')
@@ -66,7 +129,7 @@ class Sitemap extends CI_Controller  {
         foreach($post_list as $post)
         {
             echo "<url>\n";
-            echo "    <loc>" . base_url("board/{$post['brd_key']}/{$post['post_idx']}") . "</loc>".PHP_EOL;
+            echo "    <loc>".base_url("board/{$post['brd_key']}/{$post['post_idx']}") . "</loc>".PHP_EOL;
             echo "    <lastmod>". date('Y-m-d', strtotime($post['post_modtime'])) ."</lastmod>".PHP_EOL;
             echo "</url>\n";
         }
@@ -152,21 +215,22 @@ class Sitemap extends CI_Controller  {
         ob_start();
 
         echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?".">".PHP_EOL;
-        echo "<rss version=\"2.0\">".PHP_EOL;
+        echo "<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">".PHP_EOL;
         echo "<channel>".PHP_EOL;
         echo "    <title>천생연분 닷컴 소식지</title>".PHP_EOL;
         echo "    <link>".base_url()."</link>".PHP_EOL;
+        echo "    <atom:link href=\"".base_url("rss")."\" rel=\"self\" type=\"application/rss+xml\" />".PHP_EOL;
         echo "    <copyright><![CDATA[천생연분닷컴]]></copyright>".PHP_EOL;
-
+        echo "    <description><![CDATA[천생연분닷컴 소식지]]></description>".PHP_EOL;
         foreach($post_list as $post)
         {
             $category = $post['brd_key'] == 'article' ? '보도자료' : '고객후기';
             echo "    <item>".PHP_EOL;
-            echo "        <title><![CDATA[(" . $category .') '. $post['post_title'] . "]]></title>".PHP_EOL;
+            echo "        <title><![CDATA[(" . $category .') '. html_entity_decode($post['post_title']) . "]]></title>".PHP_EOL;
             echo "        <link>" . base_url("board/{$post['brd_key']}/{$post['post_idx']}") . "</link>".PHP_EOL;
             echo "        <author>" . ($post['brd_key'] == 'article' ? '천생연분닷컴' : htmlspecialchars($post['usr_name'])) . "</author>".PHP_EOL;
-            echo "        <pubDate>" . $post['post_regtime'] . "</pubDate>".PHP_EOL;
-            echo "        <description><![CDATA[" . display_html_content($post['post_content']). "]]></description>".PHP_EOL;
+            echo "        <pubDate>" .  date(DATE_RSS, strtotime($post['post_regtime'])) . "</pubDate>".PHP_EOL;
+            echo "        <description><![CDATA[" . html_entity_decode(strip_tags(htmlspecialchars_decode($post['post_content']))). "]]></description>".PHP_EOL;
             echo "        <category>{$category}</category>".PHP_EOL;
             echo "    </item>".PHP_EOL;
         }

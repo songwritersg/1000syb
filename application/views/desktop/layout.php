@@ -30,17 +30,17 @@ var base_url = '<?=base_url()?>';
 <!--START:헤더-->
 <header id="sybHeader">
     <div class="container">
-        <a class="left-top-banner"><img src="/static/images/common/banner_top_insurance.gif" alt="믿고 맡기는 허니문 보증보험 9억 3천 가입"></a>
+        <a class="left-top-banner" href="<?=base_url("/about/#insurance")?>"><img src="/static/images/common/banner_top_insurance.gif" alt="믿고 맡기는 허니문 보증보험 9억 3천 가입"></a>
         <h1 class="logo"><a href="<?=base_url()?>">천생연분닷컴</a></h1>
         <ul class="right-top-menu">
-            <li><a href="<?=base_url()?>"><i class="fa fa-home"></i>&nbsp;HOME</a></li>
+            <li><a href="<?=base_url()?>"><i class="fa fa-home"></i>&nbsp;메인</a></li>
             <?php if($this->member->is_login()) :?>
-            <li><a href="<?=base_url('members/logout')?>"><i class="fa fa-power-off"></i>&nbsp;LOGOUT</a></li>
+            <li><a href="<?=base_url('members/logout')?>"><i class="fa fa-power-off"></i>&nbsp;로그아웃</a></li>
             <?php else :?>
-            <li><a href="<?=base_url('members/login')?>"><i class="fa fa-power-off"></i>&nbsp;LOGIN</a></li>
+            <li><a href="<?=base_url('members/login')?>"><i class="fa fa-power-off"></i>&nbsp;로그인</a></li>
             <?php endif;?>
-            <li><a href="javascript:;" data-toggle="add-favorite"><i class="fa fa-star"></i>&nbsp;FAVORITE</a></li>
-            <li><a href="<?=base_url('board/article')?>"><i class="fa  fa-newspaper-o"></i>&nbsp;BLOG</a></li>
+            <li><a href="javascript:;" data-toggle="add-favorite"><i class="fa fa-star"></i>&nbsp;즐겨찾기</a></li>
+            <li><a href="<?=base_url('board/article')?>"><i class="fa  fa-newspaper-o"></i>&nbsp;보도자료</a></li>
         </ul>
     </div>
 </header>
@@ -56,8 +56,9 @@ var base_url = '<?=base_url()?>';
         <li <?=$this->active=='mol'?'class="active"':''?>><a href="<?=base_url("products/mol")?>">몰디브</a></li>
         <li <?=$this->active=='eur'?'class="active"':''?>><a href="<?=base_url("products/eur")?>">유럽</a></li>
         <li <?=$this->active=='canc'?'class="active"':''?>><a href="<?=base_url("products/canc")?>">칸쿤</a></li>
+        <li <?=$this->active=='aust'?'class="active"':''?>><a href="<?=base_url("products/aust")?>">호주</a></li>
         <li <?=$this->active=='aune'?'class="active"':''?>><a href="<?=base_url("products/aune")?>">남태평양</a></li>
-        <li class="other1 <?=$this->active=='eth'?'active':''?>"><a href="<?=base_url("products/eth")?>">연계지역</a></li>
+        <li class="other1 <?=$this->active=='eth'?'active':''?>"><a href="<?=base_url("products/eth")?>">기타지역</a></li>
         <li class="other2 <?=$this->active=='oth'?'active':''?>"><a href="<?=base_url("products/oth")?>">특수지역</a></li>
     </ul>
 </nav>
@@ -241,7 +242,7 @@ var base_url = '<?=base_url()?>';
                     <a href="tel:02-72-8876" class="phone"><i class="fa fa-mobile"></i>&nbsp;02-720-8876</a>&nbsp;|&nbsp;Fax.02) 2179-9481, 02) 720-8881<br>
                 </p>
                     <dl class="address-list">
-                        <dt>본사 주소</dt><dd>서울시 강남구 봉은사로 437, (소암빌딩 4F)</dd>
+                        <dt>본사주소</dt><dd>서울시 강남구 봉은사로 437, (소암빌딩 4F)</dd>
                         <?php foreach($branches_list as $row) :?>
                         <dt><?=$row['bnc_name']?></dt><dd><?=$row['bnc_address']?></dd>
                         <?php endforeach;?>
@@ -255,7 +256,7 @@ var base_url = '<?=base_url()?>';
                 <h5>AWARDS</h5>
                 <img src="/static/images/layout/footer_banner_award.png" alt="브랜드 대상 수상, 서비스지수1위 수상"><br>
 
-                <select data-toggle="syb-select" onchange="location.href=this.value;">
+                <select class="select-jisa" onchange="location.href=this.value;">
                     <option value="">전국지사 바로가기</option>
                     <?php foreach($branches_list as $row):?>
                     <option value="<?=base_url("about/branch/".urlencode($row['bnc_name']))?>"><?=$row['bnc_name']?></option>

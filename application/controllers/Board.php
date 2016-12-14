@@ -97,7 +97,6 @@ class Board extends SYB_Controller {
      *********************************************************/
     function password($brd_key="",$post_idx="")
     {
-        $this->output->enable_profiler(TRUE);
         if(! $this->data['board'] = $this->board_model->get_board($brd_key))
         {
             alert('존재하지 않는 게시판입니다.');
