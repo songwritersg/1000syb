@@ -43,6 +43,8 @@
                 <?=form_open("board/{$board['brd_key']}/comment", array("id"=>"form-comment"));?>
                 <input type="hidden" name="reurl" value="<?=current_full_url(TRUE)?>">
                 <input type="hidden" name="post_idx" value="<?=$post['post_idx']?>">
+                <input type="text" class="fake-input">
+                <input type="password" class="fake-input">
                 <?php if(! $this->member->is_login()) :?>
                     <div class="form-group">
                         <label for="comment_usr_name">이름</label>

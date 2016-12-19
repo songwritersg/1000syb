@@ -16,4 +16,5 @@ class Helptool extends SYB_Controller {
         $data['yield'] = $this->load->view($this->site->get_layout()."/helptool/page_404", NULL, TRUE);
         $this->load->view($this->site->get_layout()."/layout", $data);
     }
+
 }

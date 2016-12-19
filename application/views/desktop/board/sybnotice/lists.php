@@ -65,7 +65,7 @@
     <div class="toolbar-group margin-top-30">
         <div class="search-form">
             <?=form_open(NULL, array("method"=>"get","class"=>"form-inline"))?>
-            <select name="scol" data-toggle="syb-select">
+            <select name="scol" class="form-control">
                 <option value="title" <?=$scol=="title"?"selected":""?>>제목</option>
                 <option value="titlecontent" <?=$scol=="titlecontent"?"selected":""?>>제목+내용</option>
                 <option value="nickname" <?=$scol=="nickname"?"selected":""?>>작성자</option>

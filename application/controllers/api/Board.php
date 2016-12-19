@@ -12,7 +12,7 @@ class Board extends REST_Controller {
     function trstory_best_post()
     {
         $this->load->library('upload');
-        $array = array("best_one_desc_1", "best_one_desc_2", "best_two_desc_1", "best_two_desc_2");
+        $array = array("best_one_desc_1", "best_one_desc_2", "best_two_desc_1", "best_two_desc_2", "best_one_link","best_two_link");
 
         foreach($array as $item)
         {

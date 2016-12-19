@@ -15,12 +15,12 @@
         <h3><?=$program_info['prg_title']?></h3>
 
         <div class="navigation">
-            <select id="select-subcategory" data-toggle="syb-select">
+            <select id="select-subcategory" class="form-control" style="display:inline-block;width:auto;background-color:#fff;">
                 <?php foreach($category['children'] as $cate) :?>
                 <option value="<?=$cate['sca_key']?>" <?=$cate['sca_key']==$sca_key?'selected':''?>><?=htmlspecialchars($cate['sca_name'])?></option>
                 <?php endforeach;?>
             </select>
-            <select id="select-products" data-toggle="syb-select" data-value="<?=$product['prd_idx']?>">
+            <select id="select-products" class="form-control" data-value="<?=$product['prd_idx']?>" style="display:inline-block;width:auto;background-color:#fff;">
                 <?php foreach($product_list as $row) :?>
                 <option value="<?=$row['prd_idx']?>" <?=$row['prd_idx'] == $product['prd_idx']?"selected":""?>><?=$row['prd_title']?></option>
                 <?php endforeach;?>
@@ -298,6 +298,8 @@
         <img src="/static/images/products/title_sybqna.png">
         <a class="close" onclick="$('#dialog-sybqna').dialog('close');">&times;</a>
         <form id="form-sybqna" method="post" action="<?=base_url("api/products/sybqna")?>">
+            <input type="text" class="fake-input">
+            <input type="password" class="fake-input">
             <fieldset>
                 <div class="form-group">
                     <label class="control-label" for="form-sybqna-usrname">이름</label>
@@ -411,26 +413,26 @@ $(function(){
         e.preventDefault();
         var form = $("#form-sybqna");
         if(! validation_check( $(this).find('input[name="usr_name"]'), '작성자 이름을 입력하세요' )) return false;
-        if( ! $(this).find('input[name="agree_privacy"]').prop('checked') )
+        if( ! form.find('#agree_privacy').prop('checked') )
         {
             alert('개인정보 취급방침에 동의하셔야 합니다.');
-            $(this).find('input[name="agree_privacy"]').focus();
+            form.find('#agree_privacy').focus();
             return false;
         }
-        if( $(this).find('input[name="usr_gender"]:checked').length <= 0 )
+        if( form.find('input[name="usr_gender"]:checked').length <= 0 )
         {
             alert("성별을 선택하셔야 합니다.");
-            $(this).find('input[name="usr_gender"]').focus();
+            form.find('input[name="usr_gender"]').focus();
             return false;
         }
         if(! validation_check( $(this).find('input[name="usr_phone"]'), '연락처를 입력하세요' )) return false;
         if(! validation_check( $(this).find('input[name="usr_email"]'), '이메일 주소를 입력하세요' )) return false;
         if(! validation_check( $(this).find('input[name="post_title"]'), '제목을 입력하세요' )) return false;
         if(! validation_check( $(this).find('input[name="usr_pass"]'), '비밀번호를 입력하세요' )) return false;
-        if($(this).find('input[name="usr_pass"]').val().length < 4 )
+        if(form.find('input[name="usr_pass"]').val().length < 4 )
         {
             alert('비밀번호는 최소 4자리 이상 입력하셔야 합니다.');
-            $(this).find('input[name="usr_pass"]').focus();
+            form.find('input[name="usr_pass"]').focus();
             return false;
         }
         if(tinymce.activeEditor.getContent({format:'text'}).trim().length<=0){
@@ -473,7 +475,6 @@ $(function(){
     $("#select-subcategory").off('change.category_change').on('change.category_change', function(){
 
         $("#select-products").empty().off('change.product_change');
-        $("#select-products").sybSelect('update')
         var sca_key = $("#select-subcategory option:selected").val();
 
         $.get('/api/products/info', {sca_key:sca_key}, function(res){
@@ -487,7 +488,7 @@ $(function(){
                 $("#select-products").append(option);
             }
 
-            $("#select-products").sybSelect('update').on('change.product_change',function(){
+            $("#select-products").on('change.product_change',function(){
                 location.href = "/products/<?=$sca_parent?>/" + $("#select-subcategory option:selected").val() + "/" + $("#select-products option:selected").val();
             });
         });

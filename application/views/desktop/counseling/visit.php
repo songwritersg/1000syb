@@ -4,48 +4,56 @@
     <input type="hidden" name="cns_const_name" value="방문상담신청">
     <input type="hidden" name="cns_status" value="방문">
     <fieldset>
-        <div class="form-group">
-            <label class="form-group-label">고객명</label>
-            <div class="input-box">
-                <input type="text" class="form-control input-md" name="cns_name" required>
-            </div>
-            <div class="desc-box">
-                <div class="radio">
-                    <input type="radio" name="cns_gender" id="cns_gender_bride" value="bride" checked><label for="cns_gender_bride" >신부</label>
-                </div>
-                <div class="radio">
-                    <input type="radio" name="cns_gender" id="cns_gender_groom" value="groom"><label for="cns_gender_groom">신랑</label>
-                </div>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="form-group-label">연락처</label>
-            <div class="input-box">
-                <input type="text" class="form-control input-md" data-toggle="phone-check" name="cns_phone" required>
-            </div>
-        </div>
+        <table class="form-table">
+            <colgroup>
+                <col width="170" />
+                <col width="*">
+                <col width="443">
+            </colgroup>
+            <tr>
+                <th><label>고객명</label></th>
+                <td>
+                    <input type="text" class="form-control input-md" name="cns_name" required>
+                </td>
+                <td>
+                    <div class="radio">
+                        <input type="radio" name="cns_gender" id="cns_gender_bride" value="bride" checked><label for="cns_gender_bride" >신부</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="cns_gender" id="cns_gender_groom" value="groom"><label for="cns_gender_groom">신랑</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><label>연락처</label></th>
+                <td>
+                    <input type="text" class="form-control input-md" data-toggle="phone-check" name="cns_phone" required>
+                </td>
+                <td><p class="help-block">※빠른 상담을 위해 핸드폰 번호를 입력해주세요</p></td>
+            </tr>
+            <tr>
+                <th><label class="form-group-label">E-mail</label></th>
+                <td>
+                    <input type="email" class="form-control input-md" data-toggle="email-check" name="cns_email" required>
+                </td>
+                <td/>
+            </tr>
+            <tr>
+                <th><label>상담신청일</label></th>
+                <td>
+                    <input type="text" class="form-control input-md" id="visit_date" name="visit_date" readonly required>
+                </td>
+                <td/>
+            </tr>
+            <tr>
+                <th><label>상담내용</label></th>
+                <td colspan="2">
+                    <textarea name="cns_memo" rows="20" class="form-control" style="resize:none"></textarea>
+                </td>
+            </tr>
+        </table>
 
-        <div class="form-group">
-            <label class="form-group-label">E-mal</label>
-            <div class="input-box">
-                <input type="email" class="form-control input-md" data-toggle="email-check" name="cns_email" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="form-group-label">상담신청일</label>
-            <div class="input-box">
-                <input type="text" class="form-control input-md" id="visit_date" name="visit_date" readonly required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="form-group-label">상담내용</label>
-            <textarea name="cns_memo" rows="20" class="form-control"></textarea>
-        </div>
-
-        <div class="form-group">
+        <div class="margin-top-30">
             <textarea class="form-control" readonly rows="4"><?=$this->site->config('site_privacy')?></textarea>
             <div class="text-center margin-top-10">
                 <div class="checkbox">
@@ -64,7 +72,10 @@
 </article>
 <script>
 $(function(){
-    $("#visit_date").datepicker({beforeShowDay: $.datepicker.noWeekends});
+    $("#visit_date").datepicker({
+        beforeShowDay: $.datepicker.noWeekends,
+        minDate : 0
+    });
 
     $("#form-counseling-visit").submit(function(e){
         if( $("input[name='cns_name']").val().trim().length <= 0) {

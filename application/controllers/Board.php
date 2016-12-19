@@ -330,6 +330,8 @@ class Board extends SYB_Controller {
             $data['post_modtime'] = date('Y-m-d H:i:s');
             $data['post_ip'] = ip2long( $this->input->ip_address() );
             $data['post_tag'] = trim($this->input->post("post_tag", TRUE, ''));
+
+
             for($i=1; $i<=10; $i++){
                 $data['post_ext'.$i] = trim($this->input->post("post_ext".$i, TRUE, ''));
             }
@@ -374,7 +376,7 @@ class Board extends SYB_Controller {
                 {
                     // 기존 값을 가져온다.
                     $original = $this->board_model->get_post($data['post_idx']);
-                    if( $original != hash('md5', $this->config->item('encryption_key'). $usr_pass) )
+                    if( $original['usr_pass'] != hash('md5', $this->config->item('encryption_key'). $usr_pass) )
                     {
                         alert('기존에 입력된 비밀번호와 다릅니다.');
                         exit;
@@ -477,6 +479,12 @@ class Board extends SYB_Controller {
             // 신규 등록일 경우
             if( empty($data['post_idx']) OR $is_reply )
             {
+                // 신규작성이며 만약 게시판 설정에 승인기능이 사용일경우 기본적으로 승인값이 N으로 들어가게 저장한다.
+                if( ! $is_reply && $this->data['board']['brd_use_assign'] == 'Y' && $data['post_notice'] == 'N' )
+                {
+                    $data['post_assign'] = "N";
+                }
+
                 $data['post_idx'] = $this->board_model->insert_post($data);
                 $msg = "신규 게시글을 등록하였습니다.";
             }
@@ -740,5 +748,16 @@ class Board extends SYB_Controller {
 
         alert('해당 글이 삭제되었습니다.', base_url("board/{$brd_key}"));
         exit;
+    }
+
+    function comment_delete()
+    {
+        $cmt_idx = $this->input->get('cmt_idx', TRUE);
+        if(empty($cmt_idx)) {
+            exit();
+        }
+        $this->load->view('popup/board/comment_delete',array('cmt_idx'=>$cmt_idx));
+        $this->layout = FALSE;
+        $this->view = FALSE;
     }
 }

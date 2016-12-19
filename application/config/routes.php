@@ -80,6 +80,7 @@ $route['recommend'] = 'products/recommend';
 
 $route['counseling/(:any)'] = "counseling/form/$1";
 
+$route['board/comment_delete'] = "board/comment_delete";
 $route['board/(:any)'] = "board/lists/$1";
 $route['board/(:any)/(:num)'] = "board/view/$1/$2";
 $route['board/(:any)/write'] = "board/write/$1";

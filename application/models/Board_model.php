@@ -166,6 +166,26 @@ class Board_model extends SYB_Model {
             $this->insert_post($re_data);
 
             // 컨설팅 DB 자동등록
+            $pref = ($data['post_etx4'] == 'F') ? "bride" : "groom";
+            $cons_data['mode'] = "INSERT";
+            $cons_data['cns_'.$pref.'_name'] = $data['usr_name'];
+            $cons_data['cns_'.$pref.'_email'] = $data['usr_email'];
+            $cons_data['cns_'.$pref.'_phone'] = $data['usr_phone'];
+            $cons_data['cns_memo'] = strip_tags($data['post_content'],"<br>");
+            $cons_data['cns_const_name'] = "홈페이지";
+            $ch = curl_init();
+            $url = "http://admin.1000syb.com/api/consulting/lists";
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cons_data));
+            curl_setopt($ch, CURLOPT_CRLF, TRUE);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_REFERER, $url);
+            $res = curl_exec($ch);
+            curl_close($ch);
         }
 
         return $id;
@@ -177,7 +197,8 @@ class Board_model extends SYB_Model {
      *********************************************************/
     function update_post($data)
     {
-        return $this->db->update("tbl_board_post", $data, $data['post_idx']);
+        $this->db->where('post_idx', $data['post_idx']);
+        return $this->db->update("tbl_board_post", $data);
     }
 
     /***********************************************************
@@ -302,17 +323,9 @@ class Board_model extends SYB_Model {
             $this->db->where("post_category", $param['category']);
         }
 
-        // 질문과 답변의 경우 원글만 가져온다.
-        if( $param['brd_key'] == 'sybqna' )
-        {
-            $this->db->where("post_secret", "Y");
-        }
-        else if ($param['brd_key'] == 'trstory')
-        {
-            $CI =& get_instance();
-            if($CI->member->level() < 8) {
-                $this->db->where("post_ext1", "Y");
-            }
+        $CI =& get_instance();
+        if($CI->member->level() < 8) {
+            $this->db->where("post_assign", "Y");
         }
 
         if( !$param['get_reply'])

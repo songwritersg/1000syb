@@ -123,7 +123,7 @@ function board_date_format($date){
 
     if(date('Y-m-d') == date('Y-m-d', $date))
     {
-        return date('H:m', $date);
+        return date('H:i', $date);
     }
     else
     {

@@ -14,8 +14,20 @@ $(function(){
     });
 
     $("a[data-toggle='comment-delete']").on('click', function(e){
-
-        if(! confirm('해당 댓글을 삭제하시겠습니까?')) return false;
+        var cmt_idx = $(this).data('idx');
+        $.get('/board/comment_delete', {cmt_idx:cmt_idx}, function(res){
+            if(res) {
+                if(! confirm('해당 댓글을 삭제하시겠습니까?')) return false;
+                $("#dialog-password").remove();
+                $("body").append( $("<div>").attr('id', 'dialog-password') );
+                $("#dialog-password").html(res);
+                $("#dialog-password").dialog({ autoOpen : true, draggable : false, dialogClass : 'close', resizeable : false, modal: true, width:400});
+            }
+            else {
+                alert('잘못된 접근입니다.');
+                exit;
+            }
+        });
 
     });
 
@@ -72,14 +84,3 @@ $(function(){
         });
     }
 });
-
-
-var board = function(){
-    return {
-        write:function(){
-
-
-        }
-    }
-
-}();

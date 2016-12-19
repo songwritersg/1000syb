@@ -6,6 +6,8 @@
         <fieldset>
             <input type="hidden" name="post_key" value="<?=$this->session->session_id?>">
             <input type="hidden" name="post_idx" value="<?=element('post_idx',$post)?>">
+            <input type="text" class="fake-input">
+            <input type="password" class="fake-input">
             <?php if(element("brd_category", $board)) :?>
             <div class="form-group">
                 <label class="form-group-label" for="post_category">분류</label>
@@ -54,7 +56,7 @@
                 <div class="form-group">
                     <label class="form-group-label" for="usr_pass">비밀번호</label>
                     <div class="input-box">
-                        <input type="password" class="form-control input-md" id="usr_pass" name="usr_pass" value="" placeholder="비밀번호를 입력하세요" minlength="4" required="required" data-title="비밀번호">
+                        <input type="password" class="form-control input-md" id="usr_pass" name="usr_pass" value="" placeholder="비밀번호를 입력하세요" minlength="4" required="required" data-title="비밀번호" autocomplete="off">
                     </div>
                     <div class="desc-box"></div>
                 </div>

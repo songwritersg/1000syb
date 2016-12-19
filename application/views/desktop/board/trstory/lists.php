@@ -17,11 +17,13 @@
                     <input type="file" class="form-control" name="userfile_1">
                     <input type="text" class="form-control" name="best_one_desc_1" value="<?=$board['extra']['best_one_desc_1']?>">
                     <input type="text" class="form-control" name="best_one_desc_2" value="<?=$board['extra']['best_one_desc_2']?>">
+                    <input type="text" class="form-control" name="best_one_link" value="<?=$board['extra']['best_one_link']?>">
                     <hr>
                     <h3>BEST REVIEW 2</h3>
                     <input type="file" class="form-control" name="userfile_2">
                     <input type="text" class="form-control" name="best_two_desc_1" value="<?=$board['extra']['best_two_desc_1']?>">
                     <input type="text" class="form-control" name="best_two_desc_2" value="<?=$board['extra']['best_two_desc_2']?>">
+                    <input type="text" class="form-control" name="best_two_link" value="<?=$board['extra']['best_two_link']?>">
 
                     <div class="text-center margin-top-10">
                         <button type="submit" class="btn btn-primary">저장</button>
@@ -37,6 +39,8 @@
                         var formData = new FormData();
                         formData.append('userfile_1', $("input[name='userfile_1']")[0].files[0]);
                         formData.append('userfile_2', $("input[name='userfile_2']")[0].files[0]);
+                        formData.append('best_one_link', $("input[name='best_one_link'").val());
+                        formData.append('best_two_link', $("input[name='best_two_link'").val());
                         formData.append('best_one_desc_1', $("input[name='best_one_desc_1']").val());
                         formData.append('best_one_desc_2', $("input[name='best_one_desc_2']").val());
                         formData.append('best_two_desc_1', $("input[name='best_two_desc_1']").val());
@@ -67,7 +71,7 @@
         <img src="/static/images/board/event_trstory.jpg" class="wide-banner">
         <ul class="event-best">
             <li>
-                <a href="#">
+                <a href="<?=$board['extra']['best_one_link']?>">
                     <figure>
                         <img src="<?=base_url($board['extra']['best_one_thumb'])?>">
                         <figcaption>BEST REVIEW 1</figcaption>
@@ -80,7 +84,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="<?=$board['extra']['best_two_link']?>">
                     <figure>
                         <img src="<?=base_url($board['extra']['best_two_thumb'])?>">
                         <figcaption>BEST REVIEW 1</figcaption>
@@ -100,7 +104,7 @@
         <div class="toolbar-group margin-bottom-30">
             <div class="search-form">
                 <?=form_open(NULL, array("method"=>"get","class"=>"form-inline"))?>
-                <select name="scol" data-toggle="syb-select">
+                <select name="scol" class="form-control">
                     <option value="title" <?=$scol=="title"?"selected":""?>>제목</option>
                     <option value="titlecontent" <?=$scol=="titlecontent"?"selected":""?>>제목+내용</option>
                     <option value="nickname" <?=$scol=="nickname"?"selected":""?>>작성자</option>

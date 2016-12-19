@@ -102,8 +102,8 @@
     <h2 class="hide">BEST 허니문 추천지역</h2>
     <div class="container">
         <ul class="slide-indicator">
-            <li><a href="javasscript:;" onclick="best_honeymoon_slider.move_prev();"><i class="fa fa-chevron-left"></i></a></li>
-            <li><a href="javasscript:;" onclick="best_honeymoon_slider.move_next();"><i class="fa fa-chevron-right"></i></a></li>
+            <li><a href="javascript:;" onclick="best_honeymoon_slider.move_prev();"><i class="fa fa-chevron-left"></i></a></li>
+            <li><a href="javascript:;" onclick="best_honeymoon_slider.move_next();"><i class="fa fa-chevron-right"></i></a></li>
         </ul>
         <h4>
             BEST <strong>허니문 추천지역</strong>
