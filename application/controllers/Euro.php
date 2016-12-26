@@ -108,6 +108,13 @@ class Euro extends SYB_Controller
             $this->data['product']['gallery_list'] = array_merge($this->data['product']['gallery_list'], explode("|",$tour_info['Images']) );
         }
 
+        // 관광지 정보를 국가별로 묶는다.
+        $this->data['view']['tours'] = array();
+        foreach($this->data['view']['TOUR_LOCATION_INFO'] as $tour) {
+            $this->data['view']['tours'][ $tour['NationName'] ][] = $tour;
+        }
+
+
 
         $this->data['prd_idx'] = $prd_idx;
         $this->data['prg_idx'] = $prg_idx;

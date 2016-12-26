@@ -116,12 +116,12 @@
         <?php foreach($product['ben_content'] as $ben_content) :?>
         <table class="table table-benefit">
             <tr>
-                <th rowspan="<?=count($ben_content['content'])?>"><?=$ben_content['title']?></th>
+                <th rowspan="<?=count($ben_content['content'])?>"><?=nl2br($ben_content['title'])?></th>
                 <td><?=nl2br($ben_content['content'][0])?></td>
             </tr>
             <?php for($i=1; $i<count($ben_content['content']); $i++) :?>
             <tr>
-                <td><?=$ben_content['content'][$i]?></td>
+                <td><?=nl2br($ben_content['content'][$i])?></td>
             </tr>
             <?php endfor?>
         </table>

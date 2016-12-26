@@ -870,3 +870,14 @@ function is_animated_gif ($filename)
     return $count > 1;
 }
 
+function ajax_error($message, $status=400)
+{
+    $CI =& get_instance();
+    $CI->output
+        ->set_status_header($status)
+        ->set_content_type('application/json')
+        ->set_output(json_encode(["status"=>FALSE, "message"=>$message], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES))
+        ->_display();
+    exit;
+}
+

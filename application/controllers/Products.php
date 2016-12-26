@@ -72,7 +72,7 @@ class Products extends SYB_Controller {
         $this->data['qna_category'] = $this->board_model->get_category("sybqna");
 
         $this->site->meta_title = $this->data['product']['prd_title'];
-        $this->site->meta_descrption = $this->data['product']['prd_subtitle'];
+        $this->site->meta_description = $this->data['product']['prd_info_desc'];
         $this->site->meta_keywords = "{$this->data['product']['ctr_name_kr']},{$this->data['product']['cty_name_kr']}";
         $this->active = $sca_parent;
         $this->layout = $this->site->get_layout();

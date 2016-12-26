@@ -238,7 +238,7 @@ fieldset[disabled] .form-control { background-color: #fff; opacity: 1; color:#c8
 .form-control.hasDatepicker { background-color:#f8f7f8; color:#555; }
 .form-control[disabled],
 fieldset[disabled] .form-control { cursor: not-allowed;}
-textarea.form-control { height: auto; }
+textarea.form-control { height: auto; resize:none;}
 input[type="search"] { -webkit-appearance: none; }
 
 textarea.input-lg,
@@ -976,6 +976,22 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #product-view #product-info .info-detail .info-detail-second .img-b-2 { margin-left:10px; }
 #product-view #product-info .info-detail p.info-extra { margin-top:20px; color:#282828;}
 
+#product-view .euro-resort-info { display:block; height:380px; overflow-y:hidden}
+#product-view .euro-resort-info .img-thumb { display:block; float:left; width:570px; height:380px;}
+#product-view .euro-resort-info .img-thumb > img { width:570px; height:380px; }
+#product-view .euro-resort-info:after { clear:both; content:''; display:table; }
+#product-view .euro-resort-info table { float:right; width:330px; border-spacing:0px; border-collapse:collapse; border:1px solid #ddd; height:380px;}
+#product-view .euro-resort-info table tr th { background:#f9f9f9; font-size:14px; padding:15px 20px; border:1px solid #ddd;}
+#product-view .euro-resort-info table tr td { background:#fff; font-size:14px; padding:15px 20px; border:1px solid #ddd; }
+#product-view .euro-resort-info table tr td > p.ellipsis {margin:0;padding:0;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-box-orient:vertical;word-wrap:break-word;}
+
+#product-view .flexslider .flex-direction-nav a { width: 60px; height: 60px; margin: -30px 0 0; opacity:1; }
+#product-view .flexslider .flex-direction-nav a:before {display:none;}
+#product-view .flexslider .flex-direction-nav a.flex-next { background:url(../images/products/slide_next.png) no-repeat; right:0px; opacity:1;box-shadow:-5px 0px 5px rgba(0,0,0,0.25);}
+#product-view .flexslider .flex-direction-nav a.flex-prev { background:url(../images/products/slide_prev.png) no-repeat; left:0px; opacity:1;box-shadow:5px 0px 5px rgba(0,0,0,0.25);}
+#product-view .flexslider:hover .flex-direction-nav .flex-prev:hover { opacity: 1; background-image:url(../images/products/slide_prev_over.png); }
+#product-view .flexslider:hover .flex-direction-nav .flex-next:hover { opacity: 1; background-image:url(../images/products/slide_next_over.png); }
+
 #product-view #product-common { padding:30px 45px; border:1px solid #ddd; border-top:0px; margin-bottom:50px;}
 #product-view #product-common h4 {margin-bottom:20px;}
 #product-view #product-common .common-panel { margin-bottom:20px; position:relative;}
@@ -1098,7 +1114,7 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 
 #skin-normal-view .post-comment { margin-top:30px; }
 #skin-normal-view .post-comment #comment-form-container { border:1px solid #ddd; background:#f9f9f9; padding:40px;}
-#skin-normal-view .post-comment #comment-form-container label { border:1px solid #ddd; width:70px; height:40px; display:block; float:left; margin-right:10px; text-align:center; line-height:40px;}
+#skin-normal-view .post-comment #comment-form-container label { border:1px solid #ddd; width:70px; height:46px; display:block; float:left; margin-right:10px; text-align:center; line-height:46px;}
 #skin-normal-view .post-comment #comment-form-container .input-box { float:left; width:220px; margin-right:20px;}
 #skin-normal-view .post-comment #comment-form-container textarea[name='cmt_content']  {resize:none; height:100px; width:820px; float:left;}
 #skin-normal-view .post-comment #comment-form-container .button-box { float:right; width:160px; height:100px; margin-left:20px;}
@@ -1202,7 +1218,7 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 
 #skin-trstory-view .post-comment { margin-top:30px; }
 #skin-trstory-view .post-comment #comment-form-container { border:1px solid #ddd; background:#f9f9f9; padding:40px;}
-#skin-trstory-view .post-comment #comment-form-container label { border:1px solid #ddd; width:70px; height:40px; display:block; float:left; margin-right:10px; text-align:center; line-height:40px;}
+#skin-trstory-view .post-comment #comment-form-container label { border:1px solid #ddd; width:70px; height:46px; display:block; float:left; margin-right:10px; text-align:center; line-height:46px;}
 #skin-trstory-view .post-comment #comment-form-container .input-box { float:left; width:220px; margin-right:20px;}
 #skin-trstory-view .post-comment #comment-form-container textarea[name='cmt_content']  {resize:none; height:100px; width:820px; float:left;}
 #skin-trstory-view .post-comment #comment-form-container .button-box { float:right; width:160px; height:100px; margin-left:20px;}
@@ -1623,6 +1639,13 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #skin-sybqna-password .password-box .button-box { padding-left:15px; padding-right:15px; float:left; display:block; }
 #skin-sybqna-password .password-box .input-box { width:230px; }
 #skin-sybqna-password .password-box .button-box {width:110px;}
+
+#dialog-comment-delete-password { padding:15px; border:1px solid #ddd; height:100%; }
+#dialog-comment-delete-password legend { color:#787878; margin-bottom:10px; }
+#dialog-comment-edit { padding:15px; }
+#dialog-comment-edit input[name="comment_user"] { width:250px; display:block; float:left;}
+#dialog-comment-edit input[name="comment_password"] { width:200px; display:block; margin-left:16px; float:right}
+#dialog-comment-edit .form-group:after { clear:both;content:'';display:table; }
 
 
 .form-table { width:100%; border-collapse:collapse; border-spacing:0px; border:1px solid #ddd;}

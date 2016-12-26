@@ -176,6 +176,7 @@ class Intereuro {
                     'prd_thumb' => $row['ImageUrl'],
                     'prd_title' => $prd_title,
                     'cty_name' => $row['ProductCountryName'],
+                    'ct_name' => $row['ProductCityName'],
                     'ppr_price' => $row['LowProductPrice']
                 );
                 $list[] = $array;

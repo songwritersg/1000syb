@@ -287,6 +287,18 @@ function getQuerystring(paramName){
     };
 })(jQuery);
 
+$(document).ajaxError(function(event, request, settings){
+
+    var message = '알수없는 오류가 발생하였습니다.';
+    if( typeof request.responseJSON != 'undefined' && typeof request.responseJSON.message != 'undefined' ) {
+        message = request.responseJSON.message;
+    }
+    else {
+        if( request.status == 500 ) message = '서버 코드 오류가 발생하였습니다.\n관리자에게 문의하세요';
+        else if ( request.status == 401 ) message = '해당 명령을 실행할 권한이 없습니다.';
+    }
+    alert(message);
+});
 
 (function($) {
     $.fn.favorite = function(option) {

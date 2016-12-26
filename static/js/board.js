@@ -17,22 +17,33 @@ $(function(){
         var cmt_idx = $(this).data('idx');
         $.get('/board/comment_delete', {cmt_idx:cmt_idx}, function(res){
             if(res) {
-                if(! confirm('해당 댓글을 삭제하시겠습니까?')) return false;
                 $("#dialog-password").remove();
                 $("body").append( $("<div>").attr('id', 'dialog-password') );
                 $("#dialog-password").html(res);
-                $("#dialog-password").dialog({ autoOpen : true, draggable : false, dialogClass : 'close', resizeable : false, modal: true, width:400});
+                $("#dialog-password").dialog({ autoOpen : true, draggable : false, dialogClass : 'close', resizeable : false, modal: true, width:400, height:'auto'});
             }
             else {
                 alert('잘못된 접근입니다.');
-                exit;
+                return false;
             }
         });
 
     });
 
     $("a[data-toggle='comment-edit']").on('click', function(e){
-
+        var cmt_idx = $(this).data('idx');
+        $.get('/board/comment_edit', {cmt_idx:cmt_idx}, function(res){
+            if(res) {
+                $("#dialog-comment-edit").remove();
+                $("body").append( $("<div>").attr('id', 'dialog-comment-edit') );
+                $("#dialog-comment-edit").html(res);
+                $("#dialog-comment-edit").dialog({ autoOpen : true, draggable : false, dialogClass : 'close', resizeable : false, modal: true, width:500, height:'auto'});
+            }
+            else {
+                alert('잘못된 접근입니다.');
+                return false;
+            }
+        });
     });
 
     var formWrite=$("#form-board-write");

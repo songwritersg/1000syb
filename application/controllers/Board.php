@@ -502,6 +502,8 @@ class Board extends SYB_Controller {
                 $this->db->insert_batch("tbl_board_file", $upload_array);
             }
 
+            $this->board_model->attach_count($data['post_idx']);
+
             // 최근 게시물 Cache 삭제
             $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
             $this->cache->delete('board_recent_'.$brd_key);
@@ -757,6 +759,25 @@ class Board extends SYB_Controller {
             exit();
         }
         $this->load->view('popup/board/comment_delete',array('cmt_idx'=>$cmt_idx));
+        $this->layout = FALSE;
+        $this->view = FALSE;
+    }
+
+    function comment_edit()
+    {
+        $cmt_idx = $this->input->get('cmt_idx', TRUE);
+        if(empty($cmt_idx)) {
+            exit();
+        }
+
+        $result = $this->db->where('cmt_idx', $cmt_idx)->where('cmt_status','Y')->get('tbl_board_comment');
+        if(! $comment = $result->row_array())
+        {
+            ajax_error("존재하지 않는 댓글이거나, 이미 삭제된 댓글입니다.", 400);
+            exit;
+        }
+
+        $this->load->view('popup/board/comment_edit',array('cmt_idx'=>$cmt_idx, 'comment'=>$comment));
         $this->layout = FALSE;
         $this->view = FALSE;
     }

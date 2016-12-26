@@ -119,6 +119,26 @@ class Board_model extends SYB_Model {
     }
 
     /**********************************************************
+     * 첨부파일 개수 최신화
+     * @param $bfi_idx
+     * @return mixed
+     *********************************************************/
+    function attach_count($post_idx)
+    {
+        if(empty($post_idx)) return NULL;
+
+        $this->db->select("COUNT(*) AS `cnt`");
+        $this->db->where("post_idx", $data['post_idx']);
+        $result = $this->db->get('tbl_board_file');
+        $count = $result->row(0)->cnt;
+
+        $this->db->where('post_idx', $data['post_idx']);
+        $this->db->set('post_attach_cnt', $count);
+        $this->db->update('tbl_board_post');
+    }
+    
+    
+    /**********************************************************
      * 첨부파일 삭제
      * @param $bfi_idx
      * @return mixed
@@ -455,6 +475,7 @@ class Board_model extends SYB_Model {
             $this->db->select("post_title, post_regtime, brd_key, post_idx, post_depth, post_secret");
             $this->db->where("brd_key", $brd_key);
             $this->db->where("post_depth", 0);
+            $this->db->where('post_assign', 'Y');
             $this->db->order_by("post_num DESC");
             $this->db->limit($limit);
             $result = $this->db->get("tbl_board_post");
@@ -493,6 +514,7 @@ class Board_model extends SYB_Model {
         // 이전글 가져오기
         $this->db->select("post_idx, post_title, post_category, post_depth, post_secret");
         $this->db->where("post_status", "Y");
+        $this->db->where('post_assign', 'Y');
         $this->db->where("brd_key", $brd_key);
 
         $this->db->group_start();
@@ -514,7 +536,7 @@ class Board_model extends SYB_Model {
         $this->db->select("post_idx, post_title, post_category, post_depth, post_secret");
         $this->db->where("post_status", "Y");
         $this->db->where("brd_key", $brd_key);
-
+        $this->db->where('post_assign', 'Y');
         $this->db->group_start();
         $this->db->group_start();
         $this->db->where("post_num", (int)$post_num);
@@ -583,6 +605,7 @@ class Board_model extends SYB_Model {
     {
         $this->db->where("brd_key", $brd_key);
         $this->db->where("post_idx", $post_idx);
+        $this->db->where('cmt_status', 'Y');
         $this->db->order_by("cmt_idx DESC");
         $result = $this->db->get("tbl_board_comment");
         return $result->result_array();
