@@ -122,7 +122,8 @@
 
         <?php if(count($notice) > 0) :?>
         <ul class="notice-list margin-bottom-30">
-            <?php foreach($notice as $row) :?>
+            <?php $i=0;
+                foreach($notice as $row) :?>
                 <li>
                     <a href="<?=$row['post_link']?>">
                         <h4><?=$row['post_title']?></h4>
@@ -133,7 +134,10 @@
                         <p><?=strip_tags($row['post_content'],"<br>")?></p>
                     </a>
                 </li>
-            <?php endforeach;?>
+            <?php
+                $i++;
+                if($i>=3) break;
+                endforeach;?>
         </ul>
         <?php endif;?>
 

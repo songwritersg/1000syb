@@ -103,6 +103,9 @@ class About extends SYB_Controller {
         // 하단이벤트 목록
         $this->data['event_list'] =$this->site_events_model->get_event_list();
 
+        $result = $this->db->order_by('sed_sort ASC')->get('tbl_site_events_detail');
+        $this->data['event_banner_list'] = $result->result_array();
+
 
         $this->layout = $this->site->get_layout();
         $this->view = "about/events";

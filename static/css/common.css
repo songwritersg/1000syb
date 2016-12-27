@@ -444,7 +444,7 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 .carousel .slides .slideItem a { display: block ; text-decoration :none; margin :0; padding :0; border :none; outline :none;}
 .carousel .slides .slideItem img { margin :0; padding :0; border :none; width :100%; height :100%;}
 .carousel .nextButton,
-.carousel .prevButton { position :absolute; top :145px; cursor :pointer ; z-index :99; width :32px; height: 51px;  background-repeat:no-repeat; background-position:center;  filter: alpha(opacity=50); -khtml-opacity: 0.5; -moz-opacity: 0.5; opacity: 0.5; transition: opacity .3s, -moz-opacity .3s, -khtml-opacity .3s}
+.carousel .prevButton { position :absolute; top :145px; cursor :pointer ; z-index :99; width :46px; height: 64px;  background-repeat:no-repeat; background-position:center;  filter: alpha(opacity=50); -khtml-opacity: 0.5; -moz-opacity: 0.5; opacity: 0.5; transition: opacity .3s, -moz-opacity .3s, -khtml-opacity .3s}
 .carousel .nextButton { right :10px; background-image : url(../images/carousel/next_button.png); }
 .carousel .prevButton { left :10px; background-image: url(../images/carousel/prev_button.png);  }
 .carousel .nextButton:hover,
@@ -618,6 +618,11 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 .floating-banner#left-banner {  margin-left:-680px; }
 .floating-banner#right-banner { margin-left:570px; }
 
+@media (max-width:1140px)
+{
+    .floating-banner { display:none; }
+}
+
 
 /******************************************************************************************************
  * PAGES
@@ -636,8 +641,8 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #main-slide .slide-indicator ol li a { display:inline-block; width:14px; height:14px; font-size:0px; }
 #main-slide .slide-indicator ol li + li {margin-left:5px;}
 #main-slide .slide-indicator ol li.flex-active { width:37px; background-color:#282828; border-color:#282828; cursor:default;}
-@media (max-width:1200px){
-    #main-slide-container { width:1200px; }
+@media (max-width:1100px){
+    #main-slide-container { width:1100px; }
 }
 
 #movie-slider { border:1px solid #d9d9d9; margin-bottom:20px; }
@@ -737,6 +742,15 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #page-events #events-location .events-body .maps a[data-idx="68"] { left:325px; top:305px;}
 #page-events #events-location .events-body .maps a[data-idx="69"] { left:90px; top:485px;}
 #page-events #events-location .events-body .maps a[data-idx="71"] { left:265px; top:225px;}
+
+
+#page-events .flexslider .flex-direction-nav a { width: 60px; height: 60px; margin: -30px 0 0; opacity:1; }
+#page-events .flexslider .flex-direction-nav a:before {display:none;}
+#page-events .flexslider .flex-direction-nav a.flex-next { background:url(../images/products/slide_next.png) no-repeat; right:0px; opacity:1;box-shadow:-5px 0px 5px rgba(0,0,0,0.25);}
+#page-events .flexslider .flex-direction-nav a.flex-prev { background:url(../images/products/slide_prev.png) no-repeat; left:0px; opacity:1;box-shadow:5px 0px 5px rgba(0,0,0,0.25);}
+#page-events .flexslider:hover .flex-direction-nav .flex-prev:hover { opacity: 1; background-image:url(../images/products/slide_prev_over.png); }
+#page-events .flexslider:hover .flex-direction-nav .flex-next:hover { opacity: 1; background-image:url(../images/products/slide_next_over.png); }
+
 
 #slide-fair { position:relative; margin-top:20px; margin-bottom:30px;}
 #slide-fair:after { clear:both; content:''; display:table; }

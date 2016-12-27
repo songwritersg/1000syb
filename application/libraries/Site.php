@@ -213,7 +213,8 @@ class Site {
         $return = "";
         $return .= '<meta charset="utf-8">';
         $return .= '<meta content="yes" name="apple-mobile-web-app-capable" />';
-        $return .=  ($this->viewmode() == DEVICE_DESKTOP) ? '<meta name="viewport" content="width=device-width,initial-scale=auto,user-scalable=yes">' : '<meta name="viewport" content="width=device-width,initial-scale=1">';
+        //$return .=  ($this->viewmode() == DEVICE_DESKTOP) ? '<meta name="viewport" content="width=device-width,initial-scale=auto,user-scalable=yes">' : '<meta name="viewport" content="width=device-width,initial-scale=1">';
+        $return .= '<meta name="viewport" content="width=1140,initial-scale=auto,user-scalable=yes">';
         $return .= '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
         // 기본 메타 태그
         $return .= '<title>' . $this->meta_title . '</title>';

@@ -1,3 +1,5 @@
+<?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/jquery.flexslider.min.js")?>
+<?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/flexslider.min.css")?>
 <article id="page-events" class="container">
     <!--START: Breadcrumbs-->
     <aside class="container">
@@ -27,9 +29,17 @@
                 <a href="#제주" data-idx="69">제주</a>
                 <a href="#경북" data-idx="71">경북</a>
             </div>
+            <div class="banner-list" id="banner-list" style="padding:30px;width:660px;height:530px;float:right">
+                <div id="banner-slide-container" class="flexslider">
+                    <ul class="slides">
+                        <?php foreach($event_banner_list as $banner) :?>
+                        <li data-location="<?=$banner['sed_location']?>"><a href="<?=$banner['sed_url']?>" target="_blank"><img src="<?=base_url($banner['sed_banner'])?>" alt="<?=$banner['sed_title']?>"></a></li>
+                        <?php endforeach;?>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-
     <table class="table table-default" id="list-events">
         <colgroup>
             <col width="575" />
@@ -70,6 +80,37 @@ $(function(){
         var idx = $(this).data('idx');
         var bg_url = "/static/images/about/map_" + idx + ".jpg";
         $("#events-location .events-body .maps").css('background-image', 'url('+bg_url+')');
+
+        // 해당 li로 이동
+        $("#banner-slide-container .slides li").each(function(){
+            if( $(this).data('location') == idx )
+            {
+                var index = $(this).index();
+
+                $('#banner-slide-container').data("flexslider").flexAnimate(index, true, true);
+
+                return false;
+            }
+        });
+    });
+
+    $("#banner-slide-container").flexslider({
+        animation: "slide",
+        slideshow:false,
+        slideshowSpeed : 1000,
+        prevText:"",
+        nextText:"",
+        controlNav:false,
+        after: function(slider){
+            var loc = $("#banner-slide-container .slides li").eq(slider.currentSlide).data('location');
+
+            $("#events-location .maps > a").removeClass("active");
+            var selected = $("#events-location .maps > a[data-idx='"+loc+"']");
+            selected.addClass("active");
+            var bg_url = "/static/images/about/map_" + loc + ".jpg";
+            $("#events-location .events-body .maps").css('background-image', 'url('+bg_url+')');
+
+        }
     });
 });
 </script>
