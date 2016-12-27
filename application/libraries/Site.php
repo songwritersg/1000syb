@@ -190,6 +190,8 @@ class Site {
         $this->meta_keywords = $this->meta_keywords ? $this->meta_keywords : "";
         $this->meta_image = $this->meta_image ? $this->meta_image : $this->config('meta_image');
 
+        if( $this->meta_image ) $this->meta_image = base_url($this->meta_image);
+
         $default_keywords = explode(",", $this->config('meta_keywords'));
         $in_keywords = explode(",", $this->meta_keywords);
         foreach($in_keywords as $keyword) {

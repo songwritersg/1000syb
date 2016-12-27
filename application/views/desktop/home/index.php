@@ -171,7 +171,3 @@ if($this->site->config('site_poplayer') && ! $this->input->cookie('syb_poplayer'
     <?php
     endif;
 endif;?>
-
-<!--
-
--->

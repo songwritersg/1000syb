@@ -67,7 +67,7 @@
                 if( $category["sca_top_{$i}"] && element('prd_idx',$category["sca_top_{$i}"]) ) : ?>
                 <li class="top-product">
                     <label class="top-label">TOP<br><?=$i?></label>
-                    <img class="product-thumbnail" src="<?=base_url($category["sca_top_".$i]['prd_thumb'])?>" alt="<?=$category["sca_top_".$i]['prd_title']?>">
+                    <img class="product-thumbnail" src="<?=(validate_url($category["sca_top_".$i]['prd_thumb'])?'':base_url()).$category["sca_top_".$i]['prd_thumb']?>" alt="<?=$category["sca_top_".$i]['prd_title']?>">
                     <div class="img-overlay"></div>
                     <div class="product-detail">
                         <h4><?=preg_replace("/\\[|\\]/","",$category["sca_top_".$i]['prd_title'])?></h4>
@@ -101,11 +101,13 @@
 <article class="container-fluid" id="product-lists" style="background:#fff;">
     <div class="container">
         <h2 class="category-title"><strong><?=strtoupper($category['sca_info_title'])?></strong>&nbsp;AREA</h2>
+        <?php if(count($category['children']) > 1) :?>
         <ul class="category-list">
             <?php foreach($category['children'] as $cate) : ?>
             <li <?=$selected==$cate['sca_key']?'class="active"':''?>><a href="<?=base_url("products/{$category['sca_key']}/{$cate['sca_key']}")?>"><?=$cate['sca_name']?></a></li>
             <?php endforeach;?>
         </ul>
+        <?php endif;?>
         <div class="product-list">
             <ul>
                 <?php foreach($lists as $row) :?>

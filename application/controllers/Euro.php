@@ -44,6 +44,33 @@ class Euro extends SYB_Controller
         $this->data['category'] = $this->product_model->get_category($sca_parent);
         $this->data['selected'] = $sca_key;
 
+        $this->data['category']['sca_top_1'] = array(
+            "prd_idx" => "1781",
+            "prd_thumb" => "http://file.intereuro.co.kr/b2b/Product/Product_20151120154352_941_62_1_copy_copy.jpg",
+            "prd_title" => "파리 일주 6일",
+            "prd_detail" => "전 세계인의 사랑을 받는 에펠탑과 개선문을 비롯하여 건축물과 패션의 중심도시 파리 관광",
+            "sca_parent" => "eur",
+            "sca_key" => "weuro"
+        );
+
+        $this->data['category']['sca_top_2'] = array(
+            "prd_idx" => "1807",
+            "prd_thumb" => "http://file.intereuro.co.kr/b2b/Product/Product_20151027105518_833_89_1_copy_copy.jpg",
+            "prd_title" => "체코일주 7일",
+            "prd_detail" => "보헤미안의 낭만이 살아 숨쉬는 곳에서 스냅촬영과 함께 동유럽 여행의 백미인 야경투어!",
+            "sca_parent" => "eur",
+            "sca_key" => "eeuro"
+        );
+
+        $this->data['category']['sca_top_3'] = array(
+            "prd_idx" => "1831",
+            "prd_thumb" => "http://file.intereuro.co.kr/b2b/Product/Product_20151026151047_720_17_1_copy_copy.jpg",
+            "prd_title" => "그리스 일주 7일",
+            "prd_detail" => "신화 고대유적지 아테네와, 세계문화유산 1호인 아크로폴리스의 파르테논신전 관광 ",
+            "sca_parent" => "eur",
+            "sca_key" => "seuro"
+        );
+
         $this->site->meta_title =  $this->data['category']['sca_info_title'] . " - " .$this->data['category']['sca_info_subtitle'] ;
         $this->site->meta_descrption = $this->data['category']['sca_info_description'];
         $this->site->meta_keywords = $this->data['category']['sca_info_title'];
@@ -86,15 +113,15 @@ class Euro extends SYB_Controller
             exit;
         }
 
-        if(! $this->data['program_list'] = $this->intereuro->get_product_program_list($prd_idx))
-        {
-            alert('해당하는 상품에 현재 예약가능한 상품이 없습니다.');
-            exit;
-        }
+            if(! $this->data['program_list'] = $this->intereuro->get_product_program_list($prd_idx))
+            {
+                alert('해당하는 상품에 현재 예약가능한 상품이 없습니다.');
+                exit;
+            }
 
-        // 상품상세 데이타 불러오기
-        // 넘어온 상품상세 IDX가 없다면 리스트중 가장 첫번째걸 선택
-        $prg_idx = (empty($prg_idx)) ? $this->data['program_list'][0]['prg_idx'] : $prg_idx;
+            // 상품상세 데이타 불러오기
+            // 넘어온 상품상세 IDX가 없다면 리스트중 가장 첫번째걸 선택
+            $prg_idx = (empty($prg_idx)) ? $this->data['program_list'][0]['prg_idx'] : $prg_idx;
 
         if(! $this->data['view'] = $this->intereuro->get_product_detail($prd_idx, $prg_idx))
         {
@@ -114,12 +141,12 @@ class Euro extends SYB_Controller
             $this->data['view']['tours'][ $tour['NationName'] ][] = $tour;
         }
 
-
-
         $this->data['prd_idx'] = $prd_idx;
         $this->data['prg_idx'] = $prg_idx;
 
         $this->data['category'] = $this->product_model->get_category($sca_parent);
+
+        $this->data['qna_category'] = $this->board_model->get_category("sybqna");
 
         $this->site->meta_title = "";
         $this->site->meta_descrption = "";

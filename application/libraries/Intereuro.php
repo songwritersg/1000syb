@@ -177,7 +177,8 @@ class Intereuro {
                     'prd_title' => $prd_title,
                     'cty_name' => $row['ProductCountryName'],
                     'ct_name' => $row['ProductCityName'],
-                    'ppr_price' => $row['LowProductPrice']
+                    'ppr_price' => $row['LowProductPrice'],
+                    "block" => $row["ProductBlockYN"] == 'Y' ? TRUE : FALSE
                 );
                 $list[] = $array;
                 $this->CI->cache->save('intereuro_product_'.$row['ProductIdx'], $array, 60);

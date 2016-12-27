@@ -881,3 +881,7 @@ function ajax_error($message, $status=400)
     exit;
 }
 
+function validate_url($url) {
+    return ( !filter_var($url, FILTER_VALIDATE_URL)  == false);
+}
+

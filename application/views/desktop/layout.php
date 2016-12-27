@@ -2,6 +2,16 @@
 <html lang="ko">
 <head>
 <?=$this->site->display_meta()?>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#686e73">
+<meta name="apple-mobile-web-app-title" content="1000syb">
+<meta name="application-name" content="1000syb">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<meta name="theme-color" content="#ffffff">
 <?=$this->site->add_css("//fonts.googleapis.com/earlyaccess/notosanskr.css", TRUE)?>
 <?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css", TRUE)?>
 <?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css", TRUE)?>
@@ -34,11 +44,6 @@ var base_url = '<?=base_url()?>';
         <h1 class="logo"><a href="<?=base_url()?>">천생연분닷컴</a></h1>
         <ul class="right-top-menu">
             <li><a href="<?=base_url()?>"><i class="fa fa-home"></i>&nbsp;메인</a></li>
-            <?php if($this->member->is_login()) :?>
-            <li><a href="<?=base_url('members/logout')?>"><i class="fa fa-power-off"></i>&nbsp;로그아웃</a></li>
-            <?php else :?>
-            <li><a href="<?=base_url('members/login')?>"><i class="fa fa-power-off"></i>&nbsp;로그인</a></li>
-            <?php endif;?>
             <li><a href="javascript:;" data-toggle="add-favorite"><i class="fa fa-star"></i>&nbsp;즐겨찾기</a></li>
             <li><a href="<?=base_url('board/article')?>"><i class="fa  fa-newspaper-o"></i>&nbsp;보도자료</a></li>
         </ul>
@@ -113,11 +118,14 @@ var base_url = '<?=base_url()?>';
                     </div>
                 </article>
             </div>
+            <style>
+
+            </style>
 
             <ul class="footer-navigation">
-                <li><a href="http://www.wnfair.com" target="_blank">잠실롯데호텔 <strong>허니문&웨딩 박람회</strong>&nbsp;<i class="fa fa-chevron-circle-right"></i></a></li>
-                <li><a href="<?=base_url("about/branch")?>">전국 지사안내&nbsp;<i class="fa fa-chevron-circle-right"></i></a></li>
-                <li><a href="<?=base_url("about/#insurance")?>">보증보험안내&nbsp;<i class="fa fa-chevron-circle-right"></i></a></li>
+                <li><a href="http://www.wnfair.com" target="_blank"><i class="icon icon-calendar"></i>&nbsp;잠실롯데호텔 <strong>허니문&웨딩 박람회</strong></a></li>
+                <li><a href="<?=base_url("about/branch")?>"><i class="icon icon-map"></i>&nbsp;전국 지사안내</a></li>
+                <li><a href="<?=base_url("about/#insurance")?>"><i class="icon icon-text"></i>&nbsp;보증보험안내</a></li>
             </ul>
         </div>
     </div>

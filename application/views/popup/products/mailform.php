@@ -1,6 +1,6 @@
 <?=$this->site->add_js("/static/plugins/tinymce-4.3.13/tinymce.min.js");?>
 <?=$this->site->add_js("http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js")?>
-<?=$this->site->add_js("/static/js/mailform.js")?>
+<?=$this->site->add_js("/static/js/mailform.min.js")?>
 <article id="mailform">
     <div class="product-view-header">
         <h1><?=$product['prd_title']?></h1>
@@ -103,6 +103,7 @@
         <button type="submit" class="btn btn-primary btn-lg" onclick="get_data();">메일 보내기</button>
     </div>
     <?=form_close()?>
+
 </article>
 <script id="tmpl-new-row" type="text/x-jquery-tmpl">
     <tr>
@@ -155,6 +156,3 @@
         </tbody>
     </table>
 </script>
-<style>
-
-</style>

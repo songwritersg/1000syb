@@ -346,7 +346,7 @@
                 <div class="policy">
                     <textarea class="form-control" readonly="readonly" rows="3" style="resize:none"><?=$this->site->config('site_privacy');?></textarea>
                     <div class="checkbox pull-right margin-top-10">
-                        <input type="checkbox" value="Y" id="agree_privacy" checked><label for="agree_privacy">위 개인정보 취급방침에 동의합니다.</label>
+                        <input type="checkbox" value="Y" id="agree_privacy"><label for="agree_privacy">위 개인정보 취급방침에 동의합니다.</label>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -395,7 +395,6 @@
 
         $("#dialog-sybqna").dialog({ autoOpen : false, draggable : false, dialogClass : 'close', resizeable : false, modal: true, width:800});
 
-
         $('.flexslider').flexslider({
             animation: "slide",
             slideshow:false,
@@ -418,6 +417,11 @@
             toolbar2: 'formatselect fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough removeformat',
             font_formats : "나눔고딕=Nanum Gothic;돋움=돋움,Dotum;굴림=굴림,Gulim;바탕=바탕,Batang;궁서=궁서;Arial=Arial;Comic Sans MS=Comic Sans MS;Courier New=Courier New;Tahoma=Tahoma;Times New Roman=Times New Roman;Verdana=Verdana",
             fontsize_formats : "10px 11px 12px 14px 16px 18px 20px 24px 28px",
+            setup: function (editor) {
+                editor.on('change', function () {
+                    tinymce.triggerSave();
+                });
+            }
         });
 
         $("#form-sybqna").on('submit', function(e){

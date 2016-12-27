@@ -89,57 +89,60 @@ $(function(){
         });
     });
 
-    $("[data-toggle='add-attach']").on('click', function(){
-        $("input[type='file']").click().off('change.attach_selected').on('change.attach_selected', function(){
-            if( ! $(this).val() ) return;
-            if( ! confirm('선택한 파일을 첨부하시겠습니까?') ) return false;
-            var formData = new FormData();
-            formData.append('userfile', $(this)[0].files[0]);
-            $.ajax({
-                url : '/api/products/attach',
-                type : 'POST',
-                processData : false,
-                contentType : false,
-                data:formData,
-                fail:function(){
-                    alert('파일 업로드에 실패하였습니다.');
-                },
-                success:function(res) {
-                    if( res.status == true )
-                    {
-                        var li = $("<li>");
-                        var input = $("<input>").attr({'type' : 'hidden','name' : 'attach_list[]','value' : res.result.full_path});
-                        var input2 = $("<input>").attr({'type' : 'hidden','name' : 'attach_name[]','value' : res.result.orig_name});
-                        var a = $("<a>").attr({
-                            'href' : 'javascript:;',
-                            'data-toggle' : 'remove-attach',
-                            'data-value' : res.result.full_path
-                        }).addClass("text-color-red").html('&times;');
-                        li.text(res.result.orig_name).append(input2).append(input).append(a);
-                        $(".attach-list").append(li);
+    $("input[type='file']").on('change', function(){
+        if( ! $(this).val() ) return;
+        if( ! confirm('선택한 파일을 첨부하시겠습니까?') ) return false;
+        var formData = new FormData();
+        formData.append('userfile', $(this)[0].files[0]);
+        $.ajax({
+            url : '/api/products/attach',
+            type : 'POST',
+            processData : false,
+            contentType : false,
+            data:formData,
+            fail:function(){
+                alert('파일 업로드에 실패하였습니다.');
+            },
+            success:function(res) {
+                if( res.status == true )
+                {
+                    var li = $("<li>");
+                    var input = $("<input>").attr({'type' : 'hidden','name' : 'attach_list[]','value' : res.result.full_path});
+                    var input2 = $("<input>").attr({'type' : 'hidden','name' : 'attach_name[]','value' : res.result.orig_name});
+                    var a = $("<a>").attr({
+                        'href' : 'javascript:;',
+                        'data-toggle' : 'remove-attach',
+                        'data-value' : res.result.full_path
+                    }).addClass("text-color-red").html('&times;');
+                    li.text(res.result.orig_name).append(input2).append(input).append(a);
+                    $(".attach-list").append(li);
 
-                        $("a[data-toggle='remove-attach']").off('click.remove_attach').on('click.remove_attach', function(){
-                            var path = $(this).data('value');
-                            var _this = $(this);
-                            $.ajax({
-                                url : '/api/products/attach',
-                                type : 'DELETE',
-                                beforeSend: function(xhr){ xhr.setRequestHeader("Content-Type", "application/json"); },
-                                data : {
-                                    path : path
-                                },
-                                success:function() {
-                                    _this.parent().remove();
-                                }
-                            });
+                    $("a[data-toggle='remove-attach']").off('click.remove_attach').on('click.remove_attach', function(){
+                        var path = $(this).data('value');
+                        var _this = $(this);
+                        $.ajax({
+                            url : '/api/products/attach',
+                            type : 'DELETE',
+                            beforeSend: function(xhr){ xhr.setRequestHeader("Content-Type", "application/json"); },
+                            data : {
+                                path : path
+                            },
+                            success:function() {
+                                _this.parent().remove();
+                            }
                         });
-                    }
-                    else {
-                        alert('파일 업로드 도중 오류가 발생하였습니다.\n' + res.result);
-                    }
+                    });
                 }
-            })
-        });
+                else {
+                    alert('파일 업로드 도중 오류가 발생하였습니다.\n' + res.result);
+                }
+            }
+        })
+    });
+
+
+    $("[data-toggle='add-attach']").on('click', function(){
+        $("input[type='file']").click();
     });
 });
 

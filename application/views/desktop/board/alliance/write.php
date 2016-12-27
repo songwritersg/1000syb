@@ -120,7 +120,7 @@
                 <textarea class="form-control" readonly rows="4"><?=$this->site->config('site_privacy')?></textarea>
                 <div class="text-center margin-top-10">
                     <div class="checkbox">
-                        <input type="checkbox" value="Y" id="agree_privacy" checked><label for="agree_privacy">위 개인정보 취급방침에 동의합니다.</label>
+                        <input type="checkbox" value="Y" id="agree_privacy"><label for="agree_privacy">위 개인정보 취급방침에 동의합니다.</label>
                     </div>
                 </div>
             </div>
