@@ -1642,11 +1642,14 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 
 #dialog-comment-delete-password { padding:15px; border:1px solid #ddd; height:100%; }
 #dialog-comment-delete-password legend { color:#787878; margin-bottom:10px; }
-#dialog-comment-edit { padding:15px; }
-#dialog-comment-edit input[name="comment_user"] { width:250px; display:block; float:left;}
-#dialog-comment-edit input[name="comment_password"] { width:200px; display:block; margin-left:16px; float:right}
+#dialog-comment-edit { padding:15px; border:1px solid #767676; box-shadow:1px 1px 1px rgba(0,0,0,0.5); }
+#dialog-comment-edit legend { display:none; }
+#dialog-comment-edit h2 { display:inline-block; font-size:16px; color:#4c4f53;}
+#dialog-comment-edit input[name="comment_user"] { width:150px; display:inline-block;}
+#dialog-comment-edit input[name="comment_password"] { width:200px; display:inline-block;}
+#dialog-comment-edit button[type="submit"] { float:right; }
 #dialog-comment-edit .form-group:after { clear:both;content:'';display:table; }
-
+#dialog-comment-edit .btn-close { position:absolute; right:5px; top:5px; border:0px; background:transparent; font-size:45px; font-weight:normal; color:#797979; cursor:pointer;}
 
 .form-table { width:100%; border-collapse:collapse; border-spacing:0px; border:1px solid #ddd;}
 .form-table td, .form-table th { padding:10px 15px; border-bottom:1px solid #ddd; vertical-align: middle;}

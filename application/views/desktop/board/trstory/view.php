@@ -49,20 +49,20 @@
                     <div class="form-group">
                         <label for="comment_usr_name">이름</label>
                         <div class="input-box">
-                            <input type="text" class="form-control input-md" id="comment_usr_name" name="usr_name" required="required" data-title="이름" placeholder="이름을 입력하세요">
+                            <input type="text" class="form-control input-md" id="comment_usr_name" name="usr_name" required="required" data-title="이름" placeholder="이름을 입력하세요" style="background:#fff;">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="comment_usr_pass">패스워드</label>
                         <div class="input-box">
-                            <input type="password" class="form-control input-md" id="comment_usr_pass" name="usr_pass" required="required" data-title="비밀번호" placeholder="비밀번호를 입력하세요">
+                            <input type="password" class="form-control input-md" id="comment_usr_pass" name="usr_pass" required="required" data-title="비밀번호" placeholder="비밀번호를 입력하세요" style="background:#fff;">
                         </div>
                     </div>
                     <div class="clearfix"></div>
                 <?php endif;?>
                 <div class="form-group margin-top-20">
                     <div class="input-box">
-                        <textarea name="cmt_content" rows="5" class="form-control" required></textarea>
+                        <textarea name="cmt_content" rows="5" class="form-control" style="background:#fff;" required></textarea>
                     </div>
                     <div class="button-box">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">댓글달기</button>

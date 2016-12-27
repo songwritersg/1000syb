@@ -1,19 +1,21 @@
 <?=form_open(NULL,array("id"=>"form-comment-edit","autocomplete"=>"off"))?>
 <input type="hidden" name="cmt_idx" value="<?=$cmt_idx?>">
+<input type="hidden" name="comment_user" value="<?=$comment['usr_name']?>">
 <input type="text" class="fake-input">
 <input type="password" class="fake-input">
 <fieldset>
     <legend>댓글 수정하기</legend>
     <div class="form-group margin-top-10">
-        <textarea class="form-control" name="comment_content" rows="5"><?=$comment['cmt_content']?></textarea>
+        <h2>댓글 수정</h2>
+        <button type="button" title="닫기" class="btn-close" onclick="$('#dialog-comment-edit').dialog('close');">&times;</button>
     </div>
     <div class="form-group margin-top-10">
-        <input type="text" class="form-control" name="comment_user" value="<?=$comment['usr_name']?>" placeholder="작성자 이름을 입력하세요">
-        <input type="password" name="comment_password" class="form-control" placeholder="비밀번호를 입력하세요">
+        <textarea class="form-control" name="comment_content" rows="5"><?=$comment['cmt_content']?></textarea>
     </div>
-    <div class="text-center margin-top-20">
-        <button type="submit" class="btn btn-dark">댓글 수정하기</button>
-        <button type="button" class="btn btn-default" onclick="$('#dialog-comment-edit').dialog('close');">닫기</button>
+
+    <div class="margin-top-10">
+        <input type="password" name="comment_password" class="form-control" placeholder="비밀번호를 입력하세요">
+        <button type="submit" class="btn btn-lg btn-primary">댓글 수정하기</button>
     </div>
 </fieldset>
 <?=form_close()?>
