@@ -68,7 +68,7 @@ if ( ! function_exists('form_open'))
 		// If no action is provided then set to the current url
 		if ( ! $action)
 		{
-			$action = $CI->config->site_url($CI->uri->uri_string());
+			$action = $CI->config->site_url($CI->uri->uri_string(), 'https');
 		}
 		// If an action is not a full URL then turn it into one
 		elseif (strpos($action, '://') === FALSE)

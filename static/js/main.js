@@ -20,15 +20,47 @@ $(function(){
         directionNav:false
     });
 
-    best_honeymoon_slider.init();
-    best_honeymonn_list_slider.init();
+    $("#slide-best-honeymoon").flexslider({
+        animation: "slide",
+        animationLoop:true,
+        slideshow:false,
+        directionNav:false,
+        controlNav:false,
+        //manualControls:$("#best-honeymoon .slide-indicator li")
+    });
+
+    $("#best-honeymoon #best-honeymmon-slide-indicator li a").on('click', function(e){
+        e.preventDefault();
+        $("#slide-best-honeymoon").flexslider( $(this).data('action') );
+    });
+
+    $("#slide-best-honeymoon-list").flexslider({
+        animation: "slide",
+        animationLoop:true,
+        slideshow:false,
+        directionNav:false,
+        controlNav:false,
+        minItems : 4,
+        maxItems : 4,
+        move:1,
+        itemWidth : 276,
+        itemMargin : 15
+    });
+
+    $("#slide-best-honeymoon-list .slide-indicator li a").on('click', function(e){
+        e.preventDefault();
+        $("#slide-best-honeymoon-list").flexslider( $(this).data('action') );
+    });
+
+    //best_honeymoon_slider.init();
+    //best_honeymonn_list_slider.init();
 
 });
-
+/*
 var best_honeymoon_slider = function(){
 
     var item_length;
-    var item_width = 1090;
+    var item_width = 1092;
     var item_height =  250;
     var is_animate = false;
     var $slide;
@@ -46,7 +78,7 @@ var best_honeymoon_slider = function(){
             $slide_mover = $slide.find('ul.slides');
             item_length = $slide_mover.find("li").length;
             $slide_mover.css({
-                width : item_width *  item_length,
+                width : item_width *  item_length,// + (20 * item_length),
                 height : item_height,
                 left : 0,
                 position: 'absolute'
@@ -81,7 +113,8 @@ var best_honeymoon_slider = function(){
         }
     }
 }();
-
+*/
+/*
 var best_honeymonn_list_slider = function(){
 
     var item_length;
@@ -138,3 +171,4 @@ var best_honeymonn_list_slider = function(){
         }
     }
 }();
+*/

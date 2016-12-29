@@ -72,6 +72,7 @@ class Products extends REST_Controller {
 
     function sybqna_post()
     {
+
         $this->load->model('board_model');
 
         $data['brd_key'] = "sybqna";

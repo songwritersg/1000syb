@@ -101,9 +101,9 @@
 <article class="continer-fluid" id="best-honeymoon">
     <h2 class="hide">BEST 허니문 추천지역</h2>
     <div class="container">
-        <ul class="slide-indicator">
-            <li><a href="javascript:;" onclick="best_honeymoon_slider.move_prev();"><i class="fa fa-chevron-left"></i></a></li>
-            <li><a href="javascript:;" onclick="best_honeymoon_slider.move_next();"><i class="fa fa-chevron-right"></i></a></li>
+        <ul class="slide-indicator" id="best-honeymmon-slide-indicator">
+            <li><a href="javascript:;" data-action="prev"><i class="fa fa-chevron-left"></i></a></li>
+            <li><a href="javascript:;" data-action="next"><i class="fa fa-chevron-right"></i></a></li>
         </ul>
         <h4>
             BEST <strong>허니문 추천지역</strong>
@@ -126,8 +126,8 @@
 
         <div id="slide-best-honeymoon-list" >
             <ol class="slide-indicator">
-                <li class="left"><a href="javascript:;" onclick="best_honeymonn_list_slider.move_prev();"><i class="fa fa-chevron-left"></i></a> </li>
-                <li class="right"><a href="javascript:;" onclick="best_honeymonn_list_slider.move_next();"><i class="fa fa-chevron-right"></i></a> </li>
+                <li class="left"><a href="javascript:;" data-action="prev"><i class="fa fa-chevron-left"></i></a> </li>
+                <li class="right"><a href="javascript:;" data-action="next"><i class="fa fa-chevron-right"></i></a> </li>
             </ol>
             <ul class="slides">
                 <?php foreach($best_products as $row):?>

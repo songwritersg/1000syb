@@ -5,9 +5,16 @@
  * @Author : 장선근 <jang@tjsrms.me>
  *
  *****************************************************************************************************/
-/** Jquery UI Dialog Default Setting **/
 
+/** Jquery UI Dialog Default Setting **/
 $(function(){
+
+    if (typeof SmoothScroll == 'function')
+    {
+        SmoothScroll({
+            stepSize: 50
+        });
+    }
 
     /**************************************************************************************************
      * 뒤로가기 버튼

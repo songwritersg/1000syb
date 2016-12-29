@@ -508,6 +508,9 @@ class Board extends SYB_Controller {
             $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
             $this->cache->delete('board_recent_'.$brd_key);
 
+            // 자기게시물의 비번은 자동등록
+            $this->session->set_userdata('post_password_'.$data['post_idx'], TRUE);
+
             alert($msg, base_url("board/{$brd_key}/{$data['post_idx']}"));
             exit;
         }

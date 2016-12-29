@@ -514,7 +514,7 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #sybIndex { overflow:hidden; position:absolute; left:-9999px; width:0; height:1px; margin:0; padding:0; }
 
 #sybHeader { position:relative; width:100%; height:90px; background:#fff; border-top:1px solid #f28524}
-#sybHeader h1.logo { display:block; width:203px; height:90px; background-size:203px 45px; background-position:center; background-image:url(../images/common/logo.png?20161228); background-repeat:no-repeat; overflow:hidden; text-indent:-9999px; margin:0 auto;}
+#sybHeader h1.logo { display:block; width:203px; height:90px; background-size:203px 45px; background-position:center; background-image:url(../images/common/logo.png?20161229); background-repeat:no-repeat; overflow:hidden; text-indent:-9999px; margin:0 auto;}
 #sybHeader h1.logo > a { display:block; width:100%; height:100%; }
 #sybHeader .left-top-banner { position:absolute; top:50%; margin-top:-27.5px; left:0px; }
 #sybHeader .right-top-menu { position:absolute; right:15px; top:33px; }
@@ -675,17 +675,18 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #best-honeymoon .slide-indicator li > a:hover { background:#33bfb2; color:#fff;}
 #best-honeymoon #slide-best-honeymoon { width:100%; overflow:hidden; }
 #best-honeymoon #slide-best-honeymoon ul.slides { margin:0; padding:0; list-style:none; height:250px;}
-#best-honeymoon #slide-best-honeymoon ul.slides li { display:block; float:left; padding-left:1px; padding-right:1px; }
+#best-honeymoon #slide-best-honeymoon ul.slides li { display:block; float:left;/* padding-left:1px; padding-right:1px; */ margin-bottom:20px;}
 #best-honeymoon #slide-best-honeymoon ul.slides li > a { display:block; float:left;}
 #best-honeymoon #slide-best-honeymoon ul.slides li > a > img { width:535px; height:250px; }
 #best-honeymoon #slide-best-honeymoon ul.slides li > a + a { margin-left:20px; }
 #best-honeymoon #slide-best-honeymoon ul.slides:after { clear:both; content:''; display:table;}
 
+#best-honeymoon #slide-best-honeymoon-list { position:relative; margin-bottom:30px;}
 #best-honeymoon #slide-best-honeymoon-list ul.slides li {  width:260px; height:auto; float:left; margin-right:16px; box-shadow:0px 1px 1px rgba(0,0,0,0.4);}
 #best-honeymoon #slide-best-honeymoon-list ul.slides li > a {}
-#best-honeymoon #slide-best-honeymoon-list ul.slides li > a > img { display:block; width:260px; height:195px;border:1px solid #ddd; border-bottom:0px; }
+#best-honeymoon #slide-best-honeymoon-list ul.slides li > a > img { display:block; width:100%; height:195px;border:1px solid #ddd; border-bottom:0px; }
 
-#best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content { background:#fff; height:130px; width:260px;border:1px solid #ddd; border-top:0px; padding:25px 55px 25px 35px; position:relative; }
+#best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content { background:#fff; height:130px; width:100%;border:1px solid #ddd; border-top:0px; padding:25px 55px 25px 35px; position:relative; }
 #best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content i { position:absolute; right:20px; bottom:40px; }
 #best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content h6 { font-size:13px; color:#828282; font-family:Arial,sans-serif; padding:0; margin:0; margin-bottom:20px;}
 #best-honeymoon #slide-best-honeymoon-list ul.slides li > a .content p { font-size:14px; letter-spacing:-0.075em; }
@@ -1606,7 +1607,7 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #skin-sybqna-list table.post-list > tbody > tr > td.post-title > a:hover { text-decoration:underline; }
 #skin-sybqna-list table.post-list > tbody > tr > td.notice { padding:0px; }
 #skin-sybqna-list table.post-list > tbody > tr > td img { vertical-align:middle; }
-#skin-sybqna-list .toolbar-group { margin-top:30px; }
+#skin-sybqna-list .toolbar-group { margin-top:0px; margin-bottom:15px;}
 #skin-sybqna-list .toolbar-group:after { clear:both; content:' '; display:table; }
 #skin-sybqna-list .toolbar-group .search-form { float:left; }
 #skin-sybqna-list .toolbar-group .action-group { float:right; }

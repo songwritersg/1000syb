@@ -264,8 +264,9 @@ class Board_model extends SYB_Model {
         if( $result->num_rows() >0 )
         {
             $list = $result->result_array();
-            foreach($list as $row)
+            foreach($list as &$row)
             {
+                $row['bfi_filename'] = implode('/', array_map('urlencode', explode('/', $row['bfi_filename'])));
                 $post['post_attach_list'][] = $row;
                 if($row['bfi_is_image'] == 'Y') {
                     $post['post_attach_image_count'] ++;
@@ -475,6 +476,7 @@ class Board_model extends SYB_Model {
             $this->db->select("post_title, post_regtime, brd_key, post_idx, post_depth, post_secret");
             $this->db->where("brd_key", $brd_key);
             $this->db->where("post_depth", 0);
+            $this->db->where('post_status', 'Y');
             $this->db->where('post_assign', 'Y');
             $this->db->order_by("post_num DESC");
             $this->db->limit($limit);
@@ -485,7 +487,7 @@ class Board_model extends SYB_Model {
             {
                 $this->adjust_row($row, 0, null,null);
             }
-            $CI->cache->save("board_recent_".$brd_key, $list, 60*10);
+            $CI->cache->save("board_recent_".$brd_key, $list, 60*1);
         }
         return $list;
     }

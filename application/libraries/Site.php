@@ -216,6 +216,7 @@ class Site {
         //$return .=  ($this->viewmode() == DEVICE_DESKTOP) ? '<meta name="viewport" content="width=device-width,initial-scale=auto,user-scalable=yes">' : '<meta name="viewport" content="width=device-width,initial-scale=1">';
         $return .= '<meta name="viewport" content="width=1140,initial-scale=auto,user-scalable=yes">';
         $return .= '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
+        $return .= '<meta name="google-site-verification" content="braa6osDc8_MkL5286zzaInxLq_iy-AHIEdDENL8aTA" />';
         // 기본 메타 태그
         $return .= '<title>' . $this->meta_title . '</title>';
         $return .= '<meta name="description" content="'.$this->meta_description.'">';
@@ -242,6 +243,7 @@ class Site {
         $return .= '<meta name="nate:site_name" content="'.$this->config('site_title').'" />';
         $return .= '<meta name="nate:url" content="'.current_url().'" />';
         $return .= $this->meta_image ? '<meta name="nate:image" content="'.$this->meta_image.'" />' : '';
+        $return .= '<link rel="canonical" href="'.current_url().'" />';
         // IE8 미만에서 html5shiv, respond 로드
         $return .= '<!--[if lt IE 9]>';
         $return .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>';

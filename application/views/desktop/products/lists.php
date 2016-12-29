@@ -131,8 +131,3 @@
         </div>
     </div>
 </article>
-
-<script>
-    $(function(){
-    });
-</script>

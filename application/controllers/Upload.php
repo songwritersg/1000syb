@@ -55,7 +55,7 @@ class Upload extends SYB_Controller
                     $this->image_lib->resize();
                 }
 
-                $image_url = "http://img.1000syb.com/".ltrim($upload_url . element('file_name', $filedata), "/");
+                $image_url = base_url($upload_url . element('file_name', $filedata));
                 exit($image_url);
 
             } else {

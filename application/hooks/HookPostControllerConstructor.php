@@ -21,7 +21,28 @@ class HookPostControllerConstructor {
 
         // 천생연분 Config 파일 불러오기
         require_once APPPATH . "/config/sybconfig.php";
+
+        // 사이트 정보 클래스 로드
+        $this->CI->load->library("site");
+        // User Agent Library
+        $this->CI->load->library("user_agent");
+
+        $this->deny_ips();
         $this->setup_device_view();
+    }
+
+    function deny_ips()
+    {
+        ini_set('display_errors',1);
+        if( $this->CI->site->config('deny_ip') )
+        {
+            $blacklist =  preg_split('/\r\n|\r|\n/', $this->CI->site->config('deny_ip'));
+            $blacklist = array_map("trim", $blacklist);
+            if( in_array( $this->CI->input->ip_address(), $blacklist) )
+            {
+                exit("access denied");
+            }
+        }
     }
 
     /************************************************
@@ -31,10 +52,7 @@ class HookPostControllerConstructor {
      ***********************************************/
     function setup_device_view()
     {
-        // 사이트 정보 클래스 로드
-        $this->CI->load->library("site");
-        // User Agent Library
-        $this->CI->load->library("user_agent");
+
 
         // 모바일 접속여부에 따라 device 정보 확인
         $device = $viewmode = $this->CI->agent->is_mobile() ? DEVICE_MOBILE : DEVICE_DESKTOP;

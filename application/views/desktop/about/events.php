@@ -40,6 +40,7 @@
             </div>
         </div>
     </div>
+    <!--
     <table class="table table-default" id="list-events">
         <colgroup>
             <col width="575" />
@@ -69,6 +70,7 @@
         ?>
         </tbody>
     </table>
+    -->
 </article>
 
 <script>
@@ -85,9 +87,8 @@ $(function(){
         $("#banner-slide-container .slides li").each(function(){
             if( $(this).data('location') == idx )
             {
-                var index = $(this).index();
-
-                $('#banner-slide-container').data("flexslider").flexAnimate(index, true, true);
+                var index = $(this).index() - 1;
+                $('#banner-slide-container').flexslider(index);
 
                 return false;
             }
@@ -102,14 +103,13 @@ $(function(){
         nextText:"",
         controlNav:false,
         after: function(slider){
-            var loc = $("#banner-slide-container .slides li").eq(slider.currentSlide).data('location');
+            var loc = $("#banner-slide-container .slides li").eq(slider.currentSlide + 1).data('location');
 
             $("#events-location .maps > a").removeClass("active");
             var selected = $("#events-location .maps > a[data-idx='"+loc+"']");
             selected.addClass("active");
             var bg_url = "/static/images/about/map_" + loc + ".jpg";
             $("#events-location .events-body .maps").css('background-image', 'url('+bg_url+')');
-
         }
     });
 });

@@ -297,7 +297,7 @@
     <div id="pop-sybqna">
         <img src="/static/images/products/title_sybqna.png">
         <a class="close" onclick="$('#dialog-sybqna').dialog('close');">&times;</a>
-        <form id="form-sybqna" method="post" action="<?=base_url("api/products/sybqna")?>">
+        <form id="form-sybqna" method="post" action="<?=base_url("api/products/sybqna","https")?>">
             <input type="text" class="fake-input">
             <input type="password" class="fake-input">
             <fieldset>
@@ -503,5 +503,7 @@ $(function(){
     $("#select-products").on('change.product_change',function(){
         location.href = "/products/<?=$sca_parent?>/" + $("#select-subcategory option:selected").val() + "/" + $("#select-products option:selected").val();
     });
+
 });
+
 </script>

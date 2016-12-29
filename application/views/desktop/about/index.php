@@ -49,7 +49,7 @@
                         <img class="icon" src="/static/images/icons/icon_insurance.gif">&nbsp;배상책임 보험<i class="caret"></i>
                     </div>
                     <div class="togglebar-body">
-                        <img class="img-responsive" src="/static/images/about/insurance_3.jpg" alt="배상책임 보험">
+                        <img class="img-responsive" src="/static/images/about/insurance_2.jpg" alt="배상책임 보험">
                     </div>
                     <i class="plus"></i>
                 </div>
@@ -62,7 +62,7 @@
                         <img class="icon" src="/static/images/icons/icon_insurance.gif">&nbsp;기획여행 보증보험<i class="caret"></i>
                     </div>
                     <div class="togglebar-body">
-                        <img class="img-responsive" src="/static/images/about/insurance_2.jpg" alt="기획여행 보증보험">
+                        <img class="img-responsive" src="/static/images/about/insurance_3.jpg" alt="기획여행 보증보험">
                     </div>
                     <i class="plus"></i>
                 </div>

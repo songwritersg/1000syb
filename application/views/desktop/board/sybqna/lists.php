@@ -1,5 +1,24 @@
 <?php $this->load->view("desktop/board/qna_common");?>
 <article id="skin-sybqna-list" class="container">
+
+    <div class="toolbar-group">
+        <div class="search-form">
+            <?=form_open(NULL, array("method"=>"get","class"=>"form-inline"))?>
+            <select name="scol" class="form-control">
+                <option value="title" <?=$scol=="title"?"selected":""?>>제목</option>
+                <option value="titlecontent" <?=$scol=="titlecontent"?"selected":""?>>제목+내용</option>
+                <option value="nickname" <?=$scol=="nickname"?"selected":""?>>작성자</option>
+            </select>
+            <input type="search" class="form-control form-control-search" name="stxt" value="<?=$stxt?>" placeholder="검색어를 입력하세요">
+            <?=form_close()?>
+        </div>
+
+        <div class="action-group">
+            <?php if($auth['write']) : ?>
+                <a class="btn btn-dark" href="<?=base_url("board/{$board['brd_key']}/write").$querystring?>"><i class="fa fa-pencil"></i>&nbsp;문의하기</a>
+            <?php endif; ?>
+        </div>
+    </div>
     <table class="post-list" summary="<?=$board['brd_title']?> 게시판 <?=$page?>페이지 목록">
         <caption><?=$board['brd_title']?> 게시판 <?=$page?>페이지</caption>
         <colgroup>
@@ -73,22 +92,4 @@
         <?=$pagination?>
     </div>
 
-    <div class="toolbar-group margin-top-30">
-        <div class="search-form">
-            <?=form_open(NULL, array("method"=>"get","class"=>"form-inline"))?>
-            <select name="scol" class="form-control">
-                <option value="title" <?=$scol=="title"?"selected":""?>>제목</option>
-                <option value="titlecontent" <?=$scol=="titlecontent"?"selected":""?>>제목+내용</option>
-                <option value="nickname" <?=$scol=="nickname"?"selected":""?>>작성자</option>
-            </select>
-            <input type="search" class="form-control form-control-search" name="stxt" value="<?=$stxt?>" placeholder="검색어를 입력하세요">
-            <?=form_close()?>
-        </div>
-
-        <div class="action-group">
-            <?php if($auth['write']) : ?>
-            <a class="btn btn-primary" href="<?=base_url("board/{$board['brd_key']}/write").$querystring?>"><i class="fa fa-pencil"></i>&nbsp;글쓰기</a>
-            <?php endif; ?>
-        </div>
-    </div>
 </article>

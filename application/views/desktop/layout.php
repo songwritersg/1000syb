@@ -2,15 +2,14 @@
 <html lang="ko">
 <head>
 <?=$this->site->display_meta()?>
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#686e73">
-<meta name="apple-mobile-web-app-title" content="1000syb">
-<meta name="application-name" content="1000syb">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=NmERnQA9qn">
+<link rel="icon" type="image/png" href="/favicon-32x32.png?v=NmERnQA9qn" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png?v=NmERnQA9qn" sizes="16x16">
+<link rel="manifest" href="/manifest.json?v=NmERnQA9qn">
+<link rel="mask-icon" href="/safari-pinned-tab.svg?v=NmERnQA9qn">
+<link rel="shortcut icon" href="/favicon.ico?v=NmERnQA9qn">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png?v=NmERnQA9qn">
 <meta name="theme-color" content="#ffffff">
 <?=$this->site->add_css("//fonts.googleapis.com/earlyaccess/notosanskr.css", TRUE)?>
 <?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css", TRUE)?>
@@ -24,6 +23,7 @@
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")?>
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js")?>
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js")?>
+<?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.6/SmoothScroll.min.js")?>
 <?=$this->site->add_js("/static/js/common.min.js", TRUE)?>
 <?=$this->site->display_js();?>
 <script>
@@ -89,7 +89,7 @@ var base_url = '<?=base_url()?>';
                             <h5>EVENT</h5>
                         </div>
                         <div class="banner-body">
-                            <a href="http://www.wnfair.com" target="_blank">
+                            <a href="http://www.wnfair.com?key=mainv" target="_blank">
                                 <img src="/static/images/layout/footer_banner_01.jpg" alt="허니문 계약시 드리는 천생연분닷컴 독점사은품 5종!">
                             </a>
                         </div>
@@ -123,7 +123,7 @@ var base_url = '<?=base_url()?>';
             </style>
 
             <ul class="footer-navigation">
-                <li><a href="http://www.wnfair.com" target="_blank"><i class="icon icon-calendar"></i>&nbsp;잠실롯데호텔 <strong>허니문&웨딩 박람회</strong></a></li>
+                <li><a href="http://www.wnfair.com?key=mainv" target="_blank"><i class="icon icon-calendar"></i>&nbsp;잠실롯데호텔 <strong>허니문&웨딩 박람회</strong></a></li>
                 <li><a href="<?=base_url("about/branch")?>"><i class="icon icon-map"></i>&nbsp;전국 지사안내</a></li>
                 <li><a href="<?=base_url("about/#insurance")?>"><i class="icon icon-text"></i>&nbsp;보증보험안내</a></li>
             </ul>
@@ -280,5 +280,14 @@ var base_url = '<?=base_url()?>';
 <!--[if lt IE 9]>
 <script src="<?=base_url('static/js/poly-checked.min.js')?>"></script>
 <![endif]-->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-89582350-1', 'auto');
+ga('send', 'pageview');
+</script>
 </body>
 </html>

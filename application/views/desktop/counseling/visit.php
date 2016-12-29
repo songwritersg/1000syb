@@ -1,6 +1,6 @@
 <?php $this->load->view("desktop/board/qna_common");?>
 <article class="container" id="counseling">
-    <?=form_open(NULL, array("id"=>"form-counseling-visit", "class"=>"write-form-container"))?>
+    <?=form_open(base_url("counseling/visit","https"), array("id"=>"form-counseling-visit", "class"=>"write-form-container"))?>
     <input type="hidden" name="cns_const_name" value="방문상담신청">
     <input type="hidden" name="cns_status" value="방문">
     <fieldset>
