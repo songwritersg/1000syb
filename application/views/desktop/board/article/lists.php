@@ -29,7 +29,7 @@
                 </figure>
                 <div class="post-desc">
 
-                    <h3><a href="<?=$row['post_link'].$querystring?>"><?=$row['is_new']?'<img src="/static/images/common/icon_new.gif" class="icon-new">&nbsp;':''?><?=$row['post_title']?></a></h3>
+                    <h3><a href="<?=$row['post_link'].$querystring?>"><?=$row['is_new']?'<img alt="NEW" src="/static/images/common/icon_new.gif" class="icon-new">&nbsp;':''?><?=$row['post_title']?></a></h3>
                     <p class="post-content"><?=strip_tags($row['post_content'],"<br>")?></p>
 
                     <ul class="post-info">

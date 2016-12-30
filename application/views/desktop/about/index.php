@@ -21,13 +21,15 @@
 
 <article id="about" class="container margin-top-50">
     <header>
+        <h2 class="hide">허니문 여행사의 기준 천생연분 닷컴</h2>
         <img class="wide-banner" src="/static/images/about/section_01_banner.jpg" alt="허니문 여행사의 기준 천생연분 닷컴, 대한민국 모든 예비 신혼부부에게 설레임과 추억을 선물해 드립니다.">
     </header>
-    <img class="wide-banner" src="/static/images/about/section_01_content.jpg">
+    <img class="wide-banner" src="/static/images/about/section_01_content.jpg" alt="1999년부터 17년동안 오직 허니문만을 생각한 대한민국 최고의 허니문 여행사입니다.">
 </article>
 
-<article id="insurance" class="container margin-top-50" id="about-insurance">
+<article id="insurance" class="container margin-top-50">
     <header>
+        <h2 class="hide">천생연분닷컴 보증,보험 가입현황</h2>
         <img class="wide-banner" src="/static/images/about/section_02_banner.jpg" alt="천생연분닷컴 보증,보험 가입현황">
     </header>
     <div class="margin-top-50">
@@ -36,20 +38,20 @@
 
                 <div class="togglebar" data-toggle="togglebar">
                     <div class="togglebar-header">
-                        <img class="icon" src="/static/images/icons/icon_insurance.gif">&nbsp;BSP 보증보험<i class="caret"></i>
+                        <img class="icon" src="/static/images/icons/icon_insurance.gif" alt="">&nbsp;BSP 보증보험<i class="caret"></i>
                     </div>
                     <div class="togglebar-body">
-                        <img class="img-responsive" src="/static/images/about/insurance_bsp.jpg" alt="이행(지급)보증보험 계약변경증권">
+                        <img class="img-responsive" src="/static/images/about/insurance_bsp.jpg" alt="이행(지급)보증보험 계약변경증권 인증서">
                     </div>
                     <i class="plus"></i>
                 </div>
 
                 <div class="togglebar margin-top-30" data-toggle="togglebar">
                     <div class="togglebar-header">
-                        <img class="icon" src="/static/images/icons/icon_insurance.gif">&nbsp;배상책임 보험<i class="caret"></i>
+                        <img class="icon" src="/static/images/icons/icon_insurance.gif" alt="">&nbsp;배상책임 보험<i class="caret"></i>
                     </div>
                     <div class="togglebar-body">
-                        <img class="img-responsive" src="/static/images/about/insurance_2.jpg" alt="배상책임 보험">
+                        <img class="img-responsive" src="/static/images/about/insurance_2.jpg" alt="배상책임 보험 인증서">
                     </div>
                     <i class="plus"></i>
                 </div>
@@ -59,47 +61,50 @@
 
                 <div class="togglebar" data-toggle="togglebar">
                     <div class="togglebar-header">
-                        <img class="icon" src="/static/images/icons/icon_insurance.gif">&nbsp;기획여행 보증보험<i class="caret"></i>
+                        <img class="icon" src="/static/images/icons/icon_insurance.gif" alt="">&nbsp;기획여행 보증보험<i class="caret"></i>
                     </div>
                     <div class="togglebar-body">
-                        <img class="img-responsive" src="/static/images/about/insurance_3.jpg" alt="기획여행 보증보험">
+                        <img class="img-responsive" src="/static/images/about/insurance_3.jpg" alt="기획여행 보증보험 인증서">
                     </div>
                     <i class="plus"></i>
                 </div>
 
                 <div class="togglebar margin-top-30" data-toggle="togglebar">
                     <div class="togglebar-header">
-                        <img class="icon" src="/static/images/icons/icon_insurance.gif">&nbsp;국외여행 보증보험<i class="caret"></i>
+                        <img class="icon" src="/static/images/icons/icon_insurance.gif" alt="">&nbsp;국외여행 보증보험<i class="caret"></i>
                     </div>
                     <div class="togglebar-body">
-                        <img class="img-responsive" src="/static/images/about/insurance_travel.jpg" alt="국외여행 보증보험">
+                        <img class="img-responsive" src="/static/images/about/insurance_travel.jpg" alt="국외여행 보증보험 인증서">
                     </div>
                     <i class="plus"></i>
                 </div>
 
             </div>
         </div>
-        <img class="wide-banner margin-top-30" src="/static/images/about/total_insurance.jpg" >
+        <img class="wide-banner margin-top-30" src="/static/images/about/total_insurance.jpg" alt="천생연분닷컴 안심보험 총 930,000,000원">
     </div>
 </article>
 <!--END: 메인 컨텐츠-->
 
 <!-- START: HONEYMOON & WEDDING FAIR -->
 <article class="container margin-top-50" id="weddingfair">
-    <img class="wide-banner" src="/static/images/about/wedding_fair_top.jpg" alt="HONETYMOON & WEDDING FAIR">
+    <header>
+        <h2 class="hide">허니문 & 웨딩 박람회</h2>
+        <img class="wide-banner" src="/static/images/about/wedding_fair_top.jpg" alt="HONETYMOON & WEDDING FAIR">
+    </header>
     <div id="slide-fair">
         <div class="slide-fair-container">
             <ul>
-                <li><img src="/static/images/about/about_fair_big_01.jpg"></li>
-                <li><img src="/static/images/about/about_fair_big_02.jpg"></li>
-                <li><img src="/static/images/about/about_fair_big_03.jpg"></li>
+                <li><img src="/static/images/about/about_fair_big_01.jpg" alt="천생연분닷컴 본사 사진 첫번째"></li>
+                <li><img src="/static/images/about/about_fair_big_02.jpg" alt="천생연분닷컴 본사 사진 두번째"></li>
+                <li><img src="/static/images/about/about_fair_big_03.jpg" alt="천생연분닷컴 본사 사진 세번째"></li>
             </ul>
         </div>
         <div class="slide-fair-list">
             <ul>
-                <li class="active"><img src="/static/images/about/about_fair_thumb_01.jpg"></li>
-                <li><img src="/static/images/about/about_fair_thumb_02.jpg"></li>
-                <li><img src="/static/images/about/about_fair_thumb_03.jpg"></li>
+                <li class="active"><img src="/static/images/about/about_fair_thumb_01.jpg" alt="천생연분닷컴 본사 사진 첫번째 썸네일"></li>
+                <li><img src="/static/images/about/about_fair_thumb_02.jpg" alt="천생연분닷컴 본사 사진 두번째 썸네일"></li>
+                <li><img src="/static/images/about/about_fair_thumb_03.jpg" alt="천생연분닷컴 본사 사진 세번째 썸네일"></li>
             </ul>
         </div>
     </div>
@@ -110,6 +115,7 @@
 <article class="container-fluid margin-top-50" id="location">
     <div class="container">
         <header>
+            <h2 class="hide">본사 찾아오시는 길</h2>
             <img class="wide-banner" src="/static/images/about/section_location_banner.jpg" alt="천생연분닷컴 본사 찾아오시는 길">
         </header>
         <div id="about-location-map">
@@ -155,27 +161,23 @@
 <article class="container-fluid" id="account">
     <h2 class="hide">천생연분닷컴 계좌번호 안내</h2>
     <div class="container">
-        <table class="table table-account margin-top-30" summary="천생연분닷컴 계좌번호안내">
-            <colgroup>
-                <col width="260" />
-                <col width="*" />
-                <col width="260" />
-            </colgroup>
+        <table class="table table-account margin-top-30">
+            <caption>천생연분닷컴 계좌번호 안내</caption>
             <thead>
             <tr>
-                <th>은행명</th>
-                <th>계좌번호</th>
-                <th>입금자명</th>
+                <th scope="col" class="bank-name">은행명</th>
+                <th scope="col" class="account-number">계좌번호</th>
+                <th scope="col" class="account-name">입금자명</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td class="text-center"><img src="/static/images/icons/icon_kb.png"></td>
+                <td class="text-center"><img src="/static/images/icons/icon_kb.png" alt="KB국민은행"></td>
                 <td class="account-number">268801-04-202744</td>
                 <td class="text-center">(주)네이버네트워크</td>
             </tr>
             <tr>
-                <td class="text-center"><img src="/static/images/icons/icon_kb.png"></td>
+                <td class="text-center"><img src="/static/images/icons/icon_kb.png" alt="KB국민은행"></td>
                 <td class="account-number">431802-01-373491</td>
                 <td class="text-center">(주)네이버네트워크</td>
             </tr>

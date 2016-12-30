@@ -29,7 +29,7 @@
                 <td class="notice"><img class="icon-notice" src="/static/images/common/icon_notice.gif" alt="상시공지"></td>
                 <td class="post-title">
                     <a href="<?=$row['post_link']?>">
-                        <?=$row['is_new']?'<img src="/static/images/common/icon_new.gif" class="icon-new">':''?>
+                        <?=$row['is_new']?'<img src="/static/images/common/icon_new.gif" class="icon-new" alt="NEW">':''?>
                         <?=$row['post_title']?>
                     </a>
                 </td>
@@ -42,8 +42,8 @@
             <tr>
                 <td><?=$row['is_reply']?"":number_format($row['nums'])?></td>
                 <td class="post-title">
-                    <?=$row['is_reply']?'<img src="/static/images/common/icon_reply.gif" class="icon-reply">':''?>
-                    <?=$row['is_new']?'<img src="/static/images/common/icon_new.gif" class="icon-new">':''?>
+                    <?=$row['is_reply']?'<img src="/static/images/common/icon_reply.gif" class="icon-reply" alt="답글">':''?>
+                    <?=$row['is_new']?'<img src="/static/images/common/icon_new.gif" class="icon-new" alt="NEW">':''?>
                     <a href="<?=$row['post_link'].$querystring?>">
                         <?=$row['post_title']?>
                     </a>

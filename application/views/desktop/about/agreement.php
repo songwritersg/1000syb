@@ -8,7 +8,7 @@
     </aside>
     <!--END: Breadcrumbs-->
 
-    <h1 class="page-title">약관 및 정책</h1>
+    <h2 class="page-title">약관 및 정책</h2>
 
     <ul class="about-tab">
         <li class="active"><span>이용약관</span></li>

@@ -7,8 +7,8 @@
 </aside>
 <!--END: Breadcrumbs-->
 <article class="container" id="page-recommend">
-    <img class="wide-banner" src="/static/images/products/banner_recommend.jpg">
-    <h1 class="margin-top-30"><img src="/static/images/products/title_recommend.png"></h1>
+    <img class="wide-banner" src="/static/images/products/banner_recommend.jpg" alt="1월~12월 허니문 어디로 가는것이 좋을까? 동유럽부터 칸쿤까지 지금 확인하세요!">
+    <h2 class="margin-top-30"><img src="/static/images/products/title_recommend.png" alt="월별 베스트 허니문 추천 지역"></h2>
     <ul class="month-indicator">
         <?php for($month=1; $month<=12; $month++) :
             $dateObj = DateTime::createFromFormat("!m", $month);
@@ -21,7 +21,7 @@
         <ul>
         <?php for($month=1; $month<=12; $month++) : ?>
             <li id="month-<?=$month?>" class="month-section" style="background-image:url(/static/images/products/recommend_<?=sprintf('%02d',$month)?>_bg.jpg);">
-                <div class="thumb"><img src="/static/images/products/recommend_<?=sprintf('%02d',$month)?>_thumb.jpg"></div>
+                <div class="thumb"><img src="/static/images/products/recommend_<?=sprintf('%02d',$month)?>_thumb.jpg" alt="<?=$month?>월 추천 허니문 지역"></div>
                 <a href="<?=base_url("board/sybqna/write")?>" class="btn btn-primary-simple btn-xlg">상품 문의하기</a>
             </li>
         <?php endfor;?>

@@ -1,7 +1,7 @@
 <?php $this->load->view('desktop/board/customer_common');?>
 <article id="skin-article-view" class="container">
     <div class="post-header">
-        <h1 class="post-title"><?=$post['post_title']?><small>조회수 : <?=number_format($post['post_hit'])?></small></h1>
+        <h2 class="post-title"><?=$post['post_title']?><small>조회수 : <?=number_format($post['post_hit'])?></small></h2>
     </div>
     <?php if(isset($post['post_attach_list']) && count($post['post_attach_list']) > 0  && $post['post_attach_image_count'] != count($post['post_attach_list']) ) :?>
     <div class="post-attach-list">

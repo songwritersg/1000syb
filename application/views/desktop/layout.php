@@ -118,9 +118,6 @@ var base_url = '<?=base_url()?>';
                     </div>
                 </article>
             </div>
-            <style>
-
-            </style>
 
             <ul class="footer-navigation">
                 <li><a href="http://www.wnfair.com?key=mainv" target="_blank"><i class="icon icon-calendar"></i>&nbsp;잠실롯데호텔 <strong>허니문&웨딩 박람회</strong></a></li>
@@ -280,6 +277,7 @@ var base_url = '<?=base_url()?>';
 <!--[if lt IE 9]>
 <script src="<?=base_url('static/js/poly-checked.min.js')?>"></script>
 <![endif]-->
+<?php if (!in_array($this->input->ip_address() , array( '175.209.123.51', '175.209.241.53')) ) :?>
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -289,5 +287,12 @@ var base_url = '<?=base_url()?>';
 ga('create', 'UA-89582350-1', 'auto');
 ga('send', 'pageview');
 </script>
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+    if(!wcs_add) var wcs_add = {};
+    wcs_add["wa"] = "ab0b509a99699c";
+    wcs_do();
+</script>
 </body>
 </html>
+<?php endif;?>

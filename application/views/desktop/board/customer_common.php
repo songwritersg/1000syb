@@ -15,7 +15,7 @@
 </aside>
 <!--END: Breadcrumbs-->
 <div class="container">
-    <h1 class="margin-bottom-30"><img class="wide-banner" src="/static/images/board/title_customer.jpg"></h1>
+    <h2 class="margin-bottom-30"><img class="wide-banner" src="/static/images/board/title_customer.jpg" alt="천생연분닷컴의 새로운 소식을 전해드리겠습니다."></h2>
 
     <div class="board-title">
         <h2>고객센터 <i class="fa fa-comments"></i></h2>

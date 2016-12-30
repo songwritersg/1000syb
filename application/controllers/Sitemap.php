@@ -28,6 +28,7 @@ class Sitemap extends CI_Controller  {
 
         foreach($product_list as $product)
         {
+            if($product['sca_key'] == 'eur') continue;
             echo "<sitemap>\n";
             echo "<loc>".base_url("sitemap_product_".$product['sca_key'].".xml")."</loc>\n";
             echo "</sitemap>\n";
@@ -177,15 +178,15 @@ class Sitemap extends CI_Controller  {
             for($i=0; $i<count($images); $i++)
             {
                 if( empty($images[$i]) OR empty($captions[$i]) ) continue;
+                $str .= '<image:image>'.PHP_EOL;
                 $str .= '        <image:loc>'. base_url($images[$i]) . '</image:loc>'.PHP_EOL;
                 $str .= '        <image:caption>'.htmlspecialchars($captions[$i]).'</image:caption>'.PHP_EOL;
+                $str .= '</image:image>'.PHP_EOL;
             }
 
             if(! empty($str))
             {
-                echo '    <image:image>'.PHP_EOL;
                 echo $str;
-                echo '    </image:image>'.PHP_EOL;
             }
 
             echo "</url>\n";

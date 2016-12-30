@@ -62,7 +62,7 @@ class About extends SYB_Controller {
     function agreement()
     {
         $this->site->meta_title = "이용약관";
-        $this->site->meta_description = "";
+        $this->site->meta_description = "본 약관은 ㈜네이버네트워크가 운영하는 천생연분닷컴(이하 '몰'이라 한다)에서 제공하는 인터넷 관련 서비스를 이용함에 있어서 '몰'과 이용자의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.";
 
         $this->layout = $this->site->get_layout();
         $this->view = "about/agreement";
@@ -75,7 +75,7 @@ class About extends SYB_Controller {
     {
         
         $this->site->meta_title = "개인정보 취급방침";
-        $this->site->meta_description = "";
+        $this->site->meta_description = "(주)네이버네트워크는 (이하 '회사'는) 고객님의 개인정보를 중요시하며, '정보통신망 이용촉진 및 정보보호'에 관한 법률을 준수하고 있습니다.";
 
         $this->layout = $this->site->get_layout();
         $this->view = "about/privacy";
@@ -87,7 +87,7 @@ class About extends SYB_Controller {
     function travel()
     {
         $this->site->meta_title = "여행약관";
-        $this->site->meta_description = "";
+        $this->site->meta_description = "천생연분닷컴의 여행약관입니다. 이 약관은 여행사와 여행자가 체결한 국외여행계약의 세부 이행 및 준수사항을 정함을 목적으로 합니다.";
         
         $this->layout = $this->site->get_layout();
         $this->view = "about/travel";
@@ -106,6 +106,8 @@ class About extends SYB_Controller {
         $result = $this->db->order_by('sed_sort ASC')->get('tbl_site_events_detail');
         $this->data['event_banner_list'] = $result->result_array();
 
+        $this->site->meta_title = "지역별 박람회";
+        $this->site->meta_description = "천생연분닷컴 허니문 전문여행사의 전국의 지사들과 박람회를 한눈에!";
 
         $this->layout = $this->site->get_layout();
         $this->view = "about/events";

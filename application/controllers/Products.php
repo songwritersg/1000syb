@@ -157,6 +157,9 @@ class Products extends SYB_Controller {
      *******************************************************************************************/
     function recommend()
     {
+        $this->site->meta_title = "월별 베스트 허니문 지역";
+        $this->site->meta_description = "1월~12월 허니문 어디로 가는것이 좋을까? 동유럽부터 ~ 칸쿤까지 지금 확인하세요! 전문가 추천! 월별 베스트 허니문 지역";
+        
         $this->layout = $this->site->get_layout();
         $this->view = "products/recommend";
     }

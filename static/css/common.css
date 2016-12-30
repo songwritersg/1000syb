@@ -304,6 +304,8 @@ ul.tab.tab-default > li.active > a:hover,
 ul.tab.tab-default > li.active > a:focus { color:#fff; background-color:#282828; }
 ul.tab.tab-default > li > a:hover { background:#fff;  }
 
+table > caption { display:none; }
+
 /** Collaspe **/
 .togglebar { position:relative; }
 .togglebar .togglebar-header { display:block; width:100%; border:1px solid #ddd; background:#f9f9f9; padding:21px 38px; font-size:18px; }
@@ -700,7 +702,7 @@ ul.pagination li.active > a{ background:#33bfb2; color:#fff; cursor:default; }
 #best-honeymoon #slide-best-honeymoon-list .slide-indicator li > a:hover { color:#33bfb2; }
 
 /** ABOUT 페이지 **/
-h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-bottom:20px;  border-bottom:1px solid #ddd;}
+h2.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-bottom:20px;  border-bottom:1px solid #ddd;}
 .about-tab { margin:0; padding:0; list-style:none; }
 .about-tab:after { clear:both; content:''; display:table; }
 .about-tab li { display:block; float:left;  }
@@ -794,6 +796,9 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #account .table-account {  }
 #account .table-account td { text-align:center; background:#fff;}
 #account .table-account td.account-number {font-family:Tahoma, sans-serif; font-size:18px; font-weight:bold; }
+#account .table-account .bank-name {width:260px;}
+#account .table-account .account-number { width:569px;}
+#account .table-account .account-name {width:260px;}
 
 #map-info-window { display:block; padding:10px;  }
 #map-info-window h4 { text-align:center; font-size:14px; margin:0; padding:0; }
@@ -805,9 +810,9 @@ h1.page-title {font-size:24px; color:#282828; margin:0; padding:0; padding-botto
 #about-branch .tab-branch li.active a { border-bottom-color:#282828; }
 
 #about-branch .branch-title { width:1080px; height:75px; position:relative;margin-bottom:30px;}
-#about-branch .branch-title h1:before {position:absolute; display:block; z-index:-1; top:10px; left:10px; width:1080px; height:75px; background:#fff; border:1px solid #33bfb2; content:'';}
-#about-branch .branch-title h1 { width:1080px; height:75px; border:1px solid #33bfb2; z-index:5; top:0px; left:0px; background:#fff; font-size:14px; color:#33bfb2; line-height:75px; padding-left:20px; }
-#about-branch .branch-title h1 strong { position:absolute; right:20px; font-size:30px; font-family:Arial, sans-serif;}
+#about-branch .branch-title h2:before {position:absolute; display:block; z-index:-1; top:10px; left:10px; width:1080px; height:75px; background:#fff; border:1px solid #33bfb2; content:'';}
+#about-branch .branch-title h2 { width:1080px; height:75px; border:1px solid #33bfb2; z-index:5; top:0px; left:0px; background:#fff; font-size:14px; color:#33bfb2; line-height:75px; padding-left:20px; }
+#about-branch .branch-title h2 strong { position:absolute; right:20px; font-size:30px; font-family:Arial, sans-serif;}
 
 #about-branch #slide-fair { margin-bottom:20px; }
 

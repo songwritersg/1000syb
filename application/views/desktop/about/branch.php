@@ -23,29 +23,29 @@
     </ul>
 
     <div class="branch-title">
-        <h1>천생연분닷컴 <?=$view['bnc_name']?>에 방문해주셔서 감사합니다.<strong><?=$view['bnc_name_eng']?></strong></h1>
+        <h2>천생연분닷컴 <?=$view['bnc_name']?>에 방문해주셔서 감사합니다.<strong><?=$view['bnc_name_eng']?></strong></h2>
     </div>
 
     <div id="slide-fair">
         <div class="slide-fair-container">
             <ul>
-                <li><img src="<?=base_url($view['bnc_image_big_01'])?>"></li>
-                <li><img src="<?=base_url($view['bnc_image_big_02'])?>"></li>
-                <li><img src="<?=base_url($view['bnc_image_big_03'])?>"></li>
+                <li><img src="<?=base_url($view['bnc_image_big_01'])?>" alt="<?=$view['bnc_name']?> 소개 사진 첫번째"></li>
+                <li><img src="<?=base_url($view['bnc_image_big_02'])?>" alt="<?=$view['bnc_name']?> 소개 사진 두번째"></li>
+                <li><img src="<?=base_url($view['bnc_image_big_03'])?>" alt="<?=$view['bnc_name']?> 소개 사진 세번째"></li>
             </ul>
         </div>
         <div class="slide-fair-list">
             <ul>
-                <li class="active"><img src="<?=base_url($view['bnc_image_big_01'])?>"></li>
-                <li><img src="<?=base_url($view['bnc_image_big_02'])?>"></li>
-                <li><img src="<?=base_url($view['bnc_image_big_03'])?>"></li>
+                <li class="active"><img src="<?=base_url($view['bnc_image_big_01'])?>"  alt="<?=$view['bnc_name']?> 소개 사진 첫번째 썸네일"></li>
+                <li><img src="<?=base_url($view['bnc_image_big_02'])?>" alt="<?=$view['bnc_name']?> 소개 사진 두번째 썸네일"></li>
+                <li><img src="<?=base_url($view['bnc_image_big_03'])?>" alt="<?=$view['bnc_name']?> 소개 사진 세번째 썸네일"></li>
             </ul>
         </div>
     </div>
 
     <div class="branch-actions">
-        <a class="branch-banner" href="<?=$view['bnc_banner_url']?>"><img src="<?=base_url($view['bnc_banner_image'])?>"></a>
-        <a class="branch-button" href="<?=$view['bnc_button_url']?>"><img src="<?=base_url($view['bnc_button_image'])?>"></a>
+        <a class="branch-banner" href="<?=$view['bnc_banner_url']?>"><img src="<?=base_url($view['bnc_banner_image'])?>" alt="천생연분닷컴 <?=$view['bnc_name']?> 박람회"></a>
+        <a class="branch-button" href="<?=$view['bnc_button_url']?>"><img src="<?=base_url($view['bnc_button_image'])?>" alt="천생연분닷컴 <?=$view['bnc_name']?> 허니문 질문과 답변" ></a>
     </div>
 </article>
 
@@ -66,9 +66,9 @@
         <table class="table transport-info">
             <thead>
             <tr>
-                <th><img class="thead-icon" src="/static/images/icons/icon_subway.png" alt="지하철 아이콘">&nbsp;지하철</th>
-                <th><img class="thead-icon" src="/static/images/icons/icon_bus.png" alt="버스 아이콘">&nbsp;버스</th>
-                <th><img class="thead-icon" src="/static/images/icons/icon_car.png" alt="자동차 아이콘">&nbsp;승용차</th>
+                <th><img class="thead-icon" src="/static/images/icons/icon_subway.png" alt="지하철">&nbsp;지하철</th>
+                <th><img class="thead-icon" src="/static/images/icons/icon_bus.png" alt="버스">&nbsp;버스</th>
+                <th><img class="thead-icon" src="/static/images/icons/icon_car.png" alt="승용차">&nbsp;승용차</th>
             </tr>
             </thead>
             <tbody>

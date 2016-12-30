@@ -9,7 +9,7 @@
         </ol>
     </aside>
     <!--END: Breadcrumbs-->
-    <h1><img class="wide-banner margin-bottom-30" src="/static/images/about/about_title_events.jpg" alt="천생연분닷컴 이벤트"></h1>
+    <h2><img class="wide-banner margin-bottom-30" src="/static/images/about/about_title_events.jpg" alt="천생연분닷컴 이벤트"></h2>
 
     <div id="events-location">
         <h2>천생연분닷컴 <strong>지역별 박람회</strong><small>천생연분닷컴 허니문 전문 여행사의 전국의 지사들과 박람회를 한눈에!</small></h2>
