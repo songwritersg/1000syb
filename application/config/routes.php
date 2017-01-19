@@ -73,8 +73,10 @@ $route['products/mailform'] = 'products/mailform';
 $route['products/gallery/(:num)']= 'products/gallery/$1';
 $route['products/(:any)'] = 'products/lists/$1';
 $route['products/(:any)/(:any)']= 'products/lists/$1/$2';
-$route['products/(:any)/(:any)/(:num)']= 'products/view/$1/$2/$3';
+$route['products/(:any)/(:any)/gallery/(:num)'] = 'products/gallery_all/$1/$2/$3';
+$route['products/(:any)/(:any)/(:num)'] = 'products/view/$1/$2/$3';
 $route['products/(:any)/(:any)/(:num)/(:num)']= 'products/view/$1/$2/$3/$4';
+$route['products/(:any)/(:any)/(:num)/(:num)/print']= 'products/print_program/$1/$2/$3/$4';
 
 $route['recommend'] = 'products/recommend';
 

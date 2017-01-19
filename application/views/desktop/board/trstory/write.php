@@ -11,6 +11,7 @@
         <fieldset>
             <input type="hidden" name="post_key" value="<?=$this->session->session_id?>">
             <input type="hidden" name="post_idx" value="<?=element('post_idx',$post)?>">
+            <input type="hidden" name="brd_key" value="<?=$board['brd_key']?>">
             <input type="hidden" name="post_secret" value="N">
             <input type="hidden" name="post_ext1" value="N">
             <input type="text" class="fake-input">

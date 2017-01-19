@@ -1,4 +1,4 @@
-<?=form_open(NULL,array("id"=>"form-comment-edit","autocomplete"=>"off"))?>
+<?=form_open("https://www.1000syb.com/board/comment_edit",array("id"=>"form-comment-edit","autocomplete"=>"off"))?>
 <input type="hidden" name="cmt_idx" value="<?=$cmt_idx?>">
 <input type="hidden" name="comment_user" value="<?=$comment['usr_name']?>">
 <input type="text" class="fake-input">
@@ -51,10 +51,18 @@
             $.ajax({
                 url : base_url + "/api/board/comments",
                 type : 'POST',
+                async:false,
                 data : $cmtForm.serialize(),
                 success: function(res){
-                    alert('댓글이 수정되었습니다.');
-                    location.reload();
+                    if(res.status == true)
+                    {
+                        alert('댓글이 수정되었습니다.');
+                        location.reload();
+                    }
+                    else {
+                        alert( res.message ? res.message : '알수없는 오류가 발생하였습니다.' );
+                    }
+
                 }
             })
         });

@@ -111,7 +111,7 @@ class Products extends SYB_Controller {
 
 
         $this->site->meta_title = $this->data['category']['sca_info_subtitle'];
-        $this->site->meta_descrption = $this->data['category']['sca_info_description'];
+        $this->site->meta_description = $this->data['category']['sca_info_description'];
         $this->site->meta_keywords = $this->data['category']['sca_name'] . ",";
 
         foreach($this->data['category']['children'] as $child)
@@ -148,6 +148,75 @@ class Products extends SYB_Controller {
 
         $this->layout = "popup";
         $this->view = "products/gallery";
+    }
+
+    function gallery_all($sca_parent="", $sca_key="", $prd_idx="")
+    {
+        if(empty($prd_idx))
+        {
+            alert_close("잘못된 접근입니다.");
+            exit;
+        }
+
+        // 상품정보를 가져온다.
+        $this->data['product'] = $this->product_model->get_product($prd_idx);
+
+        // 갤러리 목록을 가져옵니다.
+        $this->data['gallery_list'] = $this->product_model->get_gallery_all($prd_idx);
+
+        $this->site->meta_title = $this->data['product']['prd_title'] . " 갤러리";
+        $this->layout = "popup";
+        $this->view = "products/gallery";
+    }
+
+    function print_program($sca_parent, $sca_key, $prd_idx = "", $prg_idx="")
+    {
+        $this->data['sca_parent'] = $sca_parent;
+        $this->data['sca_key'] = $sca_key;
+
+        if(empty($prd_idx))
+        {
+            alert_close('잘못된 접근입니다.');
+            exit;
+        }
+
+        $this->data['product'] = $this->product_model->get_product($prd_idx);
+
+        if( empty($this->data['product']) )
+        {
+            alert_close('잘못된 접근입니다.');
+            exit;
+        }
+
+        // 일정표 정보를 가져온다.
+        $this->data['prg_idx'] = $prg_idx;
+        if(empty($this->data['prg_idx']))
+        {
+            alert_close('잘못된 접근입니다.');
+            exit;
+        }
+
+        $this->data['program_info'] = $this->product_model->get_program($this->data['prg_idx']);
+        if(! $this->data['program_info'] )
+        {
+            alert('현재 상품에 등록된 일정표가 없습니다.');
+            exit;
+        }
+
+        // 같은 지역의 카테고리 목록
+        $this->data['category'] = $this->product_model->get_category($sca_parent);
+        // 같은 카테고리의 상품들
+        $this->data['product_list'] = $this->product_model->get_list($sca_key);
+
+        // 상품문의하기 게시판 카테고리를 가져온다.
+        $this->data['qna_category'] = $this->board_model->get_category("sybqna");
+
+        $this->site->meta_title = $this->data['product']['prd_title'] ." - " . $this->data['program_info']['prg_title'];
+        $this->site->meta_description = $this->data['product']['prd_info_desc'];
+        $this->site->meta_keywords = "{$this->data['product']['ctr_name_kr']},{$this->data['product']['cty_name_kr']}";
+        $this->active = $sca_parent;
+        $this->layout = 'popup';
+        $this->view = "products/program_print";
     }
 
     /*******************************************************************************************
@@ -237,6 +306,9 @@ class Products extends SYB_Controller {
             $mail_data['program_info'] = $this->product_model->get_program($mail_data['prg_idx']);
             $mail_data['schedule_info'] = json_decode($this->input->post("content"), TRUE);
 
+            $mail_data['prd_title'] = $this->input->post('prd_title', TRUE);
+            $mail_data['prg_title'] = $this->input->post('prg_title', TRUE);
+
             $mail_data['sales_comment'] = $this->input->post("sales_comment", TRUE);
             $mail_data['mail_subject'] = $this->input->post("mail_subject");
             $mail_content = $this->load->view("mail/program",$mail_data,TRUE);
@@ -260,10 +332,19 @@ class Products extends SYB_Controller {
 
             if( $this->email->send() )
             {
-                foreach($attach_list as $file)
-                {
-                    //@unlink($file);
-                }
+                // 메일로그를 저장
+                $data['smg_sender'] = $this->input->post('mail_sender');
+                $data['smg_receive'] = $this->input->post('mail_receiver');
+                $data['smg_title'] = $this->input->post("mail_subject");
+                $data['smg_prd_title'] = $mail_data['prd_title'];
+                $data['smg_prg_title'] = $mail_data['prg_title'];
+                $data['smg_attaches'] = json_encode($attach_name, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+                $data['smg_content'] = $mail_content;
+                $data['smg_regtime'] = date('Y-m-d H:i:s');
+                $data['smg_ip'] = ip2long($this->input->ip_address());
+
+                $this->db->insert('tbl_site_maillog', $data);
+
                 alert_close("메일 전송이 완료되었습니다.");
                 exit;
             }

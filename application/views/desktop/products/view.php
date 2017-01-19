@@ -59,7 +59,10 @@
                 <li class=""><a href="#" data-toggle="sns-share" data-service="band" data-title="<?=$product['prd_title']?>" data-url="<?=current_url()?>">밴드 공유하기</a></li>
                 <li class=""><a href="#" data-toggle="sns-share" data-service="naver" data-title="<?=$product['prd_title']?>" data-url="<?=current_url()?>">네이버 공유하기</a></li>
             </ul>
+            <button type="button" class="btn-gallery">메일보내기</button>
+            <!--
             <button type="button" class="btn btn-primary" data-toggle="send-mail" data-idx="<?=$product['prd_idx']?>" data-prg="<?=$prg_idx?>" data-key="<?=$sca_key?>" data-parent="<?=$sca_parent?>">메일 보내기</button>
+            -->
         </div>
         <div class="clearfix"></div>
 
@@ -196,6 +199,7 @@
             <li><a href="#" data-toggle="open-sybqna">상품 문의하기</a></li>
         </ul>
         <h4 class="detail-title"><img src="/static/images/products/title_product_program_detail.jpg"></h4>
+        <button type="button" class="btn-program-print">일정표 인쇄하기</button>
 
         <?php for($day=1; $day<=count($program_info['schedule']); $day++) : ?>
         <div class="schedule-title">
@@ -392,6 +396,20 @@ $(function(){
         });
     });
 
+    $(".btn-gallery").on('click', function(){
+        $.popup({
+            url:'<?=base_url("products/{$sca_parent}/{$sca_key}/gallery/{$product['prd_idx']}")?>',
+            width:1080,height:900
+        });
+    });
+
+    $(".btn-program-print").on('click', function(){
+        $.popup({
+            url:'<?=base_url("products/{$sca_parent}/{$sca_key}/{$product['prd_idx']}/{$program_info['prg_idx']}/print")?>',
+            width:1080,height:900
+        });
+    });
+
     $("#dialog-sybqna").dialog({ autoOpen : false, draggable : false, dialogClass : 'close', resizeable : false, modal: true, width:800});
 
     tinymce.init({
@@ -447,6 +465,7 @@ $(function(){
         }
         $.post('/api/products/sybqna', form.serialize(), function(res){
             if(res.status==true){
+                ga_send('문의작성 완료 :: 천생연분닷컴', '/board/sybqna/write_ok');
                 alert('문의 작성이 완료되었습니다.');
                 location.reload();
             }

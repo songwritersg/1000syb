@@ -238,6 +238,14 @@ function display_html_content($content = '', $html = '', $thumb_width=800, $auto
     return $content;
 }
 
+function name_blind($str ="")
+{
+    $str = trim($str);
+    if(empty($str)) return $str;
+
+    return ($len = mb_strlen($str) ) > 2 ? mb_substr($str,0,1).str_repeat('*',$len-2).mb_substr($str,-1,1) : mb_substr($str,0,1).'*';
+}
+
 function get_yoil( $date, $short = TRUE )
 {
     $yoil_array = array("일","월","화","수","목","금","토");
@@ -264,6 +272,50 @@ function file_check( $file_src )
 
     $file_src = FCPATH . $file_src;
     return file_exists($file_src);
+}
+
+/**
+ * 유투브 아이디를 이용해서 유투브 썸네일을 가져온다.
+ * @param $yt_id
+ * @param string $type
+ * @return string
+ */
+function get_yt_thumb( $yt_id, $type="" )
+{
+    $return = "//img.youtube.com/vi/{$yt_id}/";
+
+    switch( $type )
+    {
+        case '0' :
+            $return .= '0.jpg';
+            break;
+        case '1' :
+            $return .= '1.jpg';
+            break;
+        case '2' :
+            $return .= '2.jpg';
+            break;
+        case '3' :
+            $return .= '3.jpg';
+            break;
+        case 'hq' :
+            $return .= 'hqdefault.jpg';
+            break;
+        case 'mq' :
+            $return .= 'mqdefault.jpg';
+            break;
+        case 'sd' :
+            $return .= 'sddefault.jpg';
+            break;
+        case 'maxres' :
+            $return .= 'maxresdefault.jpg';
+            break;
+        default :
+            $return .= 'default.jpg';
+            break;
+    }
+
+    return $return;
 }
 
 
@@ -308,12 +360,14 @@ function html_purifier($html)
 
     $cache_path = config_item('cache_path') ? config_item('cache_path') : APPPATH . 'cache/';
 
+
     $config->set('Cache.SerializerPath', $cache_path);
     $config->set('HTML.SafeEmbed', false);
     $config->set('HTML.SafeObject', false);
     $config->set('HTML.SafeIframe', true);
     $config->set('URI.SafeIframeRegexp','%^(https?:)?//(' . $safeiframe . ')%');
     $config->set('Attr.AllowedFrameTargets', array('_blank'));
+    $config->set('URI.AllowedSchemes', array('http'=>true,'https'=>true,'mailto'=>true, 'data' => true));
     $config->set('Core.Encoding', 'utf-8');
     $config->set('Core.EscapeNonASCIICharacters', true);
     $config->set('HTML.MaxImgLength', null);
@@ -322,6 +376,7 @@ function html_purifier($html)
 
     return $purifier->purify($html);
 }
+
 
 /***************************************************************************************
  * 게시글 보기에서 썸네일을 한개 가져온다.
@@ -375,7 +430,8 @@ function get_view_thumbnail($contents = '', $thumb_width= 0)
         $p = parse_url($src);
         if (isset($p['host']) && $p['host'] === $CI->input->server('HTTP_HOST')
             && strpos($p['path'], '/files/editor/') !== false) {
-            $thumb_tag = '<img src="' . thumb_url('editor', str_replace(base_url('/files/editor') . '/', '', $src), $thumb_width) . '" ';
+            //$thumb_tag = '<img src="' . thumb_url('editor', str_replace(base_url('/files/editor') . '/', '', $src), $thumb_width) . '" ';
+            $thumb_tag = '<img src="' . $src . '" ';
         } else {
             $thumb_tag = '<img src="' . $src . '" ';
         }

@@ -21,6 +21,9 @@ $(document).ready(function(){
 			toolbar2: 'formatselect fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough removeformat',			
 			font_formats : "나눔고딕=Nanum Gothic;돋움=돋움,Dotum;굴림=굴림,Gulim;바탕=바탕,Batang;궁서=궁서;Arial=Arial;Comic Sans MS=Comic Sans MS;Courier New=Courier New;Tahoma=Tahoma;Times New Roman=Times New Roman;Verdana=Verdana",
 			fontsize_formats : "10px 11px 12px 14px 16px 18px 20px 24px 28px",
+			relative_urls : false,
+			remove_script_host : false,
+			document_base_url : base_url
 		});
 	});
 	

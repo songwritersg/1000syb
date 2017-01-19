@@ -27,7 +27,7 @@ class Counseling extends SYB_Controller {
             $this->data['board']['brd_key'] = $form_type;
             $this->data['board']['brd_title'] = $form_type == 'call' ? '전화상담신청' : '방문상담신청';
             $this->view = "counseling/{$form_type}";
-            $this->layout = "desktop";
+            $this->layout = $this->site->get_layout();
         }
         else
         {

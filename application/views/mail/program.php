@@ -17,11 +17,11 @@
     <table cellspacing="0" cellpadding="0" width="620" bgcolor="#f5f5f5" style="border-left:1px solid #e9e6e3;border-right:1px solid #e9e6e3;margin:auto;border-collapse:collapse">
         <tr>
             <td bgcolor="#f5f5f5" width="20"></td>
-            <td colspan="3" bgcolor="#404040" width="580" height="78" valign="middle" align="center" style="color:#ffffff;font-size:24px;font-weight:bold;border:1px solid #000"><?=preg_replace("/\\[|\\]/","",$product['prd_title'])?></td>
+            <td colspan="3" bgcolor="#404040" width="580" height="78" valign="middle" align="center" style="color:#ffffff;font-size:24px;font-weight:bold;border:1px solid #000"><?=preg_replace("/\\[|\\]/","",$prd_title)?></td>
             <td bgcolor="#f5f5f5" width="20"></td>
         <tr>
             <td bgcolor="#f5f5f5" width="20"></td>
-            <td colspan="3" bgcolor="#33bfb2" width="580" height="58" valign="middle" align="center" style="color:#ffffff;font-size:20px;border:1px solid #217d74;"><?=$program_info['prg_title']?></td>
+            <td colspan="3" bgcolor="#33bfb2" width="580" height="58" valign="middle" align="center" style="color:#ffffff;font-size:20px;border:1px solid #217d74;"><?=$prg_title?></td>
             <td bgcolor="#f5f5f5" width="20"></td>
         </tr>
 
@@ -62,7 +62,9 @@
             <td bgcolor="#f5f5f5" width="20"></td>
         </tr>
 
-        <?php foreach($product['ben_content'] as $ben_content) :?>
+        <?php
+        if(isset($product['ben_content']) && count($product['ben_content'])) :
+        foreach($product['ben_content'] as $ben_content) :?>
         <tr>
             <td bgcolor="#f5f5f5" width="20"></td>
             <td bgcolor="#f5f5f5" width="20" style="border:1px solid #ddd; border-right:0px;"></td>
@@ -89,7 +91,9 @@
                 <td bgcolor="#f5f5f5" width="20"></td>
             </tr>
             <?php endfor;?>
-        <?php endforeach;?>
+        <?php endforeach;
+        endif;
+        ?>
 
         <tr>
             <td bgcolor="#f5f5f5" width="20"></td>
@@ -288,7 +292,7 @@
     <table cellspacing="0" cellpadding="0" width="620" bgcolor="#f5f5f5" style="border-left:1px solid #e9e6e3;border-right:1px solid #e9e6e3;margin:auto;border-collapse:collapse">
         <tr>
             <td bgcolor="#f5f5f5" width="20"></td>
-            <td colspan="4" bgcolor="#33bfb2" height="58" style="border:1px solid #217d74;"><img src="<?=base_url("static/images/mailform/title_resort_info.jpg")?>" alt="리조트 정보"></td>
+            <td colspan="4" bgcolor="#33bfb2" height="58" style="border:1px solid #217d74;"><img src="<?=base_url("static/images/mailform/title_schedule.jpg")?>" alt="일정표 확인하기"></td>
             <td bgcolor="#f5f5f5" width="20"></td>
         </tr>
         <?php foreach($schedule_info as $schedule) :?>

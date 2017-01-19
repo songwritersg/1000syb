@@ -52,11 +52,15 @@ class HookPostControllerConstructor {
      ***********************************************/
     function setup_device_view()
     {
-
-
         // 모바일 접속여부에 따라 device 정보 확인
         $device = $viewmode = $this->CI->agent->is_mobile() ? DEVICE_MOBILE : DEVICE_DESKTOP;
-        
+
+        // m.1000syb.com 이면 모바일로
+        if( $_SERVER['HTTP_HOST'] == "m.1000syb.com" )
+        {
+            $viewmode = DEVICE_MOBILE;
+        }
+
         // 해당 모드로 보기 쿠키가 존재한다면 해당 보기 모드로
         if( get_cookie( COOKIE_VIEWMODE )  && ( get_cookie( COOKIE_VIEWMODE ) == DEVICE_DESKTOP OR get_cookie( COOKIE_VIEWMODE ) == DEVICE_MOBILE) )
         {
@@ -66,5 +70,10 @@ class HookPostControllerConstructor {
         // 사이트 정보에 저장
         $this->CI->site->set_device($device);
         $this->CI->site->set_viewmode($viewmode);
+
+        if( $viewmode == DEVICE_MOBILE )
+        {
+            $this->CI->config->set_item('base_url', "http://m.1000syb.com/" );
+        }
     }
 }

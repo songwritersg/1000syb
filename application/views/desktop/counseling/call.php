@@ -102,13 +102,6 @@
                 return false;
             }
 
-            if( $("textarea[name='cns_memo']").val().trim().length <= 0) {
-                alert('상담 내용을 입력하셔야 합니다.');
-                e.preventDefault();
-                $("input[name='cns_memo']").focus();
-                return false;
-            }
-
             if(! $("#agree_privacy").prop('checked') )
             {
                 alert('개인정보 취급방침에 동의하셔야 합니다.');
@@ -116,6 +109,9 @@
                 $("#agree_privacy").focus();
                 return false;
             }
+
+            ga_send("전화상담 신청 완료", "/counseling/call_done");
+            return true;
         });
     });
 </script>

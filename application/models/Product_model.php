@@ -85,7 +85,7 @@ class Product_model extends SYB_Model
 
         if(! $product ) return NULL;
 
-        // 입력된 상품특전이 있으면 정리한ㄷ.
+        // 입력된 상품특전이 있으면 정리한다.
         if( isset($product['ben_content']) && $product['ben_content'] )
         {
             $product['ben_content'] = json_decode($product['ben_content'], TRUE);
@@ -189,5 +189,36 @@ class Product_model extends SYB_Model
         $this->db->order_by("gll_sort ASC");
         $result = $this->db->get("tbl_product_gallery");
         return $result->result_array();
+    }
+
+    /*******************************************************
+     * 해당 상품의 전체 갤러리를 가져온다.
+     * @param $room_idx
+     *******************************************************/
+    function get_gallery_all($prd_idx)
+    {
+        $this->db->where("prd_idx", $prd_idx);
+        $this->db->order_by("gll_sort ASC");
+        $result = $this->db->get("tbl_product_gallery");
+        return $result->result_array();
+    }
+
+    /*******************************************************
+     * 상품 전체 스키마를 가져온다.
+     *******************************************************/
+    function get_schema()
+    {
+        $result = $this->db->where('sca_depth',0)->order_by('sca_sort ASC')->get('tbl_site_category');
+        $list = $result->result_array();
+
+        foreach($list as &$row)
+        {
+            $row['items'] = array();
+
+            $result = $this->db->where('sca_depth >', 0)->where('sca_parent', $row['sca_idx'])->order_by('sca_sort ASC')->get('tbl_site_category');
+            $row['items'] = $result->result_array();
+        }
+
+        return $list;
     }
 }

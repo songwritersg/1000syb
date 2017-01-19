@@ -14,21 +14,6 @@
     <div class="product-view-header">
         <h1><?=$product['prd_title']?></h1>
         <h3><?=$product['cty_name']?></h3>
-
-        <!--
-        <div class="navigation">
-            <select id="select-subcategory" class="form-control" style="display:inline-block;width:auto;background-color:#fff">
-                <?php foreach($category['children'] as $cate) :?>
-                    <option value="<?=$cate['sca_key']?>" <?=$cate['sca_key']==$sca_key?'selected':''?>><?=htmlspecialchars($cate['sca_name'])?></option>
-                <?php endforeach;?>
-            </select>
-            <select id="select-products" class="form-control" data-value="<?=$product['prd_idx']?>" style="display:inline-block;width:auto;background-color:#fff">
-                <?php foreach($product_list as $row) :?>
-                    <option value="<?=$row['prd_idx']?>" <?=$row['prd_idx'] == $product['prd_idx']?"selected":""?>><?=$row['prd_title']?></option>
-                <?php endforeach;?>
-            </select>
-        </div>
-        -->
     </div>
     <div class="product-view-gallery">
         <div class="carousel">
@@ -457,6 +442,7 @@
             }
             $.post('/api/products/sybqna', form.serialize(), function(res){
                 if(res.status==true){
+                    ga_send('문의작성 완료 :: 천생연분닷컴', '/board/sybqna/write_ok');
                     alert('문의 작성이 완료되었습니다.');
                     location.reload();
                 }

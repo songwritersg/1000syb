@@ -1,3 +1,4 @@
+<script src='https://www.google.com/recaptcha/api.js?onload=recaptchaOnLoad&render=explicit' async defer></script>
 <?php $this->load->view('desktop/board/customer_common');?>
 <?=$this->site->add_js("/static/plugins/tinymce-4.3.13/tinymce.min.js");?>
 <?=$this->site->add_js("/static/plugins/tinymce-4.3.13/editor_config.js");?>
@@ -22,6 +23,7 @@
         <fieldset>
             <input type="hidden" name="post_key" value="<?=$this->session->session_id?>">
             <input type="hidden" name="post_idx" value="<?=element('post_idx',$post)?>">
+            <input type="hidden" name="brd_key" value="<?=$board['brd_key']?>">
             <input type="hidden" name="post_secret" value="Y">
             <input type="hidden" name="post_notice" value="N">
             <input type="text" class="fake-input">
@@ -114,6 +116,10 @@
                     <td/>
                 </tr>
                 <?php endif;?>
+                <tr>
+                    <th>스팸등록방지</th>
+                    <td colspan="2"><div id="recaptcha" style="margin:auto"></div></td>
+                </tr>
             </table>
 
             <div class="margin-top-30">

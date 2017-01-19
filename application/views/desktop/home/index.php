@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="col col-6">
-                        <a href="<?=base_url("counseling/call")?>" class="imgcard imgcard-estimate">1:1상담신청하기</a>
+                        <a href="<?=base_url("counseling/call")?>" class="imgcard imgcard-estimate active">1:1상담신청하기</a>
                     </div>
                 </div>
             </div>
@@ -85,6 +85,12 @@
     </div>
 </article>
 <!-- END: Intro Section -->
+
+<script>
+    $(".imgcard").mouseover(function(){
+        $(".imgcard").removeClass("active");
+    });
+</script>
 
 <!-- START: Middle Banner -->
 <?php foreach( $main_middle_banners as $banner) : ?>
@@ -133,7 +139,9 @@
                 <?php foreach($best_products as $row):?>
                 <li>
                     <a href="<?=base_url("products/{$row['sca_parent']}/{$row['sca_key']}/{$row['prd_idx']}")?>">
-                        <img src="<?=base_url($row['prd_thumb'])?>" alt="260x195">
+                        <div class="thumb">
+                            <img src="<?=base_url($row['prd_thumb'])?>" alt="<?=$row['prd_title']?>">
+                        </div>
                         <div class="content">
                             <h6><?=$row['cty_name_kr']?></h6>
                             <p><?=preg_replace("/\\[|\\]/","",$row['prd_title'])?><i class="fa fa-chevron-circle-right "></i></p>
@@ -147,12 +155,13 @@
 </article>
 <!-- End:Best 허니문 추천지역-->
 
+
 <?php
 if($this->site->config('site_poplayer') && ! $this->input->cookie('syb_poplayer')) :
     $poplayer = json_decode($this->site->config('site_poplayer'), TRUE);
     if($poplayer['active'] == 'Y') : ?>
-    <div id="mask"></div>
-    <div id="popup-layer" style="width:<?=$poplayer['width']?>px; height:<?=$poplayer['height']?>px; margin-left:-<?=$poplayer['width']/2?>px; margin-top:-<?=$poplayer['height']/2?>px;">
+    <div id="mask" class="popup-notice-mask"></div>
+    <div id="popup-layer" class="popup-notice" style="width:<?=$poplayer['width']?>px; height:<?=$poplayer['height']?>px; margin-left:-<?=$poplayer['width']/2?>px; margin-top:-<?=$poplayer['height']/2?>px;">
         <img src="<?=base_url($poplayer['file_name'])?>" style="width:<?=$poplayer['width']?>px; height:<?=$poplayer['height']?>px;" alt="팝업 공지">
         <button type="button" data-toggle="close">&times;</button>
         <button type="button" data-toggle="cookie-close">오늘 하루 열지 않기</button>
@@ -171,3 +180,18 @@ if($this->site->config('site_poplayer') && ! $this->input->cookie('syb_poplayer'
     <?php
     endif;
 endif;?>
+
+
+<!--[if lt IE 9]>
+<div id="mask"></div>
+<div id="popup-layer" style="width:900px;height:485px; margin-left:-450px; margin-top:-242.5px">
+    <img src="<?=base_url("static/images/common/explorer_update.jpg")?>" alt="Internet Explorer 8 이하 미지원 안내">
+</div>
+<script>
+    $(".popup-notice-mask, .popup-notice").remove();
+    $("#mask").on('click',function(){
+        $("#popup-layer").remove();
+        $('#mask').remove();
+    });
+</script>
+<![endif]-->

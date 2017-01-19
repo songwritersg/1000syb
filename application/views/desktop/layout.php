@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<?=$this->site->display_meta()?>
+<!DOCTYPE html><html lang="ko"><head><?=$this->site->display_meta()?>
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=NmERnQA9qn">
 <link rel="icon" type="image/png" href="/favicon-32x32.png?v=NmERnQA9qn" sizes="32x32">
 <link rel="icon" type="image/png" href="/favicon-16x16.png?v=NmERnQA9qn" sizes="16x16">
@@ -15,9 +12,7 @@
 <?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css", TRUE)?>
 <?=$this->site->add_css("https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css", TRUE)?>
 <?=$this->site->add_css("/static/css/common.min.css", TRUE)?>
-<?=$this->site->display_css()?>
-</head>
-<body>
+<?=$this->site->display_css()?></head><body>
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js", TRUE)?>
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js")?>
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")?>
@@ -25,15 +20,12 @@
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js")?>
 <?=$this->site->add_js("https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.6/SmoothScroll.min.js")?>
 <?=$this->site->add_js("/static/js/common.min.js", TRUE)?>
-<?=$this->site->display_js();?>
-<script>
-var base_url = '<?=base_url()?>';
-</script>
+<?=$this->site->display_js();?><script>var base_url = '<?=base_url()?>';</script>
 <!--START:본문 바로가기-->
 <div id="sybIndex">
     <a href="#sybSection">본문 바로가기</a>
     <a href="#sybNav">메뉴 바로가기</a>
-    <a href="/sitemap">사이트맵</a>
+    <a href="<?=base_url("/customer/sitemap")?>">사이트맵</a>
 </div>
 <!--END:본문 바로가기-->
 
@@ -46,6 +38,7 @@ var base_url = '<?=base_url()?>';
             <li><a href="<?=base_url()?>"><i class="fa fa-home"></i>&nbsp;메인</a></li>
             <li><a href="javascript:;" data-toggle="add-favorite"><i class="fa fa-star"></i>&nbsp;즐겨찾기</a></li>
             <li><a href="<?=base_url('board/article')?>"><i class="fa  fa-newspaper-o"></i>&nbsp;보도자료</a></li>
+            <li><a href="<?=base_url('customer/sitemap')?>"><i class="fa  fa-cog"></i>&nbsp;사이트맵</a></li>
         </ul>
     </div>
 </header>
@@ -130,7 +123,7 @@ var base_url = '<?=base_url()?>';
     <article class="container" id="footer-cscenter">
         <h4>고객 센터</h4>
         <div class="cscenter">
-            <img class="wide-banner" src="/static/images/layout/footer_cscenter.jpg" alt="고객센터">
+            <img class="wide-banner" src="/static/images/layout/footer_cscenter.jpg?20170109" alt="고객센터">
         </div>
 
         <div class="csbuttons">
@@ -153,7 +146,7 @@ var base_url = '<?=base_url()?>';
                         <?php foreach($recent_list as $post ) :?>
                             <li>
                                 <a href="<?=$post['post_link']?>">
-                                    <span class="title"><?=$post['post_title']?><?=($post['is_new'])?'<img alt="NEW" class="icon-new" src="/static/images/common/icon_new.gif">':''?></span>
+                                    <span class="title"><?=($post['is_new'])?'<img alt="NEW" class="icon-new" src="/static/images/common/icon_new.gif">':''?><?=$post['post_title']?></span>
                                     <span class="regtime"><?=board_date_format($post['post_regtime'])?></span>
                                 </a>
 
@@ -175,7 +168,7 @@ var base_url = '<?=base_url()?>';
                             <?php foreach($recent_list as $post ) :?>
                                 <li>
                                     <a href="<?=$post['post_link']?>">
-                                        <span class="title"><?=$post['post_title']?><?=($post['is_new'])?'<img class="icon-new" alt="NEW" src="/static/images/common/icon_new.gif">':''?></span>
+                                        <span class="title"><?=($post['is_new'])?'<img class="icon-new" alt="NEW" src="/static/images/common/icon_new.gif">':''?><?=$post['post_title']?></span>
                                         <span class="regtime"><?=board_date_format($post['post_regtime'])?></span>
                                     </a>
 
@@ -197,7 +190,7 @@ var base_url = '<?=base_url()?>';
                             <?php foreach($recent_list as $post ) :?>
                                 <li>
                                     <a href="<?=$post['post_link']?>">
-                                        <span class="title"><?=htmlspecialchars($post['post_title'])?><?=($post['is_new'])?'<img alt="NEW"  class="icon-new" src="/static/images/common/icon_new.gif">':''?></span>
+                                        <span class="title"><?=($post['is_new'])?'<img alt="NEW" class="icon-new" src="/static/images/common/icon_new.gif">':''?><?=htmlspecialchars($post['post_title'])?></span>
                                         <span class="regtime"><?=board_date_format($post['post_regtime'])?></span>
                                     </a>
 
@@ -272,7 +265,24 @@ var base_url = '<?=base_url()?>';
     </div>
 </footer>
 
-<?php $this->load->view('desktop/banners');?>
+<?php if( $this->site->device() != DEVICE_MOBILE ) $this->load->view('desktop/banners'); ?>
+
+<?php if($this->site->viewmode() == DEVICE_DESKTOP && $this->site->device() == DEVICE_MOBILE  && DEVICE_MOBILE != DEVICE_DESKTOP) : ?>
+<button type="button" class="btn btn-block btn-default" data-toggle="viewmode" data-value="<?=DEVICE_MOBILE?>" style="padding:50px;font-size:32px;">모바일웹 보기</button>
+<script>
+    $(function(){
+        $("[data-toggle='viewmode']").on('click', function(e){
+            var value = $(this).data('value');
+            var expire = new Date();
+            expire.setDate(expire.getDate() - 1);
+            cookies = "viewmode" + '=' +escape( value ) + '; path=/';
+            cookies += ';expires=' + expire.toGMTString() + ';';
+            document.cookie = cookies;
+            location.reload();
+        });
+    });
+</script>
+<?php endif;?>
 
 <!--[if lt IE 9]>
 <script src="<?=base_url('static/js/poly-checked.min.js')?>"></script>

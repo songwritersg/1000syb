@@ -6,6 +6,18 @@
  *
  *****************************************************************************************************/
 
+if(!window.console || !window.console.log) {
+    window.console = {log : function(){}};
+}
+
+function ga_send(title, page)
+{
+    if(typeof ga != 'undefined')
+    {
+        ga('send', { 'hitType': 'pageview', 'page': page, 'title': title });
+    }
+}
+
 /** Jquery UI Dialog Default Setting **/
 $(function(){
 
@@ -71,14 +83,17 @@ $(function(){
         }
     });
 
+    var floatPosition = 0;
+
     /***************************************************************************************************
      * 플로팅 배너 위치 조절
      **************************************************************************************************/
     if( $(".floating-banner").length > 0 ) {
+
         $(function(){
-            var floatPosition = $("#sybSection").offset().top;
+            floatPosition = $("#sybSection").offset().top;
             if( $("#main-slide").length > 0 ) {
-                floatPosition += 540;
+                floatPosition += $("#main-slide").width() / 4 + 60;
             }
             if( $("#product-lists-info").length > 0) {
                 floatPosition += 540;
@@ -110,9 +125,21 @@ $(function(){
                 }
 
                 $(".floating-banner").stop().animate({ "top" : newPosition }, 200);
-            });
+            }).scroll();
         });
 
+        // 윈도우 사이즈가 변경된경우 floatPosition 변경
+        $(window).resize(function(){
+            floatPosition = $("#sybSection").offset().top;
+            if( $("#main-slide").length > 0 ) {
+                floatPosition += $("#main-slide").width() / 4 + 60;
+            }
+            if( $("#product-lists-info").length > 0) {
+                floatPosition += 540;
+            }
+            floatPosition += $(".breadcrumbs").outerHeight(true);
+            $(window).scroll();
+        });
     }
 
     /***************************************************************************************************

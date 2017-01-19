@@ -48,13 +48,27 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="form-group-label" for="prd_title">상품 이름</label>
+            <div class="input-box">
+                <input type="text" class="form-control" name="prd_title" id="prd_title" value="<?=$product['prd_title']?>" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-group-label" for="prg_title">일정표 이름</label>
+            <div class="input-box">
+                <input type="text" class="form-control" name="prg_title" id="prg_title" value="<?=$program_info['prg_title']?>" required>
+            </div>
+        </div>
+
         <img class="wide-banner" src="<?=base_url("/static/images/mailform/title_sales_comment.jpg")?>">
         <div class="editor-form" style="border:1px solid #ddd;">
             <textarea id="sales_comment" name="sales_comment" class="tinymce"></textarea>
         </div>
 
         <img class="wide-banner margin-top-30" src="<?=base_url("/static/images/mailform/title_schedule.jpg")?>">
-        <?php for($day=1; $day<count($program_info['schedule']); $day++) : ?>
+        <?php for($day=1; $day<=count($program_info['schedule']); $day++) : ?>
         <div class="button-area">
             <button type="button" data-toggle="add-schedule-table">일차 추가</button>
         </div>

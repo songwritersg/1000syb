@@ -68,7 +68,7 @@
             </script>
         <?php endif;?>
 
-        <img src="/static/images/board/event_trstory.jpg" class="wide-banner">
+        <img src="/static/images/board/event_trstory.jpg?20170109" class="wide-banner">
         <ul class="event-best">
             <li>
                 <a href="<?=$board['extra']['best_one_link']?>">
@@ -125,13 +125,12 @@
             <?php $i=0;
                 foreach($notice as $row) :?>
                 <li>
-                    <a href="<?=$row['post_link']?>">
+                    <a href="<?=$row['post_link']?>" title="<?=$row['post_title']?>">
                         <h4><?=$row['post_title']?></h4>
                         <ul>
                             <li><?=board_date_format($row['post_regtime'])?></li>
                             <li><?=number_format($row['post_hit'])?></li>
                         </ul>
-                        <p><?=strip_tags($row['post_content'],"<br>")?></p>
                     </a>
                 </li>
             <?php
@@ -156,7 +155,7 @@
                         <h4 class="post-title"><?=$row['post_title']?></h4>
                         <ul class="post-info">
                             <li><?=board_date_format($row['post_regtime'])?></li>
-                            <li><?=$row['usr_name']?></li>
+                            <li><?=name_blind($row['usr_name'])?></li>
                             <li><?=number_format($row['post_hit'])?></li>
                         </ul>
                         <p class="post-desc"><?=strip_tags($row['post_content'],"<br>")?></p>

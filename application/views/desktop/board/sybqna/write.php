@@ -7,6 +7,7 @@
         <fieldset>
             <input type="hidden" name="post_key" value="<?=$this->session->session_id?>">
             <input type="hidden" name="post_idx" value="<?=element('post_idx',$post)?>">
+            <input type="hidden" name="brd_key" value="<?=$board['brd_key']?>">
             <input type="text" class="fake-input">
             <input type="password" class="fake-input">
             <table class="form-table">
@@ -48,7 +49,7 @@
                     <td>
                         <select class="form-control" name="post_category"  id="post_category">
                             <?php foreach($board['brd_category'] as $category) :?>
-                                <option value="<?=$category['bca_key']?>" <?=$category['bca_key']==element('post_category',$post)?'selected':''?>><?=$category['bca_key']?></option>
+                                <option value="<?=$category['bca_key']?>" <?=$category['bca_key']==element('post_category',$post, $this->input->get('category'))?'selected':''?>><?=$category['bca_key']?></option>
                             <?php endforeach;?>
                         </select>
                     </td>

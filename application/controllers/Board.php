@@ -97,6 +97,7 @@ class Board extends SYB_Controller {
      *********************************************************/
     function password($brd_key="",$post_idx="")
     {
+        $this->data['post_idx'] = $post_idx;
         if(! $this->data['board'] = $this->board_model->get_board($brd_key))
         {
             alert('존재하지 않는 게시판입니다.');
@@ -334,6 +335,19 @@ class Board extends SYB_Controller {
 
             for($i=1; $i<=10; $i++){
                 $data['post_ext'.$i] = trim($this->input->post("post_ext".$i, TRUE, ''));
+            }
+
+            // 구글 리캡챠 적용
+            if( $data['brd_key'] == 'alliance' )
+            {
+                $this->load->library('googleRecaptcha');
+                $response = $this->input->post('g-recaptcha-response', TRUE);
+
+                if( empty($response) OR ! $this->googlerecaptcha->check_response( $response ) )
+                {
+                    alert('스팸차단인증에 실패하였습니다.\\n올바른 경로로 글을 작성해주세요');
+                    exit;
+                }
             }
 
             if( empty($data['post_idx']) )

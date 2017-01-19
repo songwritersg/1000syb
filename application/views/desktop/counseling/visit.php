@@ -120,6 +120,10 @@ $(function(){
             $("#agree_privacy").focus();
             return false;
         }
+
+
+        ga_send("전화상담 신청 완료", "/counseling/visit_done");
+        return true;
     });
 });
 </script>

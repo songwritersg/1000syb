@@ -12,6 +12,7 @@
         </div>
         <?=form_open_multipart(NULL, array("id"=>"form-board-write", "autocomplete"=>"off"))?>
         <fieldset>
+            <input type="hidden" name="brd_key" value="<?=$board['brd_key']?>">
             <input type="hidden" name="post_key" value="<?=$this->session->session_id?>">
             <input type="hidden" name="post_idx" value="<?=element('post_idx',$post)?>">
             <input type="hidden" name="post_secret" value="Y">

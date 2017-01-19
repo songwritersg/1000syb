@@ -1,5 +1,5 @@
 <div id="dialog-comment-delete-password">
-    <?=form_open(NULL,array("id"=>"form-comment-delete","autocomplete"=>"off"))?>
+    <?=form_open("https://www.1000syb.com/board/comment_delete",array("id"=>"form-comment-delete","autocomplete"=>"off"))?>
     <input type="hidden" name="cmt_idx" value="<?=$cmt_idx?>">
     <fieldset>
         <legend>비밀번호 입력</legend>
@@ -32,9 +32,16 @@ $(function(){
             url : base_url + "/api/board/comments",
             type : 'DELETE',
             data : $cmtForm.serialize(),
+            async:false,
             success: function(res){
-                alert('댓글이 삭제되었습니다.');
-                location.reload();
+                if(res.status == true)
+                {
+                    alert('댓글이 삭제되었습니다.');
+                    location.reload();
+                }
+                else {
+                    alert( res.message ? res.message : '알수없는 오류가 발생하였습니다.' );
+                }
             }
         })
     });

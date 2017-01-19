@@ -206,6 +206,33 @@ class Board_model extends SYB_Model {
             curl_setopt($ch, CURLOPT_REFERER, $url);
             $res = curl_exec($ch);
             curl_close($ch);
+
+            // 문자발송이 사용설정되어있다면 문자를 발송한다.
+            $CI =& get_instance();
+
+            // 사용 Y && 문자내용이 있다면
+            if( $CI->site->config('sybqna_sms_use') == 'Y' && $CI->site->config('sybqna_sms_content'))
+            {
+                $sms_data['type'] = "mms";
+                $sms_data['phone'] = $data['usr_phone'];
+                $sms_data['subject'] = $CI->site->config('sybqna_sms_subject');
+                $sms_data['msg'] = $CI->site->config('sybqna_sms_content');
+                $sms_data['callback'] = "027208876";
+
+                $ch = curl_init();
+                $url = "http://admin.1000syb.com/api/sms/send";
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($sms_data));
+                curl_setopt($ch, CURLOPT_CRLF, TRUE);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+                curl_setopt($ch, CURLOPT_HEADER, false);
+                curl_setopt($ch, CURLOPT_REFERER, $url);
+                $res = curl_exec($ch);
+                curl_close($ch);
+            }
         }
 
         return $id;
@@ -437,6 +464,7 @@ class Board_model extends SYB_Model {
         $row['is_new']  = (strtotime($row['post_regtime']) + (60*60*24) > time());
         $row['is_reply'] = ($row['post_depth'] > 0);
         $row['is_secret'] = ($row['post_secret']=='Y');
+        $row['is_notice'] = ($row['post_notice']=='Y');
 
         // 검색어가 있는경우 하이라이팅
         if($scol && $stxt)
@@ -473,7 +501,7 @@ class Board_model extends SYB_Model {
 
         if(! $list = $CI->cache->get('board_recent_'.$brd_key))
         {
-            $this->db->select("post_title, post_regtime, brd_key, post_idx, post_depth, post_secret");
+            $this->db->select("post_title, post_regtime, brd_key, post_idx, post_depth, post_secret, post_notice, post_content");
             $this->db->where("brd_key", $brd_key);
             $this->db->where("post_depth", 0);
             $this->db->where('post_status', 'Y');

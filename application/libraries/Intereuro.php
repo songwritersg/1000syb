@@ -167,21 +167,24 @@ class Intereuro {
             $lists = $output['PRODUCT_LIST_INFO'];
 
             $list = array();
-            foreach($lists as $row)
+            if(count($lists) > 0)
             {
-                $tmp = explode("_",$row['ProductName']);
-                $prd_title = $tmp[0];
-                $array = array(
-                    'prd_idx' => $row['ProductIdx'],
-                    'prd_thumb' => $row['ImageUrl'],
-                    'prd_title' => $prd_title,
-                    'cty_name' => $row['ProductCountryName'],
-                    'ct_name' => $row['ProductCityName'],
-                    'ppr_price' => $row['LowProductPrice'],
-                    "block" => $row["ProductBlockYN"] == 'Y' ? TRUE : FALSE
-                );
-                $list[] = $array;
-                $this->CI->cache->save('intereuro_product_'.$row['ProductIdx'], $array, 60);
+                foreach($lists as $row)
+                {
+                    $tmp = explode("_",$row['ProductName']);
+                    $prd_title = $tmp[0];
+                    $array = array(
+                        'prd_idx' => $row['ProductIdx'],
+                        'prd_thumb' => $row['ImageUrl'],
+                        'prd_title' => $prd_title,
+                        'cty_name' => $row['ProductCountryName'],
+                        'ct_name' => $row['ProductCityName'],
+                        'ppr_price' => $row['LowProductPrice'],
+                        "block" => $row["ProductBlockYN"] == 'Y' ? TRUE : FALSE
+                    );
+                    $list[] = $array;
+                    $this->CI->cache->save('intereuro_product_'.$row['ProductIdx'], $array, 60);
+                }
             }
 
             $this->CI->cache->save('intereuro_list_'.$txtAreaCode, $list, 60);  // 60초동안 저장

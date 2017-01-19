@@ -86,13 +86,13 @@
     $(function(){
        $(".top-product").on('mouseover', function(){
            $(this).find('.img-overlay').stop().fadeTo('100', 0.8);
-           $(this).stop().animate({borderWidth : 2},100);
+           /*$(this).stop().animate({borderWidth : 2},100);*/
            $(this).find('.product-detail').stop().animate({
                top : '110px'
            },100);
        }).on('mouseleave', function(){
            $(this).find('.img-overlay').stop().fadeOut('100');
-           $(this).stop().animate({borderWidth : 0},100);
+           /*$(this).stop().animate({borderWidth : 0},100);*/
            $(this).find('.product-detail').stop().animate({top : '225px'},100);
        });
     });

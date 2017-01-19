@@ -38,6 +38,7 @@ class Sitemap extends CI_Controller  {
         {
             echo "<sitemap>\n";
             echo "<loc>".base_url("sitemap_board_".$board['brd_key'].".xml")."</loc>\n";
+            echo "<priority>0.8</priority>".PHP_EOL;
             echo "</sitemap>\n";
         }
 
@@ -66,7 +67,7 @@ class Sitemap extends CI_Controller  {
         echo "<url>".PHP_EOL;
         echo "<loc>".base_url("about")."</loc>".PHP_EOL;
         echo "<lastmod>".date('Y-m-d', filemtime(VIEWPATH."desktop/about/index.php"))."</lastmod>".PHP_EOL;
-        echo "<priority>0.9</priority>".PHP_EOL;
+        echo "<priority>0.8</priority>".PHP_EOL;
         echo "<changefreq>monthly</changefreq>".PHP_EOL;
         echo "</url>".PHP_EOL;
 
@@ -75,7 +76,7 @@ class Sitemap extends CI_Controller  {
             echo "<url>".PHP_EOL;
             echo "<loc>".base_url("about/branch/".urlencode($branch['bnc_name']))."</loc>".PHP_EOL;
             echo "<lastmod>2016-11-05</lastmod>".PHP_EOL;
-            echo "<priority>0.9</priority>".PHP_EOL;
+            echo "<priority>0.8</priority>".PHP_EOL;
             echo "<changefreq>monthly</changefreq>".PHP_EOL;
             echo "</url>".PHP_EOL;
         }
@@ -83,21 +84,21 @@ class Sitemap extends CI_Controller  {
         echo "<url>".PHP_EOL;
         echo "<loc>".base_url("about/agreement")."</loc>".PHP_EOL;
         echo "<lastmod>".date('Y-m-d', filemtime(VIEWPATH."desktop/about/agreement.php"))."</lastmod>".PHP_EOL;
-        echo "<priority>0.9</priority>".PHP_EOL;
+        echo "<priority>0.8</priority>".PHP_EOL;
         echo "<changefreq>monthly</changefreq>".PHP_EOL;
         echo "</url>".PHP_EOL;
 
         echo "<url>".PHP_EOL;
         echo "<loc>".base_url("about/privacy")."</loc>".PHP_EOL;
         echo "<lastmod>".date('Y-m-d', filemtime(VIEWPATH."desktop/about/privacy.php"))."</lastmod>".PHP_EOL;
-        echo "<priority>0.9</priority>".PHP_EOL;
+        echo "<priority>0.8</priority>".PHP_EOL;
         echo "<changefreq>monthly</changefreq>".PHP_EOL;
         echo "</url>".PHP_EOL;
 
         echo "<url>".PHP_EOL;
         echo "<loc>".base_url("about/travel")."</loc>".PHP_EOL;
         echo "<lastmod>".date('Y-m-d', filemtime(VIEWPATH."desktop/about/travel.php"))."</lastmod>".PHP_EOL;
-        echo "<priority>0.9</priority>".PHP_EOL;
+        echo "<priority>0.8</priority>".PHP_EOL;
         echo "<changefreq>monthly</changefreq>".PHP_EOL;
         echo "</url>".PHP_EOL;
 

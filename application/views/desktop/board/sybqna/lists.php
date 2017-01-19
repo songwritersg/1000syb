@@ -79,7 +79,7 @@
                     </a>
                     <?=$row['is_secret']?'<i class="fa fa-lock"></i>':''?>
                 </td>
-                <td><?=$row['usr_name']?></td>
+                <td><?=name_blind($row['usr_name'])?></td>
                 <td><?=board_date_format($row['post_regtime'])?></td>
                 <td><img src="/static/images/board/answer_<?=$row['answer_count']>0?'y':'n'?>.jpg" alt="<?=$row['answer_count']>0?'답변완료':'미답변'?>"></td>
                 <td><?=number_format($row['post_hit'])?></td>

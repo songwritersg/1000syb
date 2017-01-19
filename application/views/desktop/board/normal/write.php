@@ -6,6 +6,7 @@
         <fieldset>
             <input type="hidden" name="post_key" value="<?=$this->session->session_id?>">
             <input type="hidden" name="post_idx" value="<?=element('post_idx',$post)?>">
+            <input type="hidden" name="brd_key" value="<?=$board['brd_key']?>">
             <input type="text" class="fake-input">
             <input type="password" class="fake-input">
             <?php if(element("brd_category", $board)) :?>

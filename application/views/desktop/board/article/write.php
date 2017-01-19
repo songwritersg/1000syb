@@ -7,6 +7,7 @@
         <fieldset>
             <input type="hidden" name="post_key" value="<?=$this->session->session_id?>">
             <input type="hidden" name="post_idx" value="<?=element('post_idx',$post)?>">
+            <input type="hidden" name="brd_key" value="<?=$board['brd_key']?>">
             <input type="hidden" name="post_category" value="<?=element("post_category", $post)?>">
             <input type="text" class="fake-input">
             <input type="password" class="fake-input">

@@ -4,7 +4,7 @@
         <h1 class="post-title"><?=$post['post_title']?><small><?=number_format($post['post_hit'])?></small></h1>
         <dl>
             <dt>글쓴이</dt>
-            <dd><?=$post['usr_name']?></dd>
+            <dd><?=name_blind($post['usr_name'])?></dd>
             <dt>작성일</dt>
             <dd><?=board_date_format($post['post_regtime'])?></dd>
         </dl>
